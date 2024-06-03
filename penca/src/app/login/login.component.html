@@ -1,0 +1,50 @@
+<div class="main-content" [ngClass]="{'blurred': bandera || bandera2}">
+    <div class="login-contenedor">
+      <button class="admin-boton" (click)="ingresarAdmin()">ADMINISTRACIÓN</button>
+      <div class="login-subcontenedor">
+        <h1 class="login-titulo">PENCA</h1>
+        <img src="../../assets/logo_ucu.png" class="login-imagen">
+        <div class="zona-botones">
+          <button (click)="setBanderaLogin()" style="width:auto;">Iniciar Sesión</button>
+          <button (click)="setBanderaRegistro()" style="width:auto;">Registrarse</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div id="id01" class="modal" [ngClass]="{'show': bandera}">
+    <form class="modal-content animate">
+      <div class="container">
+        <label for="uname"><b>Usuario</b></label>
+        <input type="text" placeholder="Ingrese su usuario" name="uname" required>
+        <label for="psw"><b>Contraseña</b></label>
+        <input type="password" placeholder="Ingrese su contraseña" name="psw" required>
+      </div>
+      <div class="contenedor-boton-login">
+        <button class="submit-login" type="submit">Iniciar</button>
+      </div>
+      <div class="container" style="background-color:#f1f1f1">
+        <button type="button" (click)="setBanderaLogin()" class="cancelbtn">Cancelar</button>
+      </div>
+    </form>
+  </div>
+  
+  <div id="id02" class="modal" [ngClass]="{'show': bandera2}">
+    <form class="modal-content animate">
+      <div class="container">
+        <label for="uname"><b>Usuario</b></label>
+        <input type="text" placeholder="Ingrese su usuario" name="uname" required>
+        <label for="psw"><b>Contraseña</b></label>
+        <input type="password" placeholder="Ingrese su contraseña" name="psw" required>
+        <label for="psw"><b>Confirmar Contraseña</b></label>
+        <input type="password" placeholder="Confirme su contraseña" name="psw" required>
+      </div>
+      <div class="contenedor-boton-login">
+        <button class="submit-login" type="submit">Registrarse</button>
+      </div>
+      <div class="container" style="background-color:#f1f1f1">
+        <button type="button" (click)="setBanderaRegistro()" class="cancelbtn">Cancelar</button>
+      </div>
+    </form>
+  </div>
+  
