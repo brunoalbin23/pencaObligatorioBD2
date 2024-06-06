@@ -11,7 +11,54 @@
       </div>
     </div>
   </div>
+
+  <div id="id01" class="login-box" [ngClass]="{'show': bandera}">
+    <form>
+      <button class="button-cruz"(click)="closeForm()">
+        <span class="X"></span>
+        <span class="Y"></span>
+      </button>
+      <div class="user-box">
+        <input type="text" name="" required="">
+        <label>Username</label>
+      </div>
+      <div class="user-box">
+        <input type="password" name="" required="">
+        <label>Password</label>
+      </div>
+      <div class="zona-boton-send">
+        <a href="#">
+          INICIAR
+        <span></span>
+        </a>
+      </div>
+    </form>
+  </div>
+
+  <div id="id02" class="login-box" [ngClass]="{'show': bandera}">
+    <form>
+      <button class="button-cruz"(click)="closeForm()">
+        <span class="X"></span>
+        <span class="Y"></span>
+      </button>
+      <div class="user-box">
+        <input type="text" name="" required="">
+        <label>Username</label>
+      </div>
+      <div class="user-box">
+        <input type="password" name="" required="">
+        <label>Password</label>
+      </div>
+      <div class="zona-boton-send">
+        <a href="#">
+          INICIAR
+        <span></span>
+        </a>
+      </div>
+    </form>
+  </div>
   
+<!--   
   <div id="id01" class="modal" [ngClass]="{'show': bandera}">
     <form class="modal-content animate">
       <div class="container">
@@ -28,6 +75,8 @@
       </div>
     </form>
   </div>
+
+  
   
   <div id="id02" class="modal" [ngClass]="{'show': bandera2}">
     <form class="modal-content animate">
@@ -47,4 +96,4 @@
       </div>
     </form>
   </div>
-  
+-->

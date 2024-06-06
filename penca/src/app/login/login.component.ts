@@ -24,4 +24,8 @@ export class LoginComponent {
   ingresarAdmin() {
     this.bandera = !this.bandera;
   }
+
+  closeForm() {
+    this.bandera = !this.bandera;
+  }
 }
