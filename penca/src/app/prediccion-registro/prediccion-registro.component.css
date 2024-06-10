@@ -1,6 +1,5 @@
 .login-contenedor {
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100vh;
@@ -17,10 +16,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 60%;
+    width: 65%;
     height: 55%;
     background-color: black;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.8);
     border-radius: 5%;
   }
 
@@ -31,7 +30,7 @@
   }
 
   .login-titulo {
-    margin: 75px 0px;
+    margin: 50px 0px;
     color: white;
     width: 700px;
     display: grid;
@@ -43,7 +42,7 @@
   }
 
   .contenedor-predecir-subcampeon{
-    margin: 75px 0px;
+    margin: 0px 0px;
   }
 
   .contenedor-boton-continuar{
@@ -52,6 +51,40 @@
   }
 
   .inputs {
-    padding: 0px;
-    margin: 0px;
+    padding: 10px;
+    margin: 20px;
+  }
+
+  button {
+    padding: 10px 20px;
+    background-color: rgba(0, 0, 0, 0);
+    border-color: white;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .inicio-boton {
+    position: relative;
+    display: inline-block;
+    padding: 10px 20px;
+    color: #ffffff;
+    font-size: 16px;
+    text-decoration: none;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: .5s;
+    margin-top: 40px;
+    letter-spacing: 4px
+  }
+
+  .inicio-boton:hover{
+    background: #3a3ae3;
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #3a3ae3,
+                0 0 25px #3a3ae3,
+                0 0 50px #3a3ae3,
+                0 0 100px #3a3ae3;
   }

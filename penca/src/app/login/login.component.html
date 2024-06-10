@@ -1,12 +1,12 @@
 <div class="main-content" [ngClass]="{'blurred': bandera || bandera2}">
     <div class="login-contenedor">
-      <button class="admin-boton" (click)="ingresarAdmin()">ADMINISTRACIÓN</button>
+      <button class="admin-boton" (click)="navigateToSala()">ADMINISTRACIÓN</button>
       <div class="login-subcontenedor">
         <h1 class="login-titulo">PENCA</h1>
         <img src="../../assets/logo_ucu.png" class="login-imagen">
         <div class="zona-botones">
-          <button (click)="setBanderaLogin()" style="width:auto;">Iniciar Sesión</button>
-          <button (click)="setBanderaRegistro()" style="width:auto;">Registrarse</button>
+          <button (click)="setBanderaLogin()" class="inicio-boton" style="width:auto;">Iniciar</button>
+          <button (click)="setBanderaRegistro()" class="inicio-boton" style="width:auto;">Registro</button>
         </div>
       </div>
     </div>
@@ -20,80 +20,44 @@
       </button>
       <div class="user-box">
         <input type="text" name="" required="">
-        <label>Username</label>
+        <label>Usuario</label>
       </div>
       <div class="user-box">
         <input type="password" name="" required="">
-        <label>Password</label>
+        <label>Contraseña</label>
       </div>
       <div class="zona-boton-send">
-        <a href="#">
+        <button (click)="navigateToSala()" class="inicio-boton">
           INICIAR
         <span></span>
-        </a>
+        </button>
       </div>
     </form>
   </div>
 
-  <div id="id02" class="login-box" [ngClass]="{'show': bandera}">
+  <div id="id02" class="login-box" [ngClass]="{'show': bandera2}">
     <form>
-      <button class="button-cruz"(click)="closeForm()">
+      <button class="button-cruz"(click)="closeForm2()">
         <span class="X"></span>
         <span class="Y"></span>
       </button>
       <div class="user-box">
         <input type="text" name="" required="">
-        <label>Username</label>
+        <label>Usuario</label>
       </div>
       <div class="user-box">
         <input type="password" name="" required="">
-        <label>Password</label>
+        <label>Contraseña</label>
+      </div>
+      <div class="user-box">
+        <input type="password" name="" required="">
+        <label>Confirmar contraseña</label>
       </div>
       <div class="zona-boton-send">
-        <a href="#">
-          INICIAR
+        <button (click)="navigateToPrediccionRegistro()" class="inicio-boton">
+          REGISTRARSE
         <span></span>
-        </a>
+        </button>
       </div>
     </form>
   </div>
-  
-<!--   
-  <div id="id01" class="modal" [ngClass]="{'show': bandera}">
-    <form class="modal-content animate">
-      <div class="container">
-        <label for="uname"><b>Usuario</b></label>
-        <input type="text" placeholder="Ingrese su usuario" name="uname" required>
-        <label for="psw"><b>Contraseña</b></label>
-        <input type="password" placeholder="Ingrese su contraseña" name="psw" required>
-      </div>
-      <div class="contenedor-boton-login">
-        <button class="submit-login" type="submit">Iniciar</button>
-      </div>
-      <div class="container" style="background-color:#f1f1f1">
-        <button type="button" (click)="setBanderaLogin()" class="cancelbtn">Cancelar</button>
-      </div>
-    </form>
-  </div>
-
-  
-  
-  <div id="id02" class="modal" [ngClass]="{'show': bandera2}">
-    <form class="modal-content animate">
-      <div class="container">
-        <label for="uname"><b>Usuario</b></label>
-        <input type="text" placeholder="Ingrese su usuario" name="uname" required>
-        <label for="psw"><b>Contraseña</b></label>
-        <input type="password" placeholder="Ingrese su contraseña" name="psw" required>
-        <label for="psw"><b>Confirmar Contraseña</b></label>
-        <input type="password" placeholder="Confirme su contraseña" name="psw" required>
-      </div>
-      <div class="contenedor-boton-login">
-        <button class="submit-login" type="submit">Registrarse</button>
-      </div>
-      <div class="container" style="background-color:#f1f1f1">
-        <button type="button" (click)="setBanderaRegistro()" class="cancelbtn">Cancelar</button>
-      </div>
-    </form>
-  </div>
--->

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -12,6 +13,16 @@ import { CommonModule } from '@angular/common';
 export class LoginComponent {
   bandera: boolean = false;
   bandera2: boolean = false;
+
+  constructor(private router: Router) { }
+
+  navigateToPrediccionRegistro() {
+    this.router.navigate(['/prediccion-registro']);
+  }
+
+  navigateToSala() {
+    this.router.navigate(['/sala-general']);
+  }
 
   setBanderaLogin() {
     this.bandera = !this.bandera;
@@ -27,5 +38,9 @@ export class LoginComponent {
 
   closeForm() {
     this.bandera = !this.bandera;
+  }
+
+  closeForm2() {
+    this.bandera2 = !this.bandera2;
   }
 }
