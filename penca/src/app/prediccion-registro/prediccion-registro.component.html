@@ -1,4 +1,4 @@
-<div class="login-contenedor">
+<div class="login-contenedor" [ngClass]="{'blurred': bandera}">
     <div class="login-subcontenedor">
       <h1 class="login-titulo">HAGA LAS PREDICCIONES DEL TORNEO </h1>
       <form class="form-prediccion-registro">
@@ -6,12 +6,12 @@
               <div class="contenedor-predecir-campeon">
                   <label class= "nombre-tit"for="uname"><b>Ingrese su campeon</b></label>
                   <input class= "inputs" type="input" name="uname" required>
-                  <button class="inicio-boton">Seleccionar</button>
+                  <button (click)="setBanderaLogin()" class="inicio-boton">Seleccionar</button>
               </div>
               <div class="contenedor-predecir-subcampeon">
                   <label class= "nombre-tit" for="uname"><b>Ingrese su subcampeon</b></label>
                   <input class= "inputs" type="text" name="uname" required>
-                  <button class="inicio-boton">Seleccionar</button>
+                  <button (click)="setBanderaLogin()" class="inicio-boton">Seleccionar</button>
               </div>
           </div>
           <div class="contenedor-boton-continuar">
@@ -20,3 +20,27 @@
         </form>
     </div>
 </div>
+
+
+<div id="id01" class="login-box" [ngClass]="{'show': bandera}">
+    <form>
+      <button class="button-cruz"(click)="closeForm()">
+        <span class="X"></span>
+        <span class="Y"></span>
+      </button>
+      <div class="user-box">
+        <input type="text" name="" required="">
+        <label>Usuario</label>
+      </div>
+      <div class="user-box">
+        <input type="password" name="" required="">
+        <label>Contraseña</label>
+      </div>
+      <div class="zona-boton-send">
+        <button (click)="navigateToSala()" class="inicio-boton">
+          INICIAR
+        <span></span>
+        </button>
+      </div>
+    </form>
+  </div>
