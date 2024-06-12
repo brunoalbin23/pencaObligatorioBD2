@@ -1,53 +1,41 @@
 .login-contenedor {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100vh;
     position: relative;
   }
   
+  body {
+    display: grid;
+    place-content: center;
+    margin: 0;
+    height: 100vh;
+    font-family: system-ui, sans-serif;
+  }
+  
   .login-subcontenedor {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 65%;
-    height: 55%;
+    padding: 50px;
     background-color: black;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.6);
     border-radius: 50px;
+    transition: transform 0.5s ease;
   }
 
-  #seleccionar-pais {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 10px;
-    padding: 20px;
-    border: 2px solid #ccc;
-    border-radius: 10px;
-    background-color: #f9f9f9;
-}
-
-.pais {
-    text-align: center;
-    border: 2px solid #ddd;
-    border-radius: 5px;
-    padding: 10px;
-    background-color: #fff;
-    cursor: pointer;
-}
-
-.pais img {
-    max-width: 50px;
-    max-height: 50px;
-    display: block;
-    margin: 0 auto;
-}
-
-.pais.selected {
-    background-color: #ff7f7f;
-}
-
-button {
+  .login-subcontenedor:hover {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: black;
+    background: rgba(0, 0, 0, 0.6);
+    transform: scale(1.1);
+  }
+  
+  button {
     padding: 10px 20px;
     background-color: rgba(0, 0, 0, 0);
     border-color: white;
@@ -57,7 +45,11 @@ button {
     cursor: pointer;
   }
 
-.inicio-boton {
+  .registrar {
+    margin-top: 50px;
+  }
+
+  .inicio-boton {
     position: relative;
     display: inline-block;
     padding: 10px 20px;
@@ -67,7 +59,6 @@ button {
     text-transform: uppercase;
     overflow: hidden;
     transition: .5s;
-    margin-top: 40px;
     letter-spacing: 4px
   }
 

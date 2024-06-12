@@ -1,46 +1,42 @@
-<div class="login-contenedor" [ngClass]="{'blurred': bandera}">
-    <div class="login-subcontenedor">
-      <h1 class="login-titulo">HAGA LAS PREDICCIONES DEL TORNEO </h1>
+<div class="login-contenedor main-content" [ngClass]="{'blurred': bandera}">
+  <div class="login-subcontenedor">
+      <h1 class="login-titulo">HAGA LAS PREDICCIONES DEL TORNEO</h1>
       <form class="form-prediccion-registro">
           <div class="container">
               <div class="contenedor-predecir-campeon">
-                  <label class= "nombre-tit"for="uname"><b>Ingrese su campeon</b></label>
-                  <input class= "inputs" type="input" name="uname" required>
-                  <button (click)="setBanderaLogin()" class="inicio-boton">Seleccionar</button>
+                  <label class="nombre-tit" for="campeon"><b>Ingrese su campeón</b></label>
+                  <input id="campeon" class="inputs" type="input" name="uname" disabled>
+                  <button type="button" (click)="openModal('campeon')" class="inicio-boton">Seleccionar</button>
               </div>
               <div class="contenedor-predecir-subcampeon">
-                  <label class= "nombre-tit" for="uname"><b>Ingrese su subcampeon</b></label>
-                  <input class= "inputs" type="text" name="uname" required>
-                  <button (click)="setBanderaLogin()" class="inicio-boton">Seleccionar</button>
+                  <label class="nombre-tit" for="subcampeon"><b>Ingrese su subcampeón</b></label>
+                  <input id="subcampeon" class="inputs" type="text" name="uname" disabled>
+                  <button type="button" (click)="openModal('subcampeon')" class="inicio-boton">Seleccionar</button>
               </div>
           </div>
           <div class="contenedor-boton-continuar">
-            <button (click)="navigateToSala()" class="submit-login inicio-boton" type="submit">Continuar</button>
+              <button (click)="navigateToSala()" class="submit-login inicio-boton" type="submit">Continuar</button>
           </div>
-        </form>
-    </div>
+      </form>
+  </div>
 </div>
 
-
 <div id="id01" class="login-box" [ngClass]="{'show': bandera}">
-    <form>
-      <button class="button-cruz"(click)="closeForm()">
-        <span class="X"></span>
-        <span class="Y"></span>
+  <form>
+      <button class="button-close" (click)="closeForm()" type="button">
+          <span class="X"></span>
+          <span class="Y"></span>
       </button>
       <div class="user-box">
-        <input type="text" name="" required="">
-        <label>Usuario</label>
+        <!--Por ahora esto con numeros, la idea dsp q sean paises exstraidos de la-->
+        <div class="number-grid">
+          <div class="number-item" *ngFor="let num of numbers" [class.selected]="selectedNumber === num" (click)="selectNumber(num)">
+              {{ num }}
+          </div>
       </div>
-      <div class="user-box">
-        <input type="password" name="" required="">
-        <label>Contraseña</label>
       </div>
       <div class="zona-boton-send">
-        <button (click)="navigateToSala()" class="inicio-boton">
-          INICIAR
-        <span></span>
-        </button>
+        <button class="save-btn" (click)="saveSelectedNumber()" type="button">Guardar</button>
       </div>
-    </form>
-  </div>
+  </form>
+</div> 

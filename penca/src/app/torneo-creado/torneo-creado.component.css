@@ -1,0 +1,131 @@
+.main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .crear-torneo-contenedor {
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    padding: 20px;
+    width: 600px;
+  }
+  
+  .crear-torneo-subcontenedor {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    color: white;
+  }
+  
+  input {
+    width: 90%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+  }
+  
+  .equipo-form-group {
+    background-color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+  
+  .btn-agregar {
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 37%;
+  }
+  
+  .lista-equipos {
+    margin-bottom: 20px;
+  }
+  
+  .equipo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #444;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+  }
+  
+  .bandera {
+    width: 50px;
+    height: auto;
+  }
+  
+  .btn-eliminar {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .botones {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  button {
+    padding: 10px 20px;
+    background-color: rgba(0, 0, 0, 0);
+    border-color: white;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .btn-cancelar, .btn-crear {
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .btn-cancelar {
+    color: white;
+  }
+  
+  .btn-crear {
+    color: white;
+  }
+
+  .inicio-boton {
+    position: relative;
+    display: inline-block;
+    padding: 10px 20px;
+    color: #ffffff;
+    font-size: 16px;
+    text-decoration: none;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: .5s;
+    letter-spacing: 4px
+  }
+
+  .inicio-boton:hover{
+    background: #3a3ae3;
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #3a3ae3,
+                0 0 25px #3a3ae3,
+                0 0 50px #3a3ae3,
+                0 0 100px #3a3ae3;
+  }

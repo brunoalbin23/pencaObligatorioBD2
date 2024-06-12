@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SleccionarPaisComponent } from './sleccionar-pais.component';
+import { OpcionesAdminComponent } from './opciones-admin.component';
 
-describe('SleccionarPaisComponent', () => {
-  let component: SleccionarPaisComponent;
-  let fixture: ComponentFixture<SleccionarPaisComponent>;
+describe('OpcionesAdminComponent', () => {
+  let component: OpcionesAdminComponent;
+  let fixture: ComponentFixture<OpcionesAdminComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SleccionarPaisComponent]
+      imports: [OpcionesAdminComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(SleccionarPaisComponent);
+    fixture = TestBed.createComponent(OpcionesAdminComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
