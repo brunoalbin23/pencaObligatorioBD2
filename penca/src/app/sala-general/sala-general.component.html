@@ -1,1 +1,39 @@
-<p>sala-general works!</p>
+<div class="main-content">
+    <div class="login-subcontenedor">
+        <button class="volver-boton" (click)="volver()">SALIR</button>
+        <div class="control-buttons">
+        <button (click)="setView('proximos')" [class.active]="currentView === 'proximos'">Próximos</button>
+        <button (click)="setView('finalizados')" [class.active]="currentView === 'finalizados'">Finalizados</button>
+        <button (click)="setView('ranking')" [class.active]="currentView === 'ranking'">Ranking</button>
+        </div>
+        
+        <div class="content">
+        <div *ngIf="currentView === 'proximos'" class="view proximos">
+            <!-- Contenido para Próximos Partidos -->
+            <div *ngFor="let partido of proximosPartidos">
+            <span>{{ partido.equipo1 }} vs {{ partido.equipo2 }}</span>
+            <span>{{ partido.fecha }}</span>
+            <button class="action-button">Actualizar</button>
+            </div>
+        </div>
+        
+        <div *ngIf="currentView === 'finalizados'" class="view finalizados">
+            <!-- Contenido para Partidos Finalizados -->
+            <div *ngFor="let partido of finalizadosPartidos">
+            <span>{{ partido.equipo1 }} {{ partido.resultado1 }} vs {{ partido.equipo2 }} {{ partido.resultado2 }}</span>
+            <span>{{ partido.fecha }}</span>
+            <span>{{ partido.puntos }}</span>
+            </div>
+        </div>
+        
+        <div *ngIf="currentView === 'ranking'" class="view ranking">
+            <!-- Contenido para Ranking -->
+            <div *ngFor="let jugador of ranking">
+            <span>{{ jugador.nombre }}</span>
+            <span>{{ jugador.puntos }}</span>
+            </div>
+        </div>
+        </div>
+    </div>
+  </div>
+  
