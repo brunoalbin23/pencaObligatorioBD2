@@ -1,13 +1,14 @@
-import express from 'express'
-import IAlumno from '../Interfaces/IAlumno'
+import IAlumno from "../Interfaces/IAlumno"
+import { Request, Response } from 'express';
+import { generateAccessToken } from "./Seguridad";
 
-const router = express.Router();
 const alumnos: IAlumno[] = [];
 
-//Logear alumno
-router.post('/logear', (req, res) => {
-
-    const nuevoAlumno: IAlumno = {
+//METODO DE REGISTRO
+export const register = (req:Request , res: Response)=>
+{
+    const nuevoAlumno: IAlumno = 
+    {
         nombre: req.body.Nombre,
         apellido: req.body.Apellido,
         fecha_nac: req.body.Date,
@@ -19,17 +20,19 @@ router.post('/logear', (req, res) => {
     // Verificar si el número de cédula ya está en uso porque lo vamos a usar como ID (creo)
     const ciEnUso = alumnos.some(alumno => alumno.ci === nuevoAlumno.ci);
 
-    if (ciEnUso) {
-        res.status(400).send("La cédula ya está en uso");
-    } else {
+    if (ciEnUso) 
+    {
+       return res.status(400).send("La cédula ya está en uso");
+    } else 
+    {
         // Si la cédula no está en uso, agregamos el nuevo alumno a la lista (aunque luego va a ser a la BD)
         alumnos.push(nuevoAlumno);
-        res.status(200).send("Usuario creado exitosamente");
+        return res.status(200).send("Usuario creado exitosamente");
     }
-});
+}
 
-//Iniciar sesion alumno
-router.post('/inicio', (req, res) => {
+//INICIAR SESION METODO
+export const inicio = (req:Request , res: Response)=>{
     let cuenta: string[] = [];
     cuenta.push(req.body.CI);
     cuenta.push(req.body.Password);
@@ -40,16 +43,37 @@ router.post('/inicio', (req, res) => {
             cuentaEncontrada = true;
         }
     });
+    const token = generateAccessToken(req.body.CI);
 
     if (cuentaEncontrada) {
-        res.status(200).send('Iniciando sesión');
+        res.status(200).send({ token: token });
     } else {
         res.status(400).send('Cuenta no encontrada');
     }
     console.log("Datos del primer alumno:", alumnos[0]);
     console.log("Los 2 primeros valores del array cuenta:", cuenta[0], cuenta[1]);
-});
+}
 
 
+/*
+import express from 'express'
 
-export default router;
+const router= express.Router();
+
+import IAlumno from "../Interfaces/IAlumno"
+
+const alumnos: IAlumno[] = [];
+
+router.post((req, res)=>{
+const alumno: IAlumno = {
+        nombre: req.body.Nombre,
+        apellido: req.body.Apellido,
+        fecha_nac: req.body.Date,
+        ci: req.body.CI,
+        carrera: req.body.Carrera
+    } 
+    alumnos.push(alumno);
+    res.status(200).send("Usuario Creado")
+})
+
+*/ 
