@@ -1,33 +1,8 @@
 <div class="main-content">
-    <div class="crear-torneo-contenedor">
-      <div class="crear-torneo-subcontenedor">
-        <div class="form-group">
-          <label for="nombreTorneo">Ingresar Nombre</label>
-          <input id="nombreTorneo" type="text" class="form-control">
+    <div class="login-contenedor">
+      <div class="login-subcontenedor">
+          <h1>TORNEO CREADO CON EXITO</h1>
+          <button (click)="navigateToOpcionesAdmin()" class="inicio-boton registrar" style="width:auto;">Aceptar</button>
         </div>
-        <div class="form-group">
-          <label for="logoTorneo">Ingresar Logo</label>
-          <input id="logoTorneo" type="file" class="form-control">
-        </div>
-        <div class="equipo-form-group">
-          <label for="nombreEquipo">Nombre Equipo</label>
-          <input id="nombreEquipo" type="text" class="form-control">
-          <label for="escudoEquipo">Adjuntar Escudo o Bandera</label>
-          <input id="escudoEquipo" type="file" class="form-control">
-          <button (click)="agregarEquipo()" class="btn-agregar inicio-boton">Agregar</button>
-        </div>
-        <div class="lista-equipos">
-          <div class="equipo" *ngFor="let equipo of equipos">
-            <span>{{ equipo.nombre }}</span>
-            <img [src]="equipo.bandera" alt="Bandera" class="bandera">
-            <button (click)="eliminarEquipo(equipo)" class="btn-eliminar inicio-boton">X</button>
-          </div>
-        </div>
-        <div class="botones">
-          <button (click)="cancelar()" class="btn-cancelar inicio-boton">Cancelar</button>
-          <button (click)="crearTorneo()" class="btn-crear inicio-boton">Crear</button>
-        </div>
-      </div>
     </div>
   </div>
-  

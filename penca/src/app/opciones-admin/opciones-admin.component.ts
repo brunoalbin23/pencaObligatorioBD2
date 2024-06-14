@@ -16,7 +16,7 @@ export class OpcionesAdminComponent {
     this.router.navigate(['/creacion-torneo']);
   }
 
-  navigateToActualizarTorneo() {
-    this.router.navigate(['/actualizacion-torneo']);
+  navigateToSeleccionarTorneo() {
+    this.router.navigate(['/seleccionar-torneo']);
   }
 }
