@@ -36,28 +36,45 @@
   </div>
 
   <div id="id02" class="login-box" [ngClass]="{'show': bandera2}">
-    <form>
-      <button class="button-cruz"(click)="closeForm2()">
+    <form (ngSubmit)="onSubmit()">
+      <button class="button-cruz" (click)="closeForm2()">
         <span class="X"></span>
         <span class="Y"></span>
       </button>
       <div class="user-box">
-        <input type="text" name="" required="">
+        <input type="text" [(ngModel)]="registro.cedula" name="cedula" required>
+        <label>Cédula</label>
+      </div>
+      <div class="user-box">
+        <input type="text" [(ngModel)]="registro.nombre" name="nombre" required>
+        <label>Nombre</label>
+      </div>
+      <div class="user-box">
+        <input type="text" [(ngModel)]="registro.apellido" name="apellido" required>
+        <label>Apellido</label>
+      </div>
+      <div class="user-box">
+        <input type="text" [(ngModel)]="registro.fechaNacimiento" name="fechaNacimiento" required>
+        <label>Fecha de Nacimiento</label>
+      </div>
+      <div class="user-box">
+        <input type="text" [(ngModel)]="registro.usuario" name="usuario" required>
         <label>Usuario</label>
       </div>
       <div class="user-box">
-        <input type="password" name="" required="">
+        <input type="password" [(ngModel)]="registro.contrasena" name="contrasena" required>
         <label>Contraseña</label>
       </div>
       <div class="user-box">
-        <input type="password" name="" required="">
+        <input type="password" [(ngModel)]="registro.confirmarContrasena" name="confirmarContrasena" required>
         <label>Confirmar contraseña</label>
       </div>
       <div class="zona-boton-send">
-        <button (click)="navigateToPrediccionRegistro()" class="inicio-boton">
+        <button type="submit" class="inicio-boton">
           REGISTRARSE
-        <span></span>
+          <span></span>
         </button>
       </div>
     </form>
   </div>
+  

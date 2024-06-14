@@ -1,16 +1,19 @@
 USE Obligatorio;
 
-CREATE TABLE Usuario (id VARCHAR(30) NOT NULL,
+CREATE TABLE Usuario (
+id VARCHAR(30) NOT NULL,
 contrasenia VARCHAR(30),
 PRIMARY KEY (id)
 );
 
-CREATE TABLE Admin (id VARCHAR(30) NOT NULL,
+CREATE TABLE Admin (
+id VARCHAR(30) NOT NULL,
 PRIMARY KEY (id),
 FOREIGN KEY (id) REFERENCES Usuario(id)
 );
 
-CREATE TABLE Alumno (id VARCHAR(30) NOT NULL,
+CREATE TABLE Alumno (
+id VARCHAR(30) NOT NULL,
 nombre VARCHAR(30) NOT NULL,
 apellido VARCHAR(30) NOT NULL,
 fecha_nac DATE NOT NULL,
@@ -19,12 +22,14 @@ PRIMARY KEY (id),
 FOREIGN KEY (id) REFERENCES Usuario(id)
 );
 
-CREATE TABLE Carrera (id VARCHAR(30) NOT NULL,
+CREATE TABLE Carrera (
+id VARCHAR(30) NOT NULL,
 nombre VARCHAR(50) NOT NULL,
 PRIMARY KEY (id)
 );
 
-CREATE TABLE Alumno_Carrera (id_carrera VARCHAR(30) NOT NULL,
+CREATE TABLE Alumno_Carrera (
+id_carrera VARCHAR(30) NOT NULL,
 id_alumno VARCHAR(30) NOT NULL,
 fecha_inicio DATE NOT NULL,
 fecha_fin DATE,
@@ -33,19 +38,22 @@ FOREIGN KEY (id_carrera) REFERENCES Carrera(id),
 FOREIGN KEY (id_alumno) REFERENCES Alumno(id)
 );
 
-CREATE TABLE Equipo (nombre VARCHAR(30) NOT NULL,
+CREATE TABLE Equipo (
+nombre VARCHAR(30) NOT NULL,
 PRIMARY KEY (nombre)
 );
 
 
-CREATE TABLE Evento (nombre VARCHAR(50) NOT NULL,
+CREATE TABLE Evento 
+nombre VARCHAR(50) NOT NULL,
 anio SMALLINT NOT NULL,
 fecha_inicio DATE NOT NULL,
 fecha_fin DATE,
 PRIMARY KEY (nombre, anio)
 );
 
-CREATE TABLE Partido (nombre_eq1 VARCHAR(30) NOT NULL,
+CREATE TABLE Partido (
+nombre_eq1 VARCHAR(30) NOT NULL,
 nombre_eq2 VARCHAR(30) NOT NULL,
 fecha_hora DATETIME NOT NULL,
 goles_eq1 TINYINT,
@@ -58,7 +66,8 @@ FOREIGN KEY (nombre_eq2) REFERENCES Equipo(nombre),
 FOREIGN KEY (nombre_ev, anio_ev) REFERENCES Evento(nombre, anio)
 );
 
-CREATE TABLE Evento_Equipo (nombre_ev VARCHAR(50) NOT NULL,
+CREATE TABLE Evento_Equipo (
+nombre_ev VARCHAR(50) NOT NULL,
 anio_ev SMALLINT NOT NULL,
 nombre_eq VARCHAR(30) NOT NULL,
 posicion TINYINT,
@@ -67,7 +76,8 @@ FOREIGN KEY (nombre_ev, anio_ev) REFERENCES Evento(nombre, anio),
 FOREIGN KEY (nombre_eq) REFERENCES Equipo(nombre)
 );
 
-CREATE TABLE Prediccion_Evento_Equipo (id_alumno VARCHAR(30) NOT NULL,
+CREATE TABLE Prediccion_Evento_Equipo (
+id_alumno VARCHAR(30) NOT NULL,
 nombre_ev VARCHAR(50) NOT NULL,
 anio_ev SMALLINT NOT NULL,
 nombre_eq VARCHAR(30) NOT NULL,
@@ -79,7 +89,8 @@ FOREIGN KEY (nombre_ev, anio_ev, nombre_eq) REFERENCES Evento_Equipo(nombre_ev, 
 );
 
 
-CREATE TABLE Prediccion_Partido (id_alumno VARCHAR(30) NOT NULL,
+CREATE TABLE Prediccion_Partido (
+id_alumno VARCHAR(30) NOT NULL,
 nombre_eq1 VARCHAR(30) NOT NULL,
 nombre_eq2 VARCHAR(30) NOT NULL,
 fecha_hora_partido DATETIME NOT NULL,

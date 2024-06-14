@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
+
 import { LoginComponent } from './login/login.component';
 import { PrediccionRegistroComponent } from './prediccion-registro/prediccion-registro.component';
 import { SalaGeneralComponent } from './sala-general/sala-general.component';
@@ -17,15 +20,34 @@ import { ResultadoActualizadoComponent } from './resultado-actualizado/resultado
 import { PrediccionActualizadaComponent } from './prediccion-actualizada/prediccion-actualizada.component';
 import { PredecirResultadoComponent } from './predecir-resultado/predecir-resultado.component';
 import { SeleccionarTorneoComponent } from './seleccionar-torneo/seleccionar-torneo.component';
-import { CommonModule } from '@angular/common';
-import { appRoutes } from './app.routes';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [AppComponent, RouterOutlet, LoginComponent, PrediccionRegistroComponent, SalaGeneralComponent, OpcionesAdminComponent, ActualizacionTorneoComponent, CreacionTorneoComponent, AgregarEquipoComponent, IngresarPartidoComponent, ActualizarResultadoComponent, TorneoCreadoComponent, CommonModule, PartidoCreadoComponent, ActualizacionResultadoComponent, ActualizacionUnResultadoComponent, ResultadoActualizadoComponent, PrediccionActualizadaComponent, PredecirResultadoComponent, SeleccionarTorneoComponent],
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    RouterModule,
+    LoginComponent,
+    PrediccionRegistroComponent,
+    SalaGeneralComponent,
+    OpcionesAdminComponent,
+    ActualizacionTorneoComponent,
+    CreacionTorneoComponent,
+    AgregarEquipoComponent,
+    IngresarPartidoComponent,
+    ActualizarResultadoComponent,
+    TorneoCreadoComponent,
+    PartidoCreadoComponent,
+    ActualizacionResultadoComponent,
+    ActualizacionUnResultadoComponent,
+    ResultadoActualizadoComponent,
+    PrediccionActualizadaComponent,
+    PredecirResultadoComponent,
+    SeleccionarTorneoComponent,
+  ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   title = 'penca';

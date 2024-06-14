@@ -9,5 +9,5 @@ import { Router } from '@angular/router';
   styleUrl: './seleccionar-torneo.component.css'
 })
 export class SeleccionarTorneoComponent {
-
+  constructor(private router: Router) { }
 }

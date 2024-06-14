@@ -1,46 +1,39 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { RegistroService } from '../registro.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
   standalone: true,
-  imports: [CommonModule]
+  imports: [CommonModule, HttpClientModule]
 })
 
 export class LoginComponent {
-  bandera: boolean = false;
   bandera2: boolean = false;
+  registro = {
+    cedula: '',
+    nombre: '',
+    apellido: '',
+    fechaNacimiento: '',
+    usuario: '',
+    contrasena: '',
+    confirmarContrasena: ''
+  };
 
-  constructor(private router: Router) { }
+  constructor(private registroService: RegistroService) { }
 
-  navigateToPrediccionRegistro() {
-    this.router.navigate(['/prediccion-registro']);
-  }
-
-  navigateToSala() {
-    this.router.navigate(['/sala-general']);
-  }
-
-  setBanderaLogin() {
-    this.bandera = !this.bandera;
-  }
-
-  setBanderaRegistro() {
-    this.bandera2 = !this.bandera2;
-  }
-
-  ingresarAdmin() {
-    this.bandera = !this.bandera;
-  }
-
-  closeForm() {
-    this.bandera = !this.bandera;
+  onSubmit() {
+    this.registroService.registrarUsuario(this.registro).subscribe(response => {
+      console.log('Usuario registrado:', response);
+    }, error => {
+      console.error('Error al registrar el usuario:', error);
+    });
   }
 
   closeForm2() {
-    this.bandera2 = !this.bandera2;
+    this.bandera2 = false;
   }
 }
