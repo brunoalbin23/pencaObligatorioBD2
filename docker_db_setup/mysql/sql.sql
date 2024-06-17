@@ -10,13 +10,12 @@ PRIMARY KEY (id),
 FOREIGN KEY (id) REFERENCES Usuario(id)
 );
 
-CREATE TABLE Alumno (id VARCHAR(30) NOT NULL,
+CREATE TABLE Alumno (CI VARCHAR(30) NOT NULL,
 nombre VARCHAR(30) NOT NULL,
 apellido VARCHAR(30) NOT NULL,
 fecha_nac DATE NOT NULL,
-cedula INT NOT NULL UNIQUE,
-PRIMARY KEY (id),
-FOREIGN KEY (id) REFERENCES Usuario(id)
+PRIMARY KEY (CI),
+FOREIGN KEY (CI) REFERENCES Usuario(id)
 );
 
 CREATE TABLE Carrera (id VARCHAR(30) NOT NULL,
@@ -25,12 +24,12 @@ PRIMARY KEY (id)
 );
 
 CREATE TABLE Alumno_Carrera (id_carrera VARCHAR(30) NOT NULL,
-id_alumno VARCHAR(30) NOT NULL,
+CI VARCHAR(30) NOT NULL,
 fecha_inicio DATE NOT NULL,
 fecha_fin DATE,
-PRIMARY KEY (id_carrera, id_alumno),
+PRIMARY KEY (id_carrera, CI),
 FOREIGN KEY (id_carrera) REFERENCES Carrera(id),
-FOREIGN KEY (id_alumno) REFERENCES Alumno(id)
+FOREIGN KEY (CI) REFERENCES Alumno(CI)
 );
 
 CREATE TABLE Equipo (nombre VARCHAR(30) NOT NULL,
@@ -45,6 +44,11 @@ fecha_fin DATE,
 PRIMARY KEY (nombre, anio)
 );
 
+CREATE TABLE Estadio (id VARCHAR(30) NOT NULL,
+nombre VARCHAR(50) NOT NULL,
+PRIMARY KEY(id)
+);
+
 CREATE TABLE Partido (nombre_eq1 VARCHAR(30) NOT NULL,
 nombre_eq2 VARCHAR(30) NOT NULL,
 fecha_hora DATETIME NOT NULL,
@@ -52,9 +56,11 @@ goles_eq1 TINYINT,
 goles_eq2 TINYINT,
 nombre_ev VARCHAR(50) NOT NULL,
 anio_ev SMALLINT NOT NULL,
+id_estadio VARCHAR(30) NOT NULL,
 PRIMARY KEY (nombre_eq1, nombre_eq2, fecha_hora),
 FOREIGN KEY (nombre_eq1) REFERENCES Equipo(nombre),
 FOREIGN KEY (nombre_eq2) REFERENCES Equipo(nombre),
+FOREIGN KEY (id_estadio) REFERENCES Estadio(id),
 FOREIGN KEY (nombre_ev, anio_ev) REFERENCES Evento(nombre, anio)
 );
 
@@ -67,19 +73,20 @@ FOREIGN KEY (nombre_ev, anio_ev) REFERENCES Evento(nombre, anio),
 FOREIGN KEY (nombre_eq) REFERENCES Equipo(nombre)
 );
 
-CREATE TABLE Prediccion_Evento_Equipo (id_alumno VARCHAR(30) NOT NULL,
+CREATE TABLE Prediccion_Evento_Equipo (CI VARCHAR(30) NOT NULL,
 nombre_ev VARCHAR(50) NOT NULL,
 anio_ev SMALLINT NOT NULL,
 nombre_eq VARCHAR(30) NOT NULL,
-prediccion TINYINT,
-PRIMARY KEY (id_alumno, nombre_ev, anio_ev, nombre_eq),
+prediccion TINYINT NOT NULL,
+puntaje TINYINT,
+PRIMARY KEY (CI, nombre_ev, anio_ev, nombre_eq),
 CONSTRAINT UC1 UNIQUE (nombre_ev, anio_ev, prediccion),
-FOREIGN KEY (id_alumno) REFERENCES Alumno(id),
+FOREIGN KEY (CI) REFERENCES Alumno(CI),
 FOREIGN KEY (nombre_ev, anio_ev, nombre_eq) REFERENCES Evento_Equipo(nombre_ev, anio_ev, nombre_eq)
 );
 
 
-CREATE TABLE Prediccion_Partido (id_alumno VARCHAR(30) NOT NULL,
+CREATE TABLE Prediccion_Partido (CI VARCHAR(30) NOT NULL,
 nombre_eq1 VARCHAR(30) NOT NULL,
 nombre_eq2 VARCHAR(30) NOT NULL,
 fecha_hora_partido DATETIME NOT NULL,
@@ -87,7 +94,7 @@ fecha_hora_prediccion DATETIME,
 prediccion_eq1 TINYINT,
 prediccion_eq2 TINYINT,
 puntaje TINYINT,
-PRIMARY KEY (id_alumno, nombre_eq1, nombre_eq2, fecha_hora_partido),
-FOREIGN KEY (id_alumno) REFERENCES Alumno(id),
+PRIMARY KEY (CI, nombre_eq1, nombre_eq2, fecha_hora_partido),
+FOREIGN KEY (CI) REFERENCES Alumno(CI),
 FOREIGN KEY (nombre_eq1, nombre_eq2, fecha_hora_partido) REFERENCES Partido(nombre_eq1, nombre_eq2, fecha_hora)
 );
