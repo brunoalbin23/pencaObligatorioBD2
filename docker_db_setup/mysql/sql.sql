@@ -26,7 +26,7 @@ PRIMARY KEY (id)
 CREATE TABLE Alumno_Carrera (id_carrera VARCHAR(30) NOT NULL,
 CI VARCHAR(30) NOT NULL,
 fecha_act DATE NOT NULL,
-PRIMARY KEY (id_carrera, CI),
+PRIMARY KEY (id_carrera, CI, fecha_act),
 FOREIGN KEY (id_carrera) REFERENCES Carrera(id),
 FOREIGN KEY (CI) REFERENCES Alumno(CI)
 );
