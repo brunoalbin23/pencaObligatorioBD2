@@ -1,178 +1,67 @@
-/*import express from 'express'
-import actividad from './Actividad';
-import usuario from '..';
-import { stringify } from 'qs';
-const router = express.Router();
+/*import express, { Request, Response } from 'express';
+import bodyParser from 'body-parser';
+import connection from './db';
 
-//TERMINA EL INICIO
-//ARRANCA LA CLASE
+const app = express();
+const port = 3000;
 
-//Crear Actividad
-router.post('/activity',(req,res)=>{
-  let activity: actividad = {
-    title : req.body.title,
-    description : req.body.description,
-    image : req.body.image
+app.use(bodyParser.json());
 
-  }
-  const nuevaActividad = usuario.activities.find((actividad) => actividad.title == req.body.title);
-  if(nuevaActividad) {
-    res.status(200).send('La Actividad que intenta agregar ya existe')
-  }
-  else {
-    usuario.activities.push(activity)
-    res.status(200).send('Actividad creada exitosamente')
-    //res.status(200).send('Actividad creada exitosamente \n '+ JSON.stringify(usuario.activities))
-
-  }
-});
-
-
-//Mostrar actividades
-/*router.get('/activity', (req, res) => {
-  const actividades = usuario.activities;
-  if (actividades.length > 0) {
-    res.status(200).json(actividades); // Enviar o en este caso seria mostrar las actividades como respuesta en formato JSON
-  } else {
-    res.status(400).send('No hay actividades disponibles'); // Aca no se si es error 200 o 400
-  }
-});
-*/
-/*
-//Mostrar Actividades 2
-router.get('/activity', (req, res) => {
-  const actividades = usuario.activities;
-  if (actividades.length > 0) {
-    // Construir un mensaje legible para mostrar las actividades
-    const actividadesFormatted = actividades.map((actividad, index) => {
-      return `Actividad ${index + 1}:
-        Título: ${actividad.title}
-        Descripción: ${actividad.description}
-        Imagen: ${actividad.image ? actividad.image : 'No disponible'}
-        ----------------------------`;
-    }).join('\n');
-
-    const mensaje = `Actividades disponibles:\n${actividadesFormatted}`;
-    res.status(200).send(mensaje);
-  } else {
-    res.status(200).send('No hay actividades disponibles');
-  }
-});
-
-
-//Crear Propuesta
-router.post('/crearPropuesta',(req,res) =>{
-  let propuesta = {
-    propuesta:req.body.propuesta
-  }
-  
-  let todoOk= true
-  console.log("EL REQ BODY es: "+req.body.propuesta + "\n")
-  let texto = req.body.propuesta
-  const texto3= stringify(propuesta.propuesta)
-  texto3.trim()
-  //const texto2= req.body.propuesta
-  //console.log(texto+'  ESTO ES LO QUE PARSEO Y QUEDA ASÍ: \n')
-  //console.log('texto 1: '+texto)
-  //console.log(texto2)
-  let texto2 = JSON.stringify(req.body.propuesta)
-  console.log("1")
-  console.log(texto)
-  console.log("2")
-  console.log(texto2)
-  console.log("3")
-  console.log(texto3)
-  texto2=texto2.trim()
-  const propuestas = texto2.split(',')
-  console.log(propuestas)
-  const lista: actividad[]=[]
-  //console.log(stringify(propuestas))
-  propuestas.forEach((propuestaTitulo) => {
-    const actividadEncontrada = usuario.activities.find((actividad) => actividad.title === propuestaTitulo);
-    if (actividadEncontrada) {
-      lista.push(actividadEncontrada);
+// Función para verificar si el nombre de usuario ya existe
+const isUsernameTaken = async (username: string): Promise<boolean> => {
+  try {
+    const conn = await connection;
+    const [rows] = await conn.execute('SELECT COUNT(*) AS count FROM usuario WHERE username = ?', [username]);
+    const count = (rows as any)[0].count;
+    return count > 0;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      throw new Error('Error desconocido al verificar el nombre de usuario');
     }
-    else {
-      todoOk= false
-      res.status(400).send('La actividad '+(propuestaTitulo)+ ' no se encontro')
+  }
+};
+
+// Función para insertar un nuevo usuario
+const createUser = async (username: string, password: string): Promise<void> => {
+  try {
+    const conn = await connection;
+    await conn.execute('INSERT INTO usuario (username, password) VALUES (?, ?)', [username, password]);
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      throw new Error('Error desconocido al crear el usuario');
     }
-  });
-  if(todoOk){
-    usuario.propuestas.push(lista)
-    res.send('Propuesta creada con exito '+stringify(lista))
+  }
+};
+
+// Endpoint para crear un nuevo usuario
+app.post('/usuarios', async (req: Request, res: Response) => {
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res.status(400).json({ error: 'Username and password are required' });
   }
 
-});
+  try {
+    const usernameTaken = await isUsernameTaken(username);
+    if (usernameTaken) {
+      return res.status(409).json({ error: 'Username already in use' });
+    }
 
-  
-//Mostrar Propuestas
-router.get('/propuestas', (req, res) => {
-  const propuestas = usuario.propuestas;
-
-  if (propuestas.length > 0) {
-    let mensaje = 'Propuestas disponibles:\n';
-
-    propuestas.forEach((lista, index) => {
-      mensaje += `Lista ${index + 1}:\n`;
-
-      lista.forEach((actividad, actividadIndex) => {
-        mensaje += `Actividad ${actividadIndex + 1}:\n`;
-        mensaje += `  Título: ${actividad.title}\n`;
-        mensaje += `  Descripción: ${actividad.description}\n`;
-        mensaje += `  Imagen: ${actividad.image ? actividad.image : 'No disponible'}\n`;
-        mensaje += '-----------------\n';
-      });
-    });
-
-    res.status(200).send(mensaje);
-  } else {
-    res.status(200).send('No hay propuestas disponibles');
+    await createUser(username, password);
+    res.status(201).json({ message: 'User created successfully' });
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(500).json({ error: error.message });
+    } else {
+      res.status(500).json({ error: 'Unknown error' });
+    }
   }
 });
 
-  
-
-
-
-
-  
-  
-
-  
-
-  export default router;//sino pongo esto luego no puedo exportar admin*/
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+app.listen(port, () => {
+  console.log(`Servidor corriendo en http://localhost:${port}`);
+});*/
