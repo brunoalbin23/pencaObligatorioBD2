@@ -112,7 +112,7 @@
     position: absolute;
     top: 45%;
     left: 47%;
-    width: 250px;
+    width: 300px;
     padding: 30px;
     margin: 50px;  
     transform: translate(-50%, -50%);
@@ -251,7 +251,7 @@
     position: relative;
     width: 3em;
     height: 3em;
-    margin-left: 150px;
+    margin-left: 200px;
     border: none;
     background: rgb(211, 21, 21);
     border-radius: 5px;
@@ -317,7 +317,38 @@
       opacity: 1;
     }
   }
-  
 
+  .user-box input[type="text"],
+.user-box input[type="date"] {
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #fff;
+  border: none;
+  border-bottom: 1px solid #fff;
+  outline: none;
+  background: transparent;
+  margin-top: 20px;
+}
 
-  
+.user-box label,
+.user-box .date-label {
+  position: absolute;
+  top: -20px;
+  left: 0;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #fff;
+  pointer-events: none;
+  transition: 0.5s;
+}
+
+.user-box input:focus ~ label,
+.user-box input:valid ~ label,
+.user-box input:focus ~ .date-label,
+.user-box input:valid ~ .date-label {
+  top: -40px;
+  left: 0;
+  color: #bdb8b8;
+  font-size: 12px;
+}
