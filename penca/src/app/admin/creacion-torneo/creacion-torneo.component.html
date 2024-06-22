@@ -1,9 +1,15 @@
 <div class="main-content">
   <div class="crear-torneo-contenedor">
     <div class="crear-torneo-subcontenedor">
-      <div class="form-group">
-        <label for="nombreTorneo">Ingresar nombre del torneo</label>
-        <input id="nombreTorneo" [(ngModel)]="nombreTorneo" type="text" class="form-control">
+      <div class="form-general">
+        <div class="form-group">
+          <label for="nombreTorneo">Ingresar nombre del torneo</label>
+          <input id="nombreTorneo" [(ngModel)]="nombreTorneo" type="text" class="form-control form-control2">
+        </div>
+        <div class="form-group">
+          <label for="ano">Ingresar el año del torneo</label>
+          <input id="anoTorneo" [(ngModel)]="anoTorneo" type="text" class="form-control form-control2">
+        </div>
       </div>
       <div class="equipo-form-group">
         <label for="nombreEquipo">Nombre Equipo</label>

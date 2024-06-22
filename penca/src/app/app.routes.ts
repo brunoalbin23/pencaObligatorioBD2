@@ -19,6 +19,9 @@ import { PredecirResultadoComponent } from './usuario/predecir-resultado/predeci
 import { SeleccionarTorneoComponent } from './admin/seleccionar-torneo/seleccionar-torneo.component';
 import { ElegirTorneoComponent } from './usuario/elegir-torneo/elegir-torneo.component';
 import { ActualizacionTorneoFinalComponent } from './actualizacion-torneo-final/actualizacion-torneo-final.component';
+import { RankingComponent } from './ranking/ranking.component';
+import { FinalizadosComponent } from './finalizados/finalizados.component';
+import { ProximosComponent } from './proximos/proximos.component';
 
 export const appRoutes: Routes = [
   { path: '', component: LoginComponent },
@@ -40,5 +43,8 @@ export const appRoutes: Routes = [
   { path: 'predecir-resultado', component: PredecirResultadoComponent},
   { path: 'seleccionar-torneo', component: SeleccionarTorneoComponent},
   { path: 'elegir-torneo', component: ElegirTorneoComponent},
-  { path: 'actualizacion-torneo-final', component: ActualizacionTorneoFinalComponent}
+  { path: 'actualizacion-torneo-final', component: ActualizacionTorneoFinalComponent},
+  { path: 'ranking', component: RankingComponent},
+  { path: 'finalizados', component: FinalizadosComponent},
+  { path: 'proximos', component: ProximosComponent}
 ];

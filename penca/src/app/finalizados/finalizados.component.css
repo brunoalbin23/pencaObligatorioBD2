@@ -1,0 +1,106 @@
+.login-contenedor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    position: relative;
+  }
+  
+  .login-subcontenedor {
+    width: 70%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+    background-color: black;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 50px;
+    transition: transform 0.5s ease;
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 10px;
+  }
+  
+  .boton-exit {
+    position: absolute;
+    left: 10px;
+  }
+  
+  .titulo-ran {
+    margin: 0;
+  }
+  
+  .lista-partidos {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .partido {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .equipo-nombres {
+    flex: 1;
+  }
+  
+  .fecha {
+    flex: 0 0 150px;
+    text-align: right;
+  }
+  
+  .btn-actualizar {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .btn-actualizar:hover {
+    background-color: #45a049;
+  }
+
+  button {
+    padding: 10px 20px;
+    background-color: rgba(0, 0, 0, 0);
+    border-color: white;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+ 
+  .inicio-boton {
+    color: #ffffff;
+    font-size: 16px;
+    text-decoration: none;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: .5s;
+    letter-spacing: 4px
+  }
+  
+  .inicio-boton:hover{
+    background: #3a3ae3;
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #3a3ae3,
+                0 0 25px #3a3ae3,
+                0 0 50px #3a3ae3,
+                0 0 100px #3a3ae3;
+  }
+  

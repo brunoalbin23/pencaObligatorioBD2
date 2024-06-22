@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -11,7 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
   standalone: true,
-  imports: [CommonModule, MatDatepickerModule, MatNativeDateModule, MatInputModule, MatFormFieldModule]
+  imports: [FormsModule, CommonModule, MatDatepickerModule, MatNativeDateModule, MatInputModule, MatFormFieldModule]
 })
 
 export class LoginComponent {
@@ -75,7 +76,7 @@ export class LoginComponent {
 
   //Esto por ahora esta con numeros, la idea es q despues sean nombres de las carreras extraidos de la base de datos del torneo
   selectedNumber: number | null = null;
-  numbers: number[] = Array.from({ length: 20 }, (_, i) => i + 1);
+  numbers: number[] = Array.from({ length: 5 }, (_, i) => i + 1);
 
   selectNumber(num: number) {
     this.selectedNumber = num;

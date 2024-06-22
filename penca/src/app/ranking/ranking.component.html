@@ -1,0 +1,16 @@
+<div class="login-contenedor">
+    <div class="login-subcontenedor">
+        <div class="header">
+            <button (click)="navigateToSala()" class="boton-exit inicio-boton registrar">Volver</button>
+            <h2 class="titulo-ran">Ranking</h2>
+          </div>
+      <div class="lista-personas">
+        <div class="persona" *ngFor="let persona of personas">
+          <span class="nombre">{{ persona.nombre }} {{ persona.apellido }}</span>
+          <span class="puntaje">{{ persona.puntaje }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  

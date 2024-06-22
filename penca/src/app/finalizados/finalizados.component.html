@@ -1,0 +1,17 @@
+<div class="login-contenedor">
+    <div class="login-subcontenedor">
+      <div class="header">
+        <button (click)="navigateToSala()" class="boton-exit inicio-boton registrar">Volver</button>
+        <h2 class="titulo-ran">Partidos Finalizados</h2>
+      </div>
+      <div class="lista-partidos">
+        <div class="partido" *ngFor="let partido of partidos">
+          <div class="equipo-nombres">
+            <span class="equipo">{{ partido.equipo1 }} vs {{ partido.equipo2 }}</span>
+            <span class="fecha">{{ partido.fecha | date: 'dd/MM/yyyy HH:mm' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

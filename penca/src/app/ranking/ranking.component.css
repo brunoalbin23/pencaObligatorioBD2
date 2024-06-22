@@ -1,0 +1,107 @@
+  
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 10px;
+  }
+  
+  .boton-exit {
+    position: absolute;
+    left: 10px; /* Ajusta esto según el espaciado que desees desde el borde izquierdo */
+  }
+  
+  .titulo-ran {
+    margin: 0;
+  }
+
+  .ranking-contenedor {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 400px;
+  }
+  
+  .lista-personas {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .persona {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .puntaje {
+    flex: 0 0 50px;
+    text-align: right;
+  }
+  
+  
+  .login-contenedor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    position: relative;
+  }
+  
+  body {
+    margin: 0;
+    height: 100vh;
+    font-family: system-ui, sans-serif;
+  }
+  
+  .login-subcontenedor {
+    width: 70%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+    background-color: black;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 50px;
+    transition: transform 0.5s ease;
+  }
+
+  button {
+    padding: 10px 20px;
+    background-color: rgba(0, 0, 0, 0);
+    border-color: white;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+ 
+  .inicio-boton {
+    color: #ffffff;
+    font-size: 16px;
+    text-decoration: none;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: .5s;
+    letter-spacing: 4px
+  }
+  
+  .inicio-boton:hover{
+    background: #3a3ae3;
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #3a3ae3,
+                0 0 25px #3a3ae3,
+                0 0 50px #3a3ae3,
+                0 0 100px #3a3ae3;
+  }
+  
+  
+  

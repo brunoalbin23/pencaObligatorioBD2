@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class CreacionTorneoComponent {
   nombreTorneo: string = '';
+  anoTorneo: string = '';
   nombreEquipo: string = '';
   equipos: { id: number, nombre: string }[] = []; 
 

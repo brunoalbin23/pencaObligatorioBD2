@@ -1,82 +1,73 @@
-.main-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-  }
-  
-  .volver-boton {
-    background-color: pink;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-bottom: 20px;
-  }
-  
-  .control-buttons {
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-    max-width: 600px;
-    margin-bottom: 20px;
-  }
-  
-  .control-buttons button {
-    background-color: #444;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100%;
-    margin: 0 5px;
-  }
-  
-  .control-buttons button.active {
-    background-color: #3a3ae3;
-  }
-  
-  .content {
-    width: 100%;
-    max-width: 600px;
-  }
-  
-  .view {
-    background-color: #1e1e1e;
-    border-radius: 10px;
-    padding: 20px;
-  }
-  
-  .view div {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #333;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-  }
-  
-  .action-button {
-    background-color: green;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .login-subcontenedor {
-    display: flex;
-    width: 70%;
-    height: 70%;
-    flex-direction: column;
-    align-items: center;
-    padding: 50px;
-    background-color: black;
-    background: rgba(0, 0, 0, 0.6);
-    border-radius: 50px;
-    transition: transform 0.5s ease;
-  }
+.login-contenedor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  position: relative;
+}
+
+body {
+  display: grid;
+  place-content: center;
+  margin: 0;
+  height: 100vh;
+  font-family: system-ui, sans-serif;
+}
+
+.login-subcontenedor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px;
+  background-color: black;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 50px;
+  transition: transform 0.5s ease;
+}
+
+.login-subcontenedor:hover {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: black;
+  background: rgba(0, 0, 0, 0.6);
+  transform: scale(1.1);
+}
+
+button {
+  padding: 10px 20px;
+  background-color: rgba(0, 0, 0, 0);
+  border-color: white;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.registrar {
+  margin-top: 50px;
+}
+
+.inicio-boton {
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  color: #ffffff;
+  font-size: 16px;
+  text-decoration: none;
+  text-transform: uppercase;
+  overflow: hidden;
+  transition: .5s;
+  letter-spacing: 4px
+}
+
+.inicio-boton:hover{
+  background: #3a3ae3;
+  color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 5px #3a3ae3,
+              0 0 25px #3a3ae3,
+              0 0 50px #3a3ae3,
+              0 0 100px #3a3ae3;
+}

@@ -19,6 +19,9 @@ import { PredecirResultadoComponent } from './usuario/predecir-resultado/predeci
 import { SeleccionarTorneoComponent } from './admin/seleccionar-torneo/seleccionar-torneo.component';
 import { ElegirTorneoComponent } from './usuario/elegir-torneo/elegir-torneo.component';
 import { ActualizacionTorneoFinalComponent } from './actualizacion-torneo-final/actualizacion-torneo-final.component';
+import { FinalizadosComponent } from './finalizados/finalizados.component';
+import { ProximosComponent } from './proximos/proximos.component';
+import { RankingComponent } from './ranking/ranking.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
@@ -28,7 +31,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [ActualizacionTorneoFinalComponent, ElegirTorneoComponent, MatDatepickerModule, MatNativeDateModule, MatInputModule, MatFormFieldModule, AppComponent, RouterOutlet, LoginComponent, PrediccionRegistroComponent, SalaGeneralComponent, OpcionesAdminComponent, ActualizacionTorneoComponent, CreacionTorneoComponent, AgregarEquipoComponent, IngresarPartidoComponent, ActualizarResultadoComponent, TorneoCreadoComponent, CommonModule, PartidoCreadoComponent, ActualizacionResultadoComponent, ActualizacionUnResultadoComponent, ResultadoActualizadoComponent, PrediccionActualizadaComponent, PredecirResultadoComponent, SeleccionarTorneoComponent],
+  imports: [RankingComponent, FinalizadosComponent, ProximosComponent, ActualizacionTorneoFinalComponent, ElegirTorneoComponent, MatDatepickerModule, MatNativeDateModule, MatInputModule, MatFormFieldModule, AppComponent, RouterOutlet, LoginComponent, PrediccionRegistroComponent, SalaGeneralComponent, OpcionesAdminComponent, ActualizacionTorneoComponent, CreacionTorneoComponent, AgregarEquipoComponent, IngresarPartidoComponent, ActualizarResultadoComponent, TorneoCreadoComponent, CommonModule, PartidoCreadoComponent, ActualizacionResultadoComponent, ActualizacionUnResultadoComponent, ResultadoActualizadoComponent, PrediccionActualizadaComponent, PredecirResultadoComponent, SeleccionarTorneoComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

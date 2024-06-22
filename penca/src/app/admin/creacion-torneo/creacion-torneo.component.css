@@ -179,3 +179,7 @@
     background-color: #e91e63;
   }
   
+  .form-general {
+    display: flex;
+    flex-direction: row;
+  }

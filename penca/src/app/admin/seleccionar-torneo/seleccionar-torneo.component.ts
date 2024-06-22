@@ -31,7 +31,7 @@ export class SeleccionarTorneoComponent {
 
   //Esto por ahora esta con numeros, la idea es q despues sean nombres de paises o cuadros extraidos de la base de datos del torneo
   selectedNumber: number | null = null;
-  numbers: number[] = Array.from({ length: 20 }, (_, i) => i + 1);
+  numbers: number[] = Array.from({ length: 10 }, (_, i) => i + 1);
 
   selectNumber(num: number) {
     this.selectedNumber = num;
