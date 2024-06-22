@@ -13,13 +13,13 @@ import { FormsModule } from '@angular/forms';
 export class CreacionTorneoComponent {
   nombreTorneo: string = '';
   nombreEquipo: string = '';
-  equipos: { id: number, nombre: string }[] = []; // Añade un identificador único
+  equipos: { id: number, nombre: string }[] = []; 
 
   constructor(private router: Router) { }
 
   agregarEquipo() {
     if (this.nombreEquipo) {
-      const id = new Date().getTime(); // Usamos timestamp como id único
+      const id = new Date().getTime(); 
       this.equipos.push({ id, nombre: this.nombreEquipo });
       this.nombreEquipo = '';
     }

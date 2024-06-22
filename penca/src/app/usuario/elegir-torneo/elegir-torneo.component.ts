@@ -17,7 +17,7 @@ export class ElegirTorneoComponent {
   constructor(private router: Router) { }
 
   navigateToSala() {
-    this.router.navigate(['/sala-general']);
+    this.router.navigate(['/prediccion-registro']);
   }
 
   openModal(inputId: string) {

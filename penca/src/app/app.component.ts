@@ -18,6 +18,7 @@ import { PrediccionActualizadaComponent } from './usuario/prediccion-actualizada
 import { PredecirResultadoComponent } from './usuario/predecir-resultado/predecir-resultado.component';
 import { SeleccionarTorneoComponent } from './admin/seleccionar-torneo/seleccionar-torneo.component';
 import { ElegirTorneoComponent } from './usuario/elegir-torneo/elegir-torneo.component';
+import { ActualizacionTorneoFinalComponent } from './actualizacion-torneo-final/actualizacion-torneo-final.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
@@ -27,7 +28,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [ElegirTorneoComponent, MatDatepickerModule, MatNativeDateModule, MatInputModule, MatFormFieldModule, AppComponent, RouterOutlet, LoginComponent, PrediccionRegistroComponent, SalaGeneralComponent, OpcionesAdminComponent, ActualizacionTorneoComponent, CreacionTorneoComponent, AgregarEquipoComponent, IngresarPartidoComponent, ActualizarResultadoComponent, TorneoCreadoComponent, CommonModule, PartidoCreadoComponent, ActualizacionResultadoComponent, ActualizacionUnResultadoComponent, ResultadoActualizadoComponent, PrediccionActualizadaComponent, PredecirResultadoComponent, SeleccionarTorneoComponent],
+  imports: [ActualizacionTorneoFinalComponent, ElegirTorneoComponent, MatDatepickerModule, MatNativeDateModule, MatInputModule, MatFormFieldModule, AppComponent, RouterOutlet, LoginComponent, PrediccionRegistroComponent, SalaGeneralComponent, OpcionesAdminComponent, ActualizacionTorneoComponent, CreacionTorneoComponent, AgregarEquipoComponent, IngresarPartidoComponent, ActualizarResultadoComponent, TorneoCreadoComponent, CommonModule, PartidoCreadoComponent, ActualizacionResultadoComponent, ActualizacionUnResultadoComponent, ResultadoActualizadoComponent, PrediccionActualizadaComponent, PredecirResultadoComponent, SeleccionarTorneoComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

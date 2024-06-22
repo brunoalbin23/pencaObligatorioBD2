@@ -1,1 +1,54 @@
-<p>ingresar-partido works!</p>
+<div class="main-content">
+    <div class="crear-torneo-contenedor">
+      <div class="crear-torneo-subcontenedor">
+        <div class="contenedor-predecir-campeon">
+          <label class="nombre-tit" for="tipoPartido"><b>Ingrese el tipo de partido</b></label>
+          <input id="tipoPartido" [(ngModel)]="tipoPartido" class="inputs" type="text" name="tipoPartido">
+        </div>
+        <div class="contenedor-predecir-campeon">
+          <label class="nombre-tit" for="equipo1"><b>Ingrese el equipo 1</b></label>
+          <input id="equipo1" [(ngModel)]="nombreEquipo1" class="inputs" type="text" name="equipo1" disabled>
+          <button type="button" (click)="openModal('equipo1')" class="inicio-boton">Seleccionar</button>
+        </div>
+        <div class="contenedor-predecir-subcampeon">
+          <label class="nombre-tit" for="equipo2"><b>Ingrese el equipo 2</b></label>
+          <input id="equipo2" [(ngModel)]="nombreEquipo2" class="inputs" type="text" name="equipo2" disabled>
+          <button type="button" (click)="openModal('equipo2')" class="inicio-boton">Seleccionar</button>
+        </div>
+        <div class="contenedor-predecir-campeon">
+          <label class="nombre-tit" for="fecha"><b>Ingrese la fecha del partido</b></label>
+          <input id="fecha" [(ngModel)]="fecha" class="inputs" type="datetime-local" name="fecha">
+        </div>
+        <div class="contenedor-predecir-campeon">
+          <label class="nombre-tit" for="estadio"><b>Seleccione el estadio</b></label>
+          <input id="estadio" [(ngModel)]="estadio" class="inputs" type="text" name="estadio" disabled>
+          <button type="button" (click)="openModal('estadio')" class="inicio-boton">Seleccionar</button>
+        </div>
+        <div class="botones">
+          <button (click)="cancelar()" class="btn-cancelar inicio-boton">Volver</button>
+          <button (click)="crearTorneo()" class="btn-crear inicio-boton">Agregar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div id="id01" class="login-box" [ngClass]="{'show': bandera}">
+    <form>
+      <button class="button-close" (click)="closeForm()" type="button">
+        <span class="X"></span>
+        <span class="Y"></span>
+      </button>
+      <div class="user-box">
+        <!-- Por ahora esto con numeros, la idea dsp q sean paises extraidos de la base de datos -->
+        <div class="number-grid">
+          <div class="number-item" *ngFor="let num of numbers" [class.selected]="selectedNumber === num" (click)="selectNumber(num)">
+            {{ num }}
+          </div>
+        </div>
+      </div>
+      <div class="zona-boton-send">
+        <button class="save-btn" (click)="saveSelectedNumber()" type="button">Guardar</button>
+      </div>
+    </form>
+  </div>
+  

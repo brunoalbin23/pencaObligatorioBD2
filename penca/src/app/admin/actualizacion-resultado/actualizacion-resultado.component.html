@@ -1,1 +1,44 @@
-<p>actualizacion-resultado works!</p>
+<div class="main-content">
+    <div class="crear-torneo-contenedor">
+      <div class="crear-torneo-subcontenedor">
+        <div class="contenedor-predecir-campeon">
+          <label class="nombre-tit" for="partido"><b>Seleccione el partido</b></label>
+          <input id="partido" [(ngModel)]="nombreEquipo1" class="inputs" type="text" name="partido" disabled>
+          <button type="button" (click)="openModal('partido')" class="inicio-boton">Seleccionar</button>
+        </div>
+        <div class="contenedor-predecir-campeon">
+          <label class="nombre-tit" for="resultado1"><b>Ingrese resultado equipo 1</b></label>
+          <input id="resultado1" [(ngModel)]="resultado1" class="inputs" name="resultado1">
+        </div>
+        <div class="contenedor-predecir-campeon">
+          <label class="nombre-tit" for="resultado2"><b>Ingrese resultado equipo 2</b></label>
+          <input id="resultado2" [(ngModel)]="resultado2" class="inputs" name="resultado2">
+        </div>
+
+        <div class="botones">
+          <button (click)="cancelar()" class="btn-cancelar inicio-boton">Volver</button>
+          <button (click)="crearTorneo()" class="btn-crear inicio-boton">Actualizar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div id="id01" class="login-box" [ngClass]="{'show': bandera}">
+    <form>
+      <button class="button-close" (click)="closeForm()" type="button">
+        <span class="X"></span>
+        <span class="Y"></span>
+      </button>
+      <div class="user-box">
+        <div class="number-grid">
+          <div class="number-item" *ngFor="let num of numbers" [class.selected]="selectedNumber === num" (click)="selectNumber(num)">
+            {{ num }}
+          </div>
+        </div>
+      </div>
+      <div class="zona-boton-send">
+        <button class="save-btn" (click)="saveSelectedNumber()" type="button">Guardar</button>
+      </div>
+    </form>
+  </div>
+  

@@ -4,17 +4,17 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-partido-creado',
+  selector: 'app-actualizacion-torneo-final',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './partido-creado.component.html',
-  styleUrl: './partido-creado.component.css'
+  templateUrl: './actualizacion-torneo-final.component.html',
+  styleUrl: './actualizacion-torneo-final.component.css'
 })
-export class PartidoCreadoComponent {
+export class ActualizacionTorneoFinalComponent {
 
   constructor(private router: Router) { }
 
-  navigateToCreacionPartido() {
-    this.router.navigate(['/ingresar-partido']);
+  navigateToOpcionesAdmin() {
+    this.router.navigate(['/actualizacion-torneo']);
   }
 }

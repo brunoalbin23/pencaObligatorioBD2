@@ -18,7 +18,7 @@ import { PrediccionActualizadaComponent } from './usuario/prediccion-actualizada
 import { PredecirResultadoComponent } from './usuario/predecir-resultado/predecir-resultado.component';
 import { SeleccionarTorneoComponent } from './admin/seleccionar-torneo/seleccionar-torneo.component';
 import { ElegirTorneoComponent } from './usuario/elegir-torneo/elegir-torneo.component';
-import { ElementSchemaRegistry } from '@angular/compiler';
+import { ActualizacionTorneoFinalComponent } from './actualizacion-torneo-final/actualizacion-torneo-final.component';
 
 export const appRoutes: Routes = [
   { path: '', component: LoginComponent },
@@ -39,5 +39,6 @@ export const appRoutes: Routes = [
   { path: 'prediccion-actualizada', component: PrediccionActualizadaComponent},
   { path: 'predecir-resultado', component: PredecirResultadoComponent},
   { path: 'seleccionar-torneo', component: SeleccionarTorneoComponent},
-  { path: 'elegir-torneo', component: ElegirTorneoComponent}
+  { path: 'elegir-torneo', component: ElegirTorneoComponent},
+  { path: 'actualizacion-torneo-final', component: ActualizacionTorneoFinalComponent}
 ];

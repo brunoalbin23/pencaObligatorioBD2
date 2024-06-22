@@ -23,6 +23,10 @@ export class ActualizacionTorneoComponent {
   }
 
   navigateToActualizarResultado() {
-    this.router.navigate(['/actualizar-resultado']);
+    this.router.navigate(['/actualizacion-resultado']);
+  }
+
+  navigateToSalir() {
+    this.router.navigate(['/opciones-admin']);
   }
 }
