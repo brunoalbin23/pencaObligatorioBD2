@@ -4,13 +4,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-prediccion-registro',
+  selector: 'app-elegir-torneo',
   standalone: true,
-  imports: [FormsModule, CommonModule],
-  templateUrl: './prediccion-registro.component.html',
-  styleUrl: './prediccion-registro.component.css'
+  imports: [CommonModule, FormsModule],
+  templateUrl: './elegir-torneo.component.html',
+  styleUrl: './elegir-torneo.component.css'
 })
-export class PrediccionRegistroComponent {
+export class ElegirTorneoComponent {
   bandera: boolean = false;
   currentInputId: string | null = null;
 

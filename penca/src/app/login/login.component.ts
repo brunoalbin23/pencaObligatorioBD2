@@ -17,23 +17,33 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 export class LoginComponent {
   bandera: boolean = false;
   bandera2: boolean = false;
+  bandera3: boolean = false;
+  bandera4: boolean = false;
 
   constructor(private router: Router) { }
 
-  navigateToPrediccionRegistro() {
-    this.router.navigate(['/prediccion-registro']);
+  navigateToElegirTorneo() {
+    this.router.navigate(['/elegir-torneo']);
   }
 
-  navigateToSala() {
-    this.router.navigate(['/sala-general']);
+  navigateToOpcionesAdmin() {
+    this.router.navigate(['/opciones-admin']);
   }
 
   setBanderaLogin() {
     this.bandera = !this.bandera;
   }
 
+  setBanderaLogin2() {
+    this.bandera4 = !this.bandera4;
+  }
+
   setBanderaRegistro() {
     this.bandera2 = !this.bandera2;
+  }
+
+  setBanderaElegirCarrera() {
+    this.bandera3 = !this.bandera3;
   }
 
   ingresarAdmin() {
@@ -48,15 +58,22 @@ export class LoginComponent {
     this.bandera2 = !this.bandera2;
   }
 
-  bandera3: boolean = false;
+  closeForm3() {
+    this.bandera3 = !this.bandera3;
+  }
+
+  closeForm4() {
+    this.bandera4 = !this.bandera4;
+  }
+
   currentInputId: string | null = null;
 
   openModal(inputId: string) {
     this.currentInputId = inputId;
-    this.bandera = true;
+    this.bandera3 = true;
   }
 
-  //Esto por ahora esta con numeros, la idea es q despues sean nombres de paises o cuadros extraidos de la base de datos del torneo
+  //Esto por ahora esta con numeros, la idea es q despues sean nombres de las carreras extraidos de la base de datos del torneo
   selectedNumber: number | null = null;
   numbers: number[] = Array.from({ length: 20 }, (_, i) => i + 1);
 
@@ -70,7 +87,7 @@ export class LoginComponent {
       if (inputElement) {
         inputElement.value = this.selectedNumber.toString();
       }
-      this.closeForm();
+      this.closeForm3();
     }
   }
 }

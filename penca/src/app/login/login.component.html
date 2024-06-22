@@ -1,6 +1,6 @@
-<div class="main-content" [ngClass]="{'blurred': bandera || bandera2}">
+<div class="main-content" [ngClass]="{'blurred': bandera || bandera2 || bandera4}">
     <div class="login-contenedor">
-      <button class="admin-boton" (click)="setBanderaLogin()">ADMINISTRACIÓN</button>
+      <button class="admin-boton" (click)="setBanderaLogin2()">ADMINISTRACIÓN</button>
       <div class="login-subcontenedor">
         <h1 class="login-titulo">PENCA</h1>
         <img src="../../assets/logo_ucu.png" class="login-imagen">
@@ -27,7 +27,30 @@
         <label>Contraseña</label>
       </div>
       <div class="zona-boton-send">
-        <button (click)="navigateToSala()" class="inicio-boton">
+        <button (click)="navigateToElegirTorneo()" class="inicio-boton">
+          INICIAR
+        <span></span>
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div id="id01" class="login-box" [ngClass]="{'show': bandera4}">
+    <form>
+      <button class="button-cruz"(click)="closeForm4()">
+        <span class="X"></span>
+        <span class="Y"></span>
+      </button>
+      <div class="user-box">
+        <input type="text" name="" required="">
+        <label>Usuario</label>
+      </div>
+      <div class="user-box">
+        <input type="password" name="" required="">
+        <label>Contraseña</label>
+      </div>
+      <div class="zona-boton-send">
+        <button (click)="navigateToOpcionesAdmin()" class="inicio-boton">
           INICIAR
         <span></span>
         </button>
@@ -62,7 +85,7 @@
         <div class="input-container">
           <div class="probar"></div>
         <input id="carrera" class="text" type="input" name="uname" disabled>
-        <button type="button" (click)="openModal('carrera')" class="inicio-boton btnbtn input-right">Acá</button>
+        <button type="button" (click)="openModal('carrera')" class="inicio-boton btnbtn input-right">...</button>
        </div>
      </div>
       <div class="user-box">
@@ -70,7 +93,7 @@
         <label>Fecha de Nacimiento</label>
       </div>
       <div class="zona-boton-send">
-        <button (click)="navigateToPrediccionRegistro()" class="inicio-boton">
+        <button (click)="navigateToElegirTorneo()" class="inicio-boton">
           REGISTRARSE
         <span></span>
         </button>
