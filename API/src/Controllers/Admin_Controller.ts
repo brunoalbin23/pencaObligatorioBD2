@@ -70,3 +70,31 @@ export const insertarResultadoPartido = async (req: Request, res: Response) => {
     return res.status(500).json({ error: 'Error al intentar insertar el resultado del partido' });
   }
 };
+
+
+export const selectCountriesFromEquipos = async (): Promise<string[]> => {
+    try {
+        const conn = await connection;
+        const [rows] = await conn.execute('SELECT DISTINCT nombre FROM Equipo');
+        
+        const countries: string[] = Object.values(rows).map((row: any) => row.nombre); // Corregido: usar row.nombre
+
+        return countries;
+    } catch (error) {
+        console.error('Error al seleccionar países de la tabla Equipo:', error);
+        throw new Error('Error al seleccionar países de la tabla Equipo');
+    }
+};
+        //FUNCION PARA PROBAR POR CONSOLA QUE DEVUELVE SelectCoutriesFromEquipo (x alguna razon a pesar de parsearlos tiraba undefined)
+export const obtenerPaises = async () => {
+    try {
+        const paises = await selectCountriesFromEquipos();
+        console.log('Paises obtenidos:', paises);
+    } catch (error) {
+        console.error('Error al obtener los países:', error);
+    }
+};
+
+// Ejemplo de uso
+obtenerPaises();
+

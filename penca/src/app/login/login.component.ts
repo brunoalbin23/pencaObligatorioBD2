@@ -6,6 +6,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
+
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -73,7 +75,7 @@ export class LoginComponent {
     this.bandera3 = true;
   }
 
-  //Esto por ahora esta con numeros, la idea es q despues sean nombres de las carreras extraidos de la base de datos del torneo
+  //Aca van Eventos
   selectedNumber: number | null = null;
   numbers: number[] = Array.from({ length: 20 }, (_, i) => i + 1);
 
