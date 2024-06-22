@@ -24,3 +24,5 @@ export function authenticate(req: any, res: any, next: any) {
       }
   }
 }
+
+//res.status(200).send({ token: token }); con esto le envio el token cuando inicia sesion y luego en los metodos lo autentico (authenticate)
