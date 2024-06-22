@@ -24,7 +24,7 @@ export const Adminlogin = async (req: Request, res: Response) => {
       return res.status(401).json({ error: 'Credenciales incorrectas' });
     }
     
-    // Verificar en la tabla Admin
+    // Verificar en la tabla Admin que este registrado previamente (las cuentas admin se hardcodean)
     const [rowsAdmin] = await conn.execute('SELECT * FROM Admin WHERE id = ?', [id]);
     
     // Verificar la cantidad de filas devueltas por la consulta SELECT
@@ -32,12 +32,54 @@ export const Adminlogin = async (req: Request, res: Response) => {
       return res.status(401).json({ error: 'No tienes permisos de administrador' });
     }
 
-    // Si las credenciales son correctas y es administrador, generar token de acceso
-    const accessToken = generateAccessToken(id); // Suponiendo que 'id' es único y se utiliza como usuario en el token
+    // Si las credenciales son correctas y es administrador, generar token de acceso qu esperemos que funcione
+    const accessToken = generateAccessToken(id); // Suponiendo que el 'id' (en este caso es la cedula) es único, se utiliza como usuario en el token
     return res.status(200).json({ accessToken: accessToken });
   } catch (error) {
     console.error('Error al intentar iniciar sesión:', error);
     return res.status(500).json({ error: 'Error al intentar iniciar sesión' });
+  }
+};
+
+
+
+//INSERTAR EVENTO
+export const insertarEvento = async (req: Request, res: Response) => {
+    const { nombre, anio } = req.body;
+  
+    // Verificar que todos los campos necesarios estén presentes
+    if (!nombre || !anio) {
+      return res.status(400).json({ error: 'Todos los campos son requeridos' });
+    }
+  
+    try {
+      const conn = await connection;
+      await conn.execute('INSERT INTO Evento (nombre, anio) VALUES (?, ?)', [nombre, anio]);
+  
+      return res.status(201).json({ message: 'evento registrado exitosamente' });
+    } catch (error) {
+      console.error('Error al intentar intentar insertar el evento:', error);
+      return res.status(500).json({ error: 'Error al intentar insertar el evento' });
+    }
+  };
+
+//INSERTAR EQUIPO
+export const insertarEquipo = async (req: Request, res: Response) => {
+  const { nombre} = req.body;
+
+  // Verificar que todos los campos necesarios estén presentes
+  if (!nombre) {
+    return res.status(400).json({ error: 'Ingrese el nombre del equipo' });
+  }
+
+  try {
+    const conn = await connection;
+    await conn.execute('INSERT INTO Equipo (nombre) VALUE (?)', [nombre]);
+
+    return res.status(201).json({ message: 'equipo registrado exitosamente' });
+  } catch (error) {
+    console.error('Error al intentar intentar insertar el equipo:', error);
+    return res.status(500).json({ error: 'Error al intentar insertar el equipo' });
   }
 };
 
@@ -72,6 +114,7 @@ export const insertarResultadoPartido = async (req: Request, res: Response) => {
 };
 
 
+
 export const selectCountriesFromEquipos = async (): Promise<string[]> => {
     try {
         const conn = await connection;
@@ -94,7 +137,4 @@ export const obtenerPaises = async () => {
         console.error('Error al obtener los países:', error);
     }
 };
-
-// Ejemplo de uso
-obtenerPaises();
 
