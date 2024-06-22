@@ -2,6 +2,7 @@
 import express from 'express';
 import alumnoRoutes from './routes/Alumno_Routes'
 import { register } from './Controllers/Alumno_Controller';
+import { login } from './Controllers/Alumno_Controller';
 
 
 import bodyParser from 'body-parser'; //Estos dos luego los borro o comento
@@ -38,6 +39,6 @@ var corsOptions = {
 app.use(cors(corsOptions));
 
 
-app.use('/alumno', alumnoRoutes)
-app.use('/registrar', register)
-  
+app.use('/alumno', alumnoRoutes);
+app.post('/registrar', register);
+app.post('/login', login);
