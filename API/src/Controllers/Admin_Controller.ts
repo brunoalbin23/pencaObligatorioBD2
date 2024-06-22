@@ -75,7 +75,7 @@ export const insertarResultadoPartido = async (req: Request, res: Response) => {
 export const selectCountriesFromEquipos = async (): Promise<string[]> => {
     try {
         const conn = await connection;
-        const [rows] = await conn.execute('SELECT DISTINCT nombre FROM Equipo');
+        const [rows] = await conn.execute('SELECT nombre FROM Equipo');
         
         const countries: string[] = Object.values(rows).map((row: any) => row.nombre); // Corregido: usar row.nombre
 
