@@ -74,11 +74,16 @@ export class LoginComponent {
     this.bandera3 = true;
   }
 
+<<<<<<< HEAD
   //Esto por ahora esta con numeros, la idea es q despues sean nombres de las carreras extraidos de la base de datos del torneo
   selectedNumber: number | null = null;
   numbers: number[] = Array.from({ length: 5 }, (_, i) => i + 1);
+=======
+  //Aca van Eventos
+  selectedNumber: String | null = null;
+>>>>>>> be41f75950177645c19d4569df0340418fbdaa0f
 
-  selectNumber(num: number) {
+  selectNumber(num: String) {
     this.selectedNumber = num;
   }
 

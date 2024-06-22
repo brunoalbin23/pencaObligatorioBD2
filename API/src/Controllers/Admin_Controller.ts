@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import connection from '../db';
 import { generateAccessToken } from './Seguridad';
+import { Evento } from '../Interfaces/IEvento';
 
 const app = express();
 app.use(bodyParser.json());
@@ -24,7 +25,7 @@ export const Adminlogin = async (req: Request, res: Response) => {
       return res.status(401).json({ error: 'Credenciales incorrectas' });
     }
     
-    // Verificar en la tabla Admin
+    // Verificar en la tabla Admin que este registrado previamente (las cuentas admin se hardcodean)
     const [rowsAdmin] = await conn.execute('SELECT * FROM Admin WHERE id = ?', [id]);
     
     // Verificar la cantidad de filas devueltas por la consulta SELECT
@@ -32,12 +33,54 @@ export const Adminlogin = async (req: Request, res: Response) => {
       return res.status(401).json({ error: 'No tienes permisos de administrador' });
     }
 
-    // Si las credenciales son correctas y es administrador, generar token de acceso
-    const accessToken = generateAccessToken(id); // Suponiendo que 'id' es único y se utiliza como usuario en el token
+    // Si las credenciales son correctas y es administrador, generar token de acceso qu esperemos que funcione
+    const accessToken = generateAccessToken(id); // Suponiendo que el 'id' (en este caso es la cedula) es único, se utiliza como usuario en el token
     return res.status(200).json({ accessToken: accessToken });
   } catch (error) {
     console.error('Error al intentar iniciar sesión:', error);
     return res.status(500).json({ error: 'Error al intentar iniciar sesión' });
+  }
+};
+
+
+
+//INSERTAR EVENTO
+export const insertarEvento = async (req: Request, res: Response) => {
+    const { nombre, anio } = req.body;
+  
+    // Verificar que todos los campos necesarios estén presentes
+    if (!nombre || !anio) {
+      return res.status(400).json({ error: 'Todos los campos son requeridos' });
+    }
+  
+    try {
+      const conn = await connection;
+      await conn.execute('INSERT INTO Evento (nombre, anio) VALUES (?, ?)', [nombre, anio]);
+  
+      return res.status(201).json({ message: 'evento registrado exitosamente' });
+    } catch (error) {
+      console.error('Error al intentar intentar insertar el evento:', error);
+      return res.status(500).json({ error: 'Error al intentar insertar el evento' });
+    }
+  };
+
+//INSERTAR EQUIPO
+export const insertarEquipo = async (req: Request, res: Response) => {
+  const { nombre} = req.body;
+
+  // Verificar que todos los campos necesarios estén presentes
+  if (!nombre) {
+    return res.status(400).json({ error: 'Ingrese el nombre del equipo' });
+  }
+
+  try {
+    const conn = await connection;
+    await conn.execute('INSERT INTO Equipo (nombre) VALUE (?)', [nombre]);
+
+    return res.status(201).json({ message: 'equipo registrado exitosamente' });
+  } catch (error) {
+    console.error('Error al intentar intentar insertar el equipo:', error);
+    return res.status(500).json({ error: 'Error al intentar insertar el equipo' });
   }
 };
 
@@ -70,3 +113,29 @@ export const insertarResultadoPartido = async (req: Request, res: Response) => {
     return res.status(500).json({ error: 'Error al intentar insertar el resultado del partido' });
   }
 };
+
+export const selectEvent = async (req: Request, res: Response) => {
+  try {
+      const conn = await connection;
+      const [rows] = await conn.execute('SELECT nombre, anio FROM Evento');
+
+      const events: Evento[] = Object.values(rows).map((row: any) => new Evento(row.nombre, row.anio)); // Corregido: usar row.nombre
+      res.status(200).send({'eventos': events});
+  } catch (error) {
+      console.error('Error al seleccionar eventos de la tabla Evento:', error);
+      res.status(500).send('Error al seleccionar eventos de la tabla Evento');
+  }
+};
+
+export const selectEquipos = async (req: Request, res: Response) => {
+    try {
+        const conn = await connection;
+        const [rows] = await conn.execute('SELECT nombre FROM Equipo');
+        
+        const countries: string[] = Object.values(rows).map((row: any) => row.nombre); // Corregido: usar row.nombre
+
+        res.status(200).send({'equipos': countries});
+    } catch (error) {
+        console.error('Error al seleccionar países de la tabla Equipo:', error);
+        res.status(500).send('Error al seleccionar países de la tabla Equipo');
+    }
