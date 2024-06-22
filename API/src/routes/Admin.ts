@@ -1,4 +1,4 @@
-import express from "express";
+/*import express from "express";
 import { ICarrera } from "../Interfaces/ICarrera";
 
 const router = express.Router();
@@ -42,4 +42,4 @@ router.post('/carrera', (req, res) => {
 });
 
 
-export default router;
+export default router;*/

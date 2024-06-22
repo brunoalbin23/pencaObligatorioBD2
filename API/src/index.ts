@@ -3,7 +3,8 @@ import express from 'express';
 import alumnoRoutes from './routes/Alumno_Routes'
 import { register } from './Controllers/Alumno_Controller';
 import { login } from './Controllers/Alumno_Controller';
-import { obtenerPaises } from './Controllers/Admin_Controller';
+//import { obtenerPaises} from './Controllers/Admin_Controller';
+import adminRouter from './routes/Admin_Routes';
 
 import bodyParser from 'body-parser'; //Estos dos luego los borro o comento
 //import connection from './db';
@@ -38,8 +39,8 @@ var corsOptions = {
 
 app.use(cors(corsOptions));
 
-
+app.use('/admin', adminRouter);
 app.use('/alumno', alumnoRoutes);
 app.post('/registrar', register);
 app.post('/login', login);
-obtenerPaises();
+//obtenerPaises();
