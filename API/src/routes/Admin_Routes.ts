@@ -4,6 +4,8 @@ import { insertarResultadoPartido, selectEquipos, selectEvent } from "../Control
 const router = Router();
 
 router.post('/insertGame', insertarResultadoPartido);
+router.post('/insertEvent', insertarEvento);
+router.post('/insertTeam', insertarEquipo);
 
 router.get('/getEquipos', selectEquipos);
 
