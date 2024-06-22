@@ -6,8 +6,6 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
-
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -76,10 +74,9 @@ export class LoginComponent {
   }
 
   //Aca van Eventos
-  selectedNumber: number | null = null;
-  numbers: number[] = Array.from({ length: 20 }, (_, i) => i + 1);
+  selectedNumber: String | null = null;
 
-  selectNumber(num: number) {
+  selectNumber(num: String) {
     this.selectedNumber = num;
   }
 

@@ -29,19 +29,32 @@ export class PrediccionRegistroComponent {
     this.bandera = false;
   }
 
-  //Esto por ahora esta con numeros, la idea es q despues sean nombres de paises o cuadros extraidos de la base de datos del torneo
-  selectedNumber: number | null = null;
-  numbers: number[] = Array.from({ length: 20 }, (_, i) => i + 1);
+  ngOnInit() {
+    this.fetchEquipos();
+  }
+  
+  async fetchEquipos() {
+    const response = await fetch("http://localhost:3000/admin/getEquipos");
+    await response.json().then((res) => {
+      if (res.equipos) {
+        this.equipos = res.equipos;
+      }
+    }); 
+  };
 
-  selectNumber(num: number) {
-    this.selectedNumber = num;
+  //Esto por ahora esta con numeros, la idea es q despues sean nombres de paises o cuadros extraidos de la base de datos del torneo
+  selectedEquipo: String | null = null;
+  equipos: String[] = [];
+
+  selectEquipo(equipo: String) {
+    this.selectedEquipo = equipo;
   }
 
-  saveSelectedNumber() {
-    if (this.selectedNumber !== null && this.currentInputId !== null) {
+  saveSelectedEquipo() {
+    if (this.selectedEquipo !== null && this.currentInputId !== null) {
       const inputElement = document.getElementById(this.currentInputId) as HTMLInputElement;
       if (inputElement) {
-        inputElement.value = this.selectedNumber.toString();
+        inputElement.value = this.selectedEquipo.toString();
       }
       this.closeForm();
     }
