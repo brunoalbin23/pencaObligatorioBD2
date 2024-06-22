@@ -10,10 +10,10 @@ app.use(bodyParser.json());
 app.use(express.json());//middleware, aunque este no se si es necesario
 
 // Función para verificar si el ID de usuario ya existe
-const isUserIdTaken = async (id: number): Promise<boolean> => {
+const isUserIdTaken = async (ci: number): Promise<boolean> => {
     try {
       const conn = await connection;
-      const [rows] = await conn.execute('SELECT COUNT(*) AS count FROM Usuario WHERE id = ?', [id]);
+      const [rows] = await conn.execute('SELECT COUNT(*) AS count FROM Usuario WHERE id = ?', [ci]);
       const count = (rows as any)[0].count;
       return count > 0;
     } catch (error) {
@@ -26,16 +26,16 @@ const isUserIdTaken = async (id: number): Promise<boolean> => {
   };
   
   // Función para registrar un nuevo usuario y alumno
-  const registerUserAndStudent = async (id: number, password: string, nombre: string, apellido: string, fechaNac: string, cedula: number): Promise<void> => {
+  const registerUserAndStudent = async (ci: number, password: string, nombre: string, apellido: string, fechaNac: string): Promise<void> => {
     const conn = await connection;
     try {
       await conn.beginTransaction();
   
       // Insertar en la tabla usuario
-      await conn.execute('INSERT INTO Usuario (id, contrasenia) VALUES (?, ?)', [id, password]);
+      await conn.execute('INSERT INTO Usuario (id, contrasenia) VALUES (?, ?)', [ci, password]);
   
       // Insertar en la tabla alumno
-      await conn.execute('INSERT INTO Alumno (id, nombre, apellido, fecha_nac, cedula) VALUES (?, ?, ?, ?, ?)', [id, nombre, apellido, fechaNac, cedula]);
+      await conn.execute('INSERT INTO Alumno (CI, nombre, apellido, fecha_nac) VALUES (?, ?, ?, ?)', [ci, nombre, apellido, fechaNac]);
   
       await conn.commit();
     } catch (error) {
@@ -50,19 +50,19 @@ const isUserIdTaken = async (id: number): Promise<boolean> => {
   
   // Endpoint para registrar un nuevo usuario y alumno
   export const register =  async (req: Request, res: Response) => {
-    const { id, password, nombre, apellido, fechaNac, cedula } = req.body;
+    const { ci, password, nombre, apellido, fechaNac } = req.body;
   
-    if (!id || !password || !nombre || !apellido || !fechaNac || !cedula) {
+    if (!ci || !password || !nombre || !apellido || !fechaNac) {
       return res.status(400).json({ error: 'Todos los campos son requeridos' });
     }
   
     try {
-      const userIdTaken = await isUserIdTaken(id);
+      const userIdTaken = await isUserIdTaken(ci);
       if (userIdTaken) {
         return res.status(409).json({ error: 'ID de usuario ya en uso' });
       }
   
-      await registerUserAndStudent(id, password, nombre, apellido, fechaNac, cedula);
+      await registerUserAndStudent(ci, password, nombre, apellido, fechaNac);
       return res.status(201).json({ message: 'Usuario y alumno registrados exitosamente' });
     } catch (error) {
       if (error instanceof Error) {
@@ -78,10 +78,10 @@ const isUserIdTaken = async (id: number): Promise<boolean> => {
 
   // Función para iniciar sesión
 export const login = async (req: Request, res: Response) => {
-    const { id, password } = req.body;
+    const { id, password } = req.body; //seria cedula pero lo dejo con id porque es representativo de usuario
   
     if (!id || !password) {
-      return res.status(400).json({ error: 'ID de usuario y contraseña son requeridos' });
+      return res.status(400).json({ error: 'Cédula de usuario y contraseña son requeridos' });
     }
   
     try {
