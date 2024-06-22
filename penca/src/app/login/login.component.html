@@ -100,21 +100,3 @@
       </div>
     </form>
   </div>
-
-
-  <div id="id01" class="login-box calle" [ngClass]="{'show': bandera3}">
-    <form>
-
-        <div class="user-box">
-          <!--Por ahora esto con numeros, la idea dsp q sean paises exstraidos de la-->
-          <div class="number-grid">
-            <div class="number-item" *ngFor="let num of numbers" [class.selected]="selectedNumber === num" (click)="selectNumber(num)">
-                {{ num }}
-            </div>
-        </div>
-        </div>
-        <div class="zona-boton-send">
-          <button class="save-btn" (click)="saveSelectedNumber()" type="button">Guardar</button>
-        </div>
-    </form>
-  </div> 

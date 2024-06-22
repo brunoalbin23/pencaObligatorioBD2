@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import connection from '../db';
 import { generateAccessToken } from './Seguridad';
+import { Evento } from '../Interfaces/IEvento';
 
 const app = express();
 app.use(bodyParser.json());
@@ -113,28 +114,28 @@ export const insertarResultadoPartido = async (req: Request, res: Response) => {
   }
 };
 
+export const selectEvent = async (req: Request, res: Response) => {
+  try {
+      const conn = await connection;
+      const [rows] = await conn.execute('SELECT nombre, anio FROM Evento');
 
+      const events: Evento[] = Object.values(rows).map((row: any) => new Evento(row.nombre, row.anio)); // Corregido: usar row.nombre
+      res.status(200).send({'eventos': events});
+  } catch (error) {
+      console.error('Error al seleccionar eventos de la tabla Evento:', error);
+      res.status(500).send('Error al seleccionar eventos de la tabla Evento');
+  }
+};
 
-export const selectCountriesFromEquipos = async (): Promise<string[]> => {
+export const selectEquipos = async (req: Request, res: Response) => {
     try {
         const conn = await connection;
-        const [rows] = await conn.execute('SELECT DISTINCT nombre FROM Equipo');
+        const [rows] = await conn.execute('SELECT nombre FROM Equipo');
         
         const countries: string[] = Object.values(rows).map((row: any) => row.nombre); // Corregido: usar row.nombre
 
-        return countries;
+        res.status(200).send({'equipos': countries});
     } catch (error) {
         console.error('Error al seleccionar países de la tabla Equipo:', error);
-        throw new Error('Error al seleccionar países de la tabla Equipo');
+        res.status(500).send('Error al seleccionar países de la tabla Equipo');
     }
-};
-        //FUNCION PARA PROBAR POR CONSOLA QUE DEVUELVE SelectCoutriesFromEquipo (x alguna razon a pesar de parsearlos tiraba undefined)
-export const obtenerPaises = async () => {
-    try {
-        const paises = await selectCountriesFromEquipos();
-        console.log('Paises obtenidos:', paises);
-    } catch (error) {
-        console.error('Error al obtener los países:', error);
-    }
-};
-
