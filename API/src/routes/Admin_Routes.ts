@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { insertarResultadoPartido, selectEquipos, selectEvent } from "../Controllers/Admin_Controller";
+import { insertarEquipo, insertarEvento, insertarResultadoPartido, selectEquipos, selectEvent } from "../Controllers/Admin_Controller";
 
 const router = Router();
 

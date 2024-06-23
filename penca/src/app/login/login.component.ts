@@ -66,4 +66,30 @@ export class LoginComponent {
   closeForm4() {
     this.bandera4 = !this.bandera4;
   }
+
+  currentInputId: string | null = null;
+
+  openModal(inputId: string) {
+    this.currentInputId = inputId;
+    this.bandera3 = true;
+  }
+
+
+  //Aca van Eventos
+  selectedNumber: String | null = null;
+
+
+  selectNumber(num: String) {
+    this.selectedNumber = num;
+  }
+
+  saveSelectedNumber() {
+    if (this.selectedNumber !== null && this.currentInputId !== null) {
+      const inputElement = document.getElementById(this.currentInputId) as HTMLInputElement;
+      if (inputElement) {
+        inputElement.value = this.selectedNumber.toString();
+      }
+      this.closeForm3();
+    }
+  }
 }
