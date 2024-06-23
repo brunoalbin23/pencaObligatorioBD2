@@ -64,7 +64,7 @@ PRIMARY KEY (nombre_eq1, nombre_eq2, fecha_hora),
 FOREIGN KEY (nombre_eq1) REFERENCES Equipo(nombre),
 FOREIGN KEY (nombre_eq2) REFERENCES Equipo(nombre),
 FOREIGN KEY (id_estadio) REFERENCES Estadio(id),
-FOREIGN KEY (id_tipo) REFERENCES Tipo_partido(id),
+FOREIGN KEY (id_tipo) REFERENCES Tipo_Partido(id),
 FOREIGN KEY (nombre_ev, anio_ev) REFERENCES Evento(nombre, anio)
 );
 
