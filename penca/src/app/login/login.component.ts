@@ -66,34 +66,4 @@ export class LoginComponent {
   closeForm4() {
     this.bandera4 = !this.bandera4;
   }
-
-  currentInputId: string | null = null;
-
-  openModal(inputId: string) {
-    this.currentInputId = inputId;
-    this.bandera3 = true;
-  }
-
-<<<<<<< HEAD
-  //Esto por ahora esta con numeros, la idea es q despues sean nombres de las carreras extraidos de la base de datos del torneo
-  selectedNumber: number | null = null;
-  numbers: number[] = Array.from({ length: 5 }, (_, i) => i + 1);
-=======
-  //Aca van Eventos
-  selectedNumber: String | null = null;
->>>>>>> be41f75950177645c19d4569df0340418fbdaa0f
-
-  selectNumber(num: String) {
-    this.selectedNumber = num;
-  }
-
-  saveSelectedNumber() {
-    if (this.selectedNumber !== null && this.currentInputId !== null) {
-      const inputElement = document.getElementById(this.currentInputId) as HTMLInputElement;
-      if (inputElement) {
-        inputElement.value = this.selectedNumber.toString();
-      }
-      this.closeForm3();
-    }
-  }
 }
