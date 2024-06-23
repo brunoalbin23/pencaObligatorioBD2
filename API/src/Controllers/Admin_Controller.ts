@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import connection from '../db';
 import { generateAccessToken } from './Seguridad';
-import { Evento } from '../Interfaces/IEvento';
+import { EventoObject } from '../Interfaces/EventoObject';
 
 const app = express();
 app.use(bodyParser.json());
@@ -114,16 +114,19 @@ export const insertarResultadoPartido = async (req: Request, res: Response) => {
   }
 };
 
-export const selectEvent = async (req: Request, res: Response) => {
+export const selectEvent = async (req:Request, res: Response): Promise<EventoObject[]> => {
   try {
-      const conn = await connection;
-      const [rows] = await conn.execute('SELECT nombre, anio FROM Evento');
+    const conn = await connection;
+    const [rows] = await conn.execute('SELECT nombre, anio FROM Evento');
 
-      const events: Evento[] = Object.values(rows).map((row: any) => new Evento(row.nombre, row.anio)); // Corregido: usar row.nombre
-      res.status(200).send({'eventos': events});
+    const events: EventoObject[] = Object.values(rows).map((row: any) => new EventoObject(row.nombre, row.anio));
+
+    console.log({events});
+    res.status(200).send({events});
+    return events;
   } catch (error) {
-      console.error('Error al seleccionar eventos de la tabla Evento:', error);
-      res.status(500).send('Error al seleccionar eventos de la tabla Evento');
+    console.error('Error al seleccionar evento/os de la tabla Evento:', error);
+    throw new Error('Error al seleccionar evento/os de la tabla Evento');
   }
 };
 
@@ -139,3 +142,4 @@ export const selectEquipos = async (req: Request, res: Response) => {
         console.error('Error al seleccionar países de la tabla Equipo:', error);
         res.status(500).send('Error al seleccionar países de la tabla Equipo');
     }
+  }
