@@ -171,3 +171,17 @@ export const selectEquipos = async (req: Request, res: Response) => {
         res.status(500).send('Error al seleccionar tipoPartidos de la tabla Tipo_Partido');
     }
   }
+
+  export const selectEstadios = async (req: Request, res: Response) => {
+    try {
+        const conn = await connection;
+        const [rows] = await conn.execute('SELECT nombre FROM Estadio');
+        
+        const countries: string[] = Object.values(rows).map((row: any) => row.nombre); 
+
+        res.status(200).send({'estadios': countries});
+    } catch (error) {
+        console.error('Error al seleccionar estadios de la tabla Estadios:', error);
+        res.status(500).send('Error al seleccionar estadios de la tabla Estadios');
+    }
+  }

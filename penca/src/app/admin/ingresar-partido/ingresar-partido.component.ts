@@ -12,6 +12,11 @@ import { FormsModule } from '@angular/forms';
 })
 export class IngresarPartidoComponent {
   
+  ngOnInit() {
+    this.fetchTiposPartidos();
+    this.fetchEstadios();
+  }
+  
   constructor(private router: Router) { }
 
   cancelar() {
@@ -34,10 +39,6 @@ export class IngresarPartidoComponent {
     this.bandera = false;
   }
 
-  ngOnInit() {
-    this.fetchTiposPartidos();
-  }
-
   async fetchTiposPartidos() {
     const response = await fetch("http://localhost:3000/admin/getTiposPartidos");
     await response.json().then((res) => {
@@ -47,8 +48,6 @@ export class IngresarPartidoComponent {
     }); 
   };
 
-
-  //Esto por ahora esta con numeros, la idea es q despues sean nombres de paises o cuadros extraidos de la base de datos del torneo
   selectedTipoPartido: String | null = null;
   tiposPartidos: String[] = [];
 
@@ -63,6 +62,44 @@ export class IngresarPartidoComponent {
         inputElement.value = this.selectedTipoPartido.toString();
       }
       this.closeForm();
+    }
+  }
+
+  bandera2: boolean = false;
+  currentInputId2: string | null = null;
+
+  openModal2(inputId: string) {
+    this.currentInputId2 = inputId;
+    this.bandera2 = true;
+  }
+
+  closeForm2() {
+    this.bandera2 = false;
+  }
+
+  async fetchEstadios() {
+    const response = await fetch("http://localhost:3000/admin/getEstadios");
+    await response.json().then((res) => {
+      if (res.estadios) {
+        this.estadios = res.estadios;
+      }
+    }); 
+  };
+
+  selectedEstadio: String | null = null;
+  estadios: String[] = [];
+
+  selectEstadio(estadio: String) {
+    this.selectedEstadio = estadio;
+  }
+
+  saveSelectedEstadio() {
+    if (this.selectedEstadio !== null && this.currentInputId2 !== null) {
+      const inputElement = document.getElementById(this.currentInputId2) as HTMLInputElement;
+      if (inputElement) {
+        inputElement.value = this.selectedEstadio.toString();
+      }
+      this.closeForm2();
     }
   }
 }
