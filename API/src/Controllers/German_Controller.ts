@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import connection from '../db';
 import { generateAccessToken } from './Seguridad';
-import { EventoObject } from '../Interfaces/EventoObject';
+
 
 const app = express();
 app.use(bodyParser.json());
@@ -86,60 +86,42 @@ export const insertarEquipo = async (req: Request, res: Response) => {
 
 
 
-
-export const insertarResultadoPartido = async (req: Request, res: Response) => {
-  const { nombre_eq1, nombre_eq2, fecha_hora, goles_eq1, goles_eq2, nombre_ev, anio_ev, id_estadio, tipo_partido } = req.body;
-
-  // Verificar que todos los campos necesarios estén presentes
-  if (!nombre_eq1 || !nombre_eq2 || !fecha_hora || !nombre_ev || !anio_ev || !id_estadio || !tipo_partido) {
-    return res.status(400).json({ error: 'Todos los campos son requeridos' });
-  }
-
-  try {
-    const conn = await connection;
-
-    // Verificar si el partido ya existe
-    const [existingPartidos] = await conn.execute('SELECT * FROM Partido WHERE nombre_eq1 = ? AND nombre_eq2 = ? AND fecha_hora = ?', [nombre_eq1, nombre_eq2, fecha_hora]);
-    if (Object.values(existingPartidos).length > 0) {
-      return res.status(409).json({ error: 'El resultado de este partido ya ha sido registrado' });
+export const insertarPartido = async (req: Request, res: Response) => {
+    const { nombre_eq1, nombre_eq2, fecha_hora, goles_eq1, goles_eq2, nombre_ev, anio_ev, estadio, tipo_partido } = req.body;
+  
+    // Verificar que todos los campos necesarios estén presentes
+    if (!nombre_eq1 || !nombre_eq2 || !fecha_hora || !nombre_ev || !anio_ev || !estadio || !tipo_partido) {
+      return res.status(400).json({ error: 'Todos los campos son requeridos' });
     }
-
-    // Insertar el resultado del partido
-    await conn.execute('INSERT INTO Partido (nombre_eq1, nombre_eq2, fecha_hora, goles_eq1, goles_eq2, nombre_ev, anio_ev, id_estadio) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', [nombre_eq1, nombre_eq2, fecha_hora, goles_eq1, goles_eq2, nombre_ev, anio_ev, id_estadio]);
-
-    return res.status(201).json({ message: 'Resultado del partido registrado exitosamente' });
-  } catch (error) {
-    console.error('Error al intentar insertar el resultado del partido:', error);
-    return res.status(500).json({ error: 'Error al intentar insertar el resultado del partido' });
-  }
-};
-
-export const selectEvent = async (req:Request, res: Response): Promise<EventoObject[]> => {
-  try {
-    const conn = await connection;
-    const [rows] = await conn.execute('SELECT nombre, anio FROM Evento');
-
-    const events: EventoObject[] = Object.values(rows).map((row: any) => new EventoObject(row.nombre, row.anio));
-
-    console.log({events});
-    res.status(200).send({events});
-    return events;
-  } catch (error) {
-    console.error('Error al seleccionar evento/os de la tabla Evento:', error);
-    throw new Error('Error al seleccionar evento/os de la tabla Evento');
-  }
-};
-
-export const selectEquipos = async (req: Request, res: Response) => {
+  
     try {
-        const conn = await connection;
-        const [rows] = await conn.execute('SELECT nombre FROM Equipo');
-        
-        const countries: string[] = Object.values(rows).map((row: any) => row.nombre); // Corregido: usar row.nombre
-
-        res.status(200).send({'equipos': countries});
+      const conn = await connection;
+  
+      // Obtener el ID del estadio a partir del nombre
+      const [estadioRows] = await conn.execute('SELECT id FROM Estadio WHERE nombre = ?', [estadio]);
+      //console.log('El estadio es: '+{estadioRows});
+      if (Object.values(estadioRows).length === 0) {
+        return res.status(404).json({ error: 'Estadio no encontrado' });
+      }
+      const id_estadio = Object.values(estadioRows)[0].id;
+  
+      // Obtener el ID del tipo de partido a partir del nombre
+      const [tipoPartidoRows] = await conn.execute('SELECT id FROM Tipo_Partido WHERE nombre = ?', [tipo_partido]);
+      if (Object.values(tipoPartidoRows).length === 0) {
+        return res.status(404).json({ error: 'Tipo de partido no encontrado' });
+      }
+      const id_tipo = Object.values(tipoPartidoRows)[0].id;
+  
+      // Insertar el resultado del partido
+      await conn.execute('INSERT INTO Partido (nombre_eq1, nombre_eq2, fecha_hora, goles_eq1, goles_eq2, nombre_ev, anio_ev, id_estadio, id_tipo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', [nombre_eq1, nombre_eq2, fecha_hora, goles_eq1, goles_eq2, nombre_ev, anio_ev, id_estadio, id_tipo]);
+  
+      return res.status(201).json({ message: 'Partido insertado exitosamente' });
     } catch (error) {
-        console.error('Error al seleccionar países de la tabla Equipo:', error);
-        res.status(500).send('Error al seleccionar países de la tabla Equipo');
+      console.error('Error al intentar insertar partido:', error);
+      return res.status(500).json({ error: 'Error al intentar insertar partido' });
     }
-  }
+  };
+  //AL FIN SALIOOOO LPM!!!!!
+  //PARA ACTUALIZAR RESULTADO PRIMERO HAY QUE FILTRAR EN UN METODO POR año y evento en la tabla evento (elegidos con el seleccionar)
+  //Luego con otro metodo hay que seleccionar dentro de los partidos de ese evento
+  //y una vez seleccionado el partido filtrando por su pk (WHERE PK= blablabla) actualizar los goles
