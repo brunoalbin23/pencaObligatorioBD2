@@ -82,23 +82,24 @@ export class IngresarPartidoComponent {
     const response = await fetch("http://localhost:3000/admin/getEstadios");
     await response.json().then((res) => {
       if (res.estadios) {
+        console.log(res.estadios)
         this.estadios = res.estadios;
       }
     }); 
   };
 
-  selectedEstadio: number | null = null;
+  selectedEstadio: IEstadio | null = null;
   estadios: IEstadio[] = [];
 
-  selectEstadio(id_estadio: number) {
-    this.selectedEstadio = id_estadio;
+  selectEstadio(estadio: IEstadio) {
+    this.selectedEstadio = estadio;
   }
 
   saveSelectedEstadio() {
     if (this.selectedEstadio !== null && this.currentInputId2 !== null) {
       const inputElement = document.getElementById(this.currentInputId2) as HTMLInputElement;
       if (inputElement) {
-        inputElement.value = this.selectedEstadio.toString();
+        inputElement.value = this.selectedEstadio.id;
       }
       this.closeForm2();
     }

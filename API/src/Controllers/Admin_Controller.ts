@@ -180,7 +180,7 @@ export const selectEquipos = async (req: Request, res: Response) => {
         
         const estadios: EstadioObject[] = Object.values(rows).map((row: any) => new EstadioObject(row.id, row.nombre)); 
 
-        res.status(200).send(estadios);
+        res.status(200).send({'estadios': estadios});
     } catch (error) {
         console.error('Error al seleccionar estadios de la tabla Estadios:', error);
         res.status(500).send('Error al seleccionar estadios de la tabla Estadios');
