@@ -17,20 +17,15 @@
   
   <div id="id01" class="login-box" [ngClass]="{'show': bandera}">
     <form>
-        <button class="button-close" (click)="closeForm()" type="button">
-            <span class="X"></span>
-            <span class="Y"></span>
-        </button>
         <div class="user-box">
-          <!--Por ahora esto con numeros, la idea dsp q sean LOS TORNEOS QUE CREE EL ADMIN-->
           <div class="number-grid">
-            <div class="number-item" *ngFor="let num of numbers" [class.selected]="selectedNumber === num" (click)="selectNumber(num)">
-                {{ num }}
+            <div class="number-item" *ngFor="let evento of eventos" [class.selected]="selectedEvento === evento" (click)="selectEvento(evento)">
+                {{ evento.nombre }}
             </div>
         </div>
         </div>
         <div class="zona-boton-send">
-          <button class="save-btn" (click)="saveSelectedNumber()" type="button">Guardar</button>
+          <button class="save-btn" (click)="saveSelectedEvento()" type="button">Guardar</button>
         </div>
     </form>
   </div> 

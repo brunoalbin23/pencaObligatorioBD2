@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IEstadio } from '../../interfaces/iestadio';
+import { ITipoPartido } from '../../interfaces/itipo-partido';
 
 @Component({
   selector: 'app-ingresar-partido',
@@ -16,6 +17,7 @@ export class IngresarPartidoComponent {
   ngOnInit() {
     this.fetchTiposPartidos();
     this.fetchEstadios();
+    this.fetchEquipo();
   }
   
   constructor(private router: Router) { }
@@ -28,6 +30,8 @@ export class IngresarPartidoComponent {
     this.router.navigate(['/torneo-creado']);
   }
 
+  //TIPOS DE PARTIDOOOOOOOOOOOOOOOOOOOS
+
   bandera: boolean = false;
   currentInputId: string | null = null;
 
@@ -38,21 +42,22 @@ export class IngresarPartidoComponent {
 
   closeForm() {
     this.bandera = false;
-  }
+    }
 
   async fetchTiposPartidos() {
-    const response = await fetch("http://localhost:3000/admin/getTiposPartidos");
-    await response.json().then((res) => {
-      if (res.tiposPartidos) {
-        this.tiposPartidos = res.tiposPartidos;
+      const response = await fetch("http://localhost:3000/admin/getTiposPartidos");
+      await response.json().then((res) => {
+        if (res.tiposPartidos) {
+          console.log(res.tiposPartidos)
+          this.tiposPartidos = res.tiposPartidos;
       }
     }); 
   };
 
-  selectedTipoPartido: String | null = null;
-  tiposPartidos: String[] = [];
+  selectedTipoPartido: ITipoPartido | null = null;
+  tiposPartidos: ITipoPartido[] = [];
 
-  selectTipoPartido(tipoPartido: String) {
+  selectTipoPartido(tipoPartido: ITipoPartido) {
     this.selectedTipoPartido = tipoPartido;
   }
 
@@ -60,11 +65,14 @@ export class IngresarPartidoComponent {
     if (this.selectedTipoPartido !== null && this.currentInputId !== null) {
       const inputElement = document.getElementById(this.currentInputId) as HTMLInputElement;
       if (inputElement) {
-        inputElement.value = this.selectedTipoPartido.toString();
+        inputElement.value = this.selectedTipoPartido.nombre;
       }
       this.closeForm();
     }
   }
+
+
+  //ESTADIOOOOOOOOOOOOOOOOOOOOOOOOS
 
   bandera2: boolean = false;
   currentInputId2: string | null = null;
@@ -82,7 +90,6 @@ export class IngresarPartidoComponent {
     const response = await fetch("http://localhost:3000/admin/getEstadios");
     await response.json().then((res) => {
       if (res.estadios) {
-        console.log(res.estadios)
         this.estadios = res.estadios;
       }
     }); 
@@ -99,9 +106,49 @@ export class IngresarPartidoComponent {
     if (this.selectedEstadio !== null && this.currentInputId2 !== null) {
       const inputElement = document.getElementById(this.currentInputId2) as HTMLInputElement;
       if (inputElement) {
-        inputElement.value = this.selectedEstadio.id;
+        inputElement.value = this.selectedEstadio.nombre;
       }
       this.closeForm2();
+    }
+  }
+
+  //EQUIPOS
+
+  bandera3: boolean = false;
+  currentInputId3: string | null = null;
+
+  openModal3(inputId: string) {
+    this.currentInputId3 = inputId;
+    this.bandera3 = true;
+  }
+
+  closeForm3() {
+    this.bandera3 = false;
+  }
+
+  async fetchEquipo() {
+    const response = await fetch("http://localhost:3000/admin/getEquipos");
+    await response.json().then((res) => {
+      if (res.equipos) {
+        this.equipos = res.equipos;
+      }
+    }); 
+  };
+
+  selectedEquipo: String | null = null;
+  equipos: String[] = [];
+
+  selectEquipo(equipo: String) {
+    this.selectedEquipo = equipo;
+  }
+
+  saveSelectedEquipo() {
+    if (this.selectedEquipo !== null && this.currentInputId2 !== null) {
+      const inputElement = document.getElementById(this.currentInputId2) as HTMLInputElement;
+      if (inputElement) {
+        inputElement.value = this.selectedEquipo.toString();
+      }
+      this.closeForm3();
     }
   }
 }

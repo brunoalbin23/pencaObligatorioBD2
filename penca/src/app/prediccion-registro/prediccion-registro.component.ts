@@ -41,8 +41,7 @@ export class PrediccionRegistroComponent {
       }
     }); 
   };
-
-  //Esto por ahora esta con numeros, la idea es q despues sean nombres de paises o cuadros extraidos de la base de datos del torneo
+  
   selectedEquipo: String | null = null;
   equipos: String[] = [];
 

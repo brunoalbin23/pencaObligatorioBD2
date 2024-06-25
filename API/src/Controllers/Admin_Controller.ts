@@ -4,6 +4,7 @@ import connection from '../db';
 import { generateAccessToken } from './Seguridad';
 import { EventoObject } from '../Interfaces/EventoObject';
 import { EstadioObject } from '../Interfaces/EstadioObject';
+import { TipoPartidoObject } from '../Interfaces/TipoPartidoObject';
 
 const app = express();
 app.use(bodyParser.json());
@@ -115,21 +116,19 @@ export const insertarResultadoPartido = async (req: Request, res: Response) => {
   }
 };
 
-export const selectEvent = async (req:Request, res: Response): Promise<EventoObject[]> => {
+export const selectEventos = async (req: Request, res: Response) => {
   try {
-    const conn = await connection;
-    const [rows] = await conn.execute('SELECT nombre, anio FROM Evento');
+      const conn = await connection;
+      const [rows] = await conn.execute('SELECT nombre, anio FROM Evento');
+      
+      const eventos: EventoObject[] = Object.values(rows).map((row: any) => new EventoObject(row.nombre, row.anio)); 
 
-    const events: EventoObject[] = Object.values(rows).map((row: any) => new EventoObject(row.nombre, row.anio));
-
-    console.log({events});
-    res.status(200).send({events});
-    return events;
+      res.status(200).send({'eventos': eventos});
   } catch (error) {
-    console.error('Error al seleccionar evento/os de la tabla Evento:', error);
-    throw new Error('Error al seleccionar evento/os de la tabla Evento');
+      console.error('Error al seleccionar eventos de la tabla Eventos:', error);
+      res.status(500).send('Error al seleccionar eventos de la tabla Eventos');
   }
-};
+}
 
 export const selectEquipos = async (req: Request, res: Response) => {
     try {
@@ -162,11 +161,11 @@ export const selectEquipos = async (req: Request, res: Response) => {
   export const selectTiposPartidos = async (req: Request, res: Response) => {
     try {
         const conn = await connection;
-        const [rows] = await conn.execute('SELECT nombre FROM Tipo_Partido');
+        const [rows] = await conn.execute('SELECT id, nombre FROM Tipo_Partido');
         
-        const countries: string[] = Object.values(rows).map((row: any) => row.nombre); 
+        const tiposPartidos: TipoPartidoObject[] = Object.values(rows).map((row: any) => new TipoPartidoObject(row.id, row.nombre)); 
 
-        res.status(200).send({'tiposPartidos': countries});
+        res.status(200).send({'tiposPartidos': tiposPartidos});
     } catch (error) {
         console.error('Error al seleccionar tipoPartidos de la tabla Tipo_Partido:', error);
         res.status(500).send('Error al seleccionar tipoPartidos de la tabla Tipo_Partido');

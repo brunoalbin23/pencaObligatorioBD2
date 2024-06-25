@@ -1,20 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { IEvento } from '../../interfaces/ievento';
 
 @Component({
   selector: 'app-elegir-torneo',
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './elegir-torneo.component.html',
-  styleUrl: './elegir-torneo.component.css'
+  styleUrls: ['./elegir-torneo.component.css'] 
 })
-export class ElegirTorneoComponent {
+export class ElegirTorneoComponent implements OnInit { 
   bandera: boolean = false;
   currentInputId: string | null = null;
 
   constructor(private router: Router) { }
+
+  ngOnInit() {
+    this.fetchEventos();
+  }
 
   navigateToSala() {
     this.router.navigate(['/prediccion-registro']);
@@ -29,19 +34,27 @@ export class ElegirTorneoComponent {
     this.bandera = false;
   }
 
-  //Esto por ahora esta con numeros, la idea es q despues sean nombres de paises o cuadros extraidos de la base de datos del torneo
-  selectedNumber: number | null = null;
-  numbers: number[] = Array.from({ length: 20 }, (_, i) => i + 1);
-
-  selectNumber(num: number) {
-    this.selectedNumber = num;
+  async fetchEventos() {
+    const response = await fetch("http://localhost:3000/admin/getEventos");
+    await response.json().then((res) => {
+      if (res.eventos) {
+        this.eventos = res.eventos;
+      }
+    }); 
   }
 
-  saveSelectedNumber() {
-    if (this.selectedNumber !== null && this.currentInputId !== null) {
+  selectedEvento: IEvento | null = null;
+  eventos: IEvento[] = [];
+
+  selectEvento(evento: IEvento) {
+    this.selectedEvento = evento;
+  }
+
+  saveSelectedEvento() {
+    if (this.selectedEvento !== null && this.currentInputId !== null) {
       const inputElement = document.getElementById(this.currentInputId) as HTMLInputElement;
       if (inputElement) {
-        inputElement.value = this.selectedNumber.toString();
+        inputElement.value = this.selectedEvento.nombre;
       }
       this.closeForm();
     }

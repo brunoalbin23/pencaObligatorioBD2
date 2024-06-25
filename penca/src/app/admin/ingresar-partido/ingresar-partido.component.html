@@ -6,16 +6,19 @@
         <input id="tiposPartidos" class="inputs" type="text" name="tiposPartidos" disabled>
         <button type="button" (click)="openModal('tiposPartidos')" class="inicio-boton">Seleccionar</button>
       </div>
+
       <div class="contenedor-predecir-campeon">
         <label class="nombre-tit" for="equipo1"><b>Ingrese el equipo 1</b></label>
         <input id="equipo1" class="inputs" type="text" name="equipo1" disabled>
-        <button type="button" (click)="openModal('equipo1')" class="inicio-boton">Seleccionar</button>
+        <button type="button" (click)="openModal3('equipo1')" class="inicio-boton">Seleccionar</button>
       </div>
+
       <div class="contenedor-predecir-subcampeon">
         <label class="nombre-tit" for="equipo2"><b>Ingrese el equipo 2</b></label>
         <input id="equipo2" class="inputs" type="text" name="equipo2" disabled>
-        <button type="button" (click)="openModal('equipo2')" class="inicio-boton">Seleccionar</button>
+        <button type="button" (click)="openModal3('equipo2')" class="inicio-boton">Seleccionar</button>
       </div>
+
       <div class="contenedor-predecir-campeon">
         <label class="nombre-tit" for="fecha"><b>Ingrese la fecha del partido</b></label>
         <input id="fecha" class="inputs" type="datetime-local" name="fecha">
@@ -38,7 +41,7 @@
     <div class="user-box">
       <div class="number-grid">
         <div class="number-item" *ngFor="let tipoPartido of tiposPartidos" [class.selected]="selectedTipoPartido === tipoPartido" (click)="selectTipoPartido(tipoPartido)">
-          {{ tipoPartido }}
+          {{ tipoPartido.nombre }}
         </div>
       </div>
     </div>
@@ -59,6 +62,21 @@
     </div>
     <div class="zona-boton-send">
       <button class="save-btn" (click)="saveSelectedEstadio()" type="button">Guardar</button>
+    </div>
+  </form>
+</div>
+
+<div id="id03" class="login-box" [ngClass]="{'show': bandera3}">
+  <form>
+    <div class="user-box">
+      <div class="number-grid">
+        <div class="number-item" *ngFor="let equipo of equipos" [class.selected]="selectedEquipo === equipo" (click)="selectEquipo(equipo)">
+          {{ equipo }}
+        </div>
+      </div>
+    </div>
+    <div class="zona-boton-send">
+      <button class="save-btn" (click)="saveSelectedEquipo()" type="button">Guardar</button>
     </div>
   </form>
 </div>
