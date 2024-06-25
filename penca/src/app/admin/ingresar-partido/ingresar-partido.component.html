@@ -52,8 +52,8 @@
   <form>
     <div class="user-box">
       <div class="number-grid">
-        <div class="number-item" *ngFor="let estadio of estadios" [class.selected]="selectedEstadio === estadio" (click)="selectEstadio(estadio)">
-          {{ estadio }}
+        <div class="number-item" *ngFor="let estadio of estadios" [class.selected]="selectedEstadio === estadio" (click)="selectEstadio(estadio.id)">
+          {{ estadio.nombre }}
         </div>
       </div>
     </div>

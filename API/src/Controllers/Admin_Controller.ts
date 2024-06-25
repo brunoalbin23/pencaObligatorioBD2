@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import connection from '../db';
 import { generateAccessToken } from './Seguridad';
 import { EventoObject } from '../Interfaces/EventoObject';
+import { EstadioObject } from '../Interfaces/EstadioObject';
 
 const app = express();
 app.use(bodyParser.json());
@@ -175,11 +176,11 @@ export const selectEquipos = async (req: Request, res: Response) => {
   export const selectEstadios = async (req: Request, res: Response) => {
     try {
         const conn = await connection;
-        const [rows] = await conn.execute('SELECT nombre FROM Estadio');
+        const [rows] = await conn.execute('SELECT id, nombre FROM Estadio');
         
-        const countries: string[] = Object.values(rows).map((row: any) => row.nombre); 
+        const estadios: EstadioObject[] = Object.values(rows).map((row: any) => new EstadioObject(row.id, row.nombre)); 
 
-        res.status(200).send({'estadios': countries});
+        res.status(200).send(estadios);
     } catch (error) {
         console.error('Error al seleccionar estadios de la tabla Estadios:', error);
         res.status(500).send('Error al seleccionar estadios de la tabla Estadios');

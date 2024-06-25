@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { IEstadio } from '../../interfaces/iestadio';
 
 @Component({
   selector: 'app-ingresar-partido',
@@ -86,11 +87,11 @@ export class IngresarPartidoComponent {
     }); 
   };
 
-  selectedEstadio: String | null = null;
-  estadios: String[] = [];
+  selectedEstadio: number | null = null;
+  estadios: IEstadio[] = [];
 
-  selectEstadio(estadio: String) {
-    this.selectedEstadio = estadio;
+  selectEstadio(id_estadio: number) {
+    this.selectedEstadio = id_estadio;
   }
 
   saveSelectedEstadio() {
