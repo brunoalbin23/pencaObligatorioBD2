@@ -149,11 +149,25 @@ export const selectEquipos = async (req: Request, res: Response) => {
         const conn = await connection;
         const [rows] = await conn.execute('SELECT nombre FROM Carrera');
         
-        const countries: string[] = Object.values(rows).map((row: any) => row.nombre); // Corregido: usar row.nombre
+        const countries: string[] = Object.values(rows).map((row: any) => row.nombre); 
 
         res.status(200).send({'carreras': countries});
     } catch (error) {
         console.error('Error al seleccionar carreras de la tabla Carrera:', error);
         res.status(500).send('Error al seleccionar carreras de la tabla Carrera');
+    }
+  }
+
+  export const selectTiposPartidos = async (req: Request, res: Response) => {
+    try {
+        const conn = await connection;
+        const [rows] = await conn.execute('SELECT nombre FROM Tipo_Partido');
+        
+        const countries: string[] = Object.values(rows).map((row: any) => row.nombre); 
+
+        res.status(200).send({'tiposPartidos': countries});
+    } catch (error) {
+        console.error('Error al seleccionar tipoPartidos de la tabla Tipo_Partido:', error);
+        res.status(500).send('Error al seleccionar tipoPartidos de la tabla Tipo_Partido');
     }
   }
