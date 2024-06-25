@@ -23,12 +23,7 @@
 
 <div id="id01" class="login-box" [ngClass]="{'show': bandera}">
   <form>
-      <button class="button-close" (click)="closeForm()" type="button">
-          <span class="X"></span>
-          <span class="Y"></span>
-      </button>
       <div class="user-box">
-        <!--Por ahora esto con numeros, la idea dsp q sean paises exstraidos de la-->
         <div class="number-grid">
           <div class="number-item" *ngFor="let equipo of equipos" [class.selected]="selectedEquipo === equipo" (click)="selectEquipo(equipo)">
               {{ equipo }}

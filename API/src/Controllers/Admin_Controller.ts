@@ -143,3 +143,17 @@ export const selectEquipos = async (req: Request, res: Response) => {
         res.status(500).send('Error al seleccionar países de la tabla Equipo');
     }
   }
+
+  export const selectCarreras = async (req: Request, res: Response) => {
+    try {
+        const conn = await connection;
+        const [rows] = await conn.execute('SELECT nombre FROM Carrera');
+        
+        const countries: string[] = Object.values(rows).map((row: any) => row.nombre); // Corregido: usar row.nombre
+
+        res.status(200).send({'carreras': countries});
+    } catch (error) {
+        console.error('Error al seleccionar carreras de la tabla Carrera:', error);
+        res.status(500).send('Error al seleccionar carreras de la tabla Carrera');
+    }
+  }

@@ -1,102 +1,116 @@
 <div class="main-content" [ngClass]="{'blurred': bandera || bandera2 || bandera4}">
-    <div class="login-contenedor">
-      <button class="admin-boton" (click)="setBanderaLogin2()">ADMINISTRACIÓN</button>
-      <div class="login-subcontenedor">
-        <h1 class="login-titulo">PENCA</h1>
-        <img src="../../assets/logo_ucu.png" class="login-imagen">
-        <div class="zona-botones">
-          <button (click)="setBanderaLogin()" class="inicio-boton" style="width:auto;">Iniciar</button>
-          <button (click)="setBanderaRegistro()" class="inicio-boton" style="width:auto;">Registro</button>
-        </div>
+  <div class="login-contenedor">
+    <button class="admin-boton" (click)="setBanderaLogin2()">ADMINISTRACIÓN</button>
+    <div class="login-subcontenedor">
+      <h1 class="login-titulo">PENCA</h1>
+      <img src="../../assets/logo_ucu.png" class="login-imagen">
+      <div class="zona-botones">
+        <button (click)="setBanderaLogin()" class="inicio-boton" style="width:auto;">Iniciar</button>
+        <button (click)="setBanderaRegistro()" class="inicio-boton" style="width:auto;">Registro</button>
       </div>
     </div>
   </div>
-
-  <div id="id01" class="login-box" [ngClass]="{'show': bandera}">
-    <form>
-      <button class="button-cruz"(click)="closeForm()">
-        <span class="X"></span>
-        <span class="Y"></span>
+</div>
+<div id="id01" class="login-box" [ngClass]="{'show': bandera}">
+  <form>
+    <button class="button-cruz"(click)="closeForm()">
+      <span class="X"></span>
+      <span class="Y"></span>
+    </button>
+    <div class="user-box">
+      <input type="text" name="" required="">
+      <label>Usuario</label>
+    </div>
+    <div class="user-box">
+      <input type="password" name="" required="">
+      <label>Contraseña</label>
+    </div>
+    <div class="zona-boton-send">
+      <button (click)="navigateToElegirTorneo()" class="inicio-boton">
+        INICIAR
+      <span></span>
       </button>
-      <div class="user-box">
-        <input type="text" name="" required="">
-        <label>Usuario</label>
-      </div>
-      <div class="user-box">
-        <input type="password" name="" required="">
-        <label>Contraseña</label>
-      </div>
-      <div class="zona-boton-send">
-        <button (click)="navigateToElegirTorneo()" class="inicio-boton">
-          INICIAR
-        <span></span>
-        </button>
-      </div>
-    </form>
-  </div>
-
-  <div id="id01" class="login-box" [ngClass]="{'show': bandera4}">
-    <form>
-      <button class="button-cruz"(click)="closeForm4()">
-        <span class="X"></span>
-        <span class="Y"></span>
+    </div>
+  </form>
+</div>
+<div id="id01" class="login-box" [ngClass]="{'show': bandera4}">
+  <form>
+    <button class="button-cruz"(click)="closeForm4()">
+      <span class="X"></span>
+      <span class="Y"></span>
+    </button>
+    <div class="user-box">
+      <input type="text" name="" required="">
+      <label>Usuario</label>
+    </div>
+    <div class="user-box">
+      <input type="password" name="" required="">
+      <label>Contraseña</label>
+    </div>
+    <div class="zona-boton-send">
+      <button (click)="navigateToOpcionesAdmin()" class="inicio-boton">
+        INICIAR
+      <span></span>
       </button>
-      <div class="user-box">
-        <input type="text" name="" required="">
-        <label>Usuario</label>
-      </div>
-      <div class="user-box">
-        <input type="password" name="" required="">
-        <label>Contraseña</label>
-      </div>
-      <div class="zona-boton-send">
-        <button (click)="navigateToOpcionesAdmin()" class="inicio-boton">
-          INICIAR
-        <span></span>
-        </button>
-      </div>
-    </form>
-  </div>
-
-  <div id="id02" class="login-box" [ngClass]="{'show': bandera2}">
-    <form>
-      <button class="button-cruz"(click)="closeForm2()">
-        <span class="X"></span>
-        <span class="Y"></span>
-      </button>
-      <div class="user-box">
-        <input type="text" name="" required="">
-        <label>CI</label>
-      </div>
-      <div class="user-box">
-        <input type="password" name="" required="">
-        <label>Contraseña</label>
-      </div>
-      <div class="user-box">
-        <input type="text" name="" required="">
-        <label>Nombre</label>
-      </div>
-      <div class="user-box">
-        <input type="text" name="" required="">
-        <label>Apellido</label>
-      </div>
-      <div class="user-box cositas">
-        <label class="nombre-tit" for="carrera"><b>Carrera</b></label>
-        <div class="input-container">
-          <div class="probar"></div>
-        <input id="carrera" class="text" type="input" name="uname" disabled>
-        <button type="button" (click)="openModal('carrera')" class="inicio-boton btnbtn input-right">...</button>
-       </div>
+    </div>
+  </form>
+</div>
+<div id="id02" class="login-box" [ngClass]="{'show': bandera2}">
+  <form>
+    <button class="button-cruz"(click)="closeForm2()">
+      <span class="X"></span>
+      <span class="Y"></span>
+    </button>
+    <div class="user-box">
+      <input type="text" name="" required="">
+      <label>CI</label>
+    </div>
+    <div class="user-box">
+      <input type="password" name="" required="">
+      <label>Contraseña</label>
+    </div>
+    <div class="user-box">
+      <input type="text" name="" required="">
+      <label>Nombre</label>
+    </div>
+    <div class="user-box">
+      <input type="text" name="" required="">
+      <label>Apellido</label>
+    </div>
+    <div class="user-box cositas">
+      <label class="nombre-tit" for="carrera"><b>Carrera</b></label>
+      <div class="input-container">
+        <div class="probar"></div>
+      <input id="campeon" class="text" type="input" name="uname" disabled>
+      <button type="button" (click)="openModal('campeon')" class="inicio-boton btnbtn input-right">...</button>
      </div>
+   </div>
+    <div class="user-box">
+      <input type="date" name="" required="">
+      <label>Fecha de Nacimiento</label>
+    </div>
+    <div class="zona-boton-send">
+      <button (click)="navigateToElegirTorneo()" class="inicio-boton">
+        REGISTRARSE
+      <span></span>
+      </button>
+    </div>
+  </form>
+</div>
+
+
+<div id="id01" class="login-box2" [ngClass]="{'show': bandera3}">
+  <form>
       <div class="user-box">
-        <input type="date" name="" required="">
-        <label>Fecha de Nacimiento</label>
+        <!--Por ahora esto con numeros, la idea dsp q sean LOS TORNEOS QUE CREE EL ADMIN-->
+        <div class="number-grid">
+          <div class="number-item" *ngFor="let carrera of carreras" [class.selected]="selectedCarrera === carrera" (click)="selectCarrera(carrera)">
+              {{ carrera }}
+          </div>
+      </div>
       </div>
       <div class="zona-boton-send">
-        <button (click)="navigateToElegirTorneo()" class="inicio-boton">
-          REGISTRARSE
-        <span></span>
-        </button>
+        <button class="save-btn" (click)="saveSelectedCarrera()" type="button">Guardar</button>
       </div>
-    </form>
-  </div>
+  </form>
+</div> 

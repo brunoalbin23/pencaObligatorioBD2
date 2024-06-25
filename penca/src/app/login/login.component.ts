@@ -20,6 +20,7 @@ export class LoginComponent {
   bandera2: boolean = false;
   bandera3: boolean = false;
   bandera4: boolean = false;
+  
 
   constructor(private router: Router) { }
 
@@ -74,20 +75,33 @@ export class LoginComponent {
     this.bandera3 = true;
   }
 
-
-  //Aca van Eventos
-  selectedNumber: String | null = null;
-
-
-  selectNumber(num: String) {
-    this.selectedNumber = num;
+  ngOnInit() {
+    this.fetchCarreras();
   }
 
-  saveSelectedNumber() {
-    if (this.selectedNumber !== null && this.currentInputId !== null) {
+  async fetchCarreras() {
+    const response = await fetch("http://localhost:3000/admin/getCarreras");
+    await response.json().then((res) => {
+      if (res.carreras) {
+        this.carreras = res.carreras;
+      }
+    }); 
+  };
+
+
+  //Esto por ahora esta con numeros, la idea es q despues sean nombres de paises o cuadros extraidos de la base de datos del torneo
+  selectedCarrera: String | null = null;
+  carreras: String[] = [];
+
+  selectCarrera(carrera: String) {
+    this.selectedCarrera = carrera;
+  }
+
+  saveSelectedCarrera() {
+    if (this.selectedCarrera !== null && this.currentInputId !== null) {
       const inputElement = document.getElementById(this.currentInputId) as HTMLInputElement;
       if (inputElement) {
-        inputElement.value = this.selectedNumber.toString();
+        inputElement.value = this.selectedCarrera.toString();
       }
       this.closeForm3();
     }
