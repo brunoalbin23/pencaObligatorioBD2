@@ -27,6 +27,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
+import { InfoService } from './services/info.service';
 
 @Component({
   selector: 'app-root',
@@ -36,5 +37,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+  constructor(private infoService: InfoService) {}
+
   title = 'penca';
 }

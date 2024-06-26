@@ -5,6 +5,7 @@ import { generateAccessToken } from './Seguridad';
 import { EventoObject } from '../Interfaces/EventoObject';
 import { EstadioObject } from '../Interfaces/EstadioObject';
 import { TipoPartidoObject } from '../Interfaces/TipoPartidoObject';
+import { IRanking } from '../Interfaces/IRanking';
 
 const app = express();
 app.use(bodyParser.json());
@@ -97,8 +98,12 @@ export const insertarResultadoPartido = async (req: Request, res: Response) => {
 
 export const selectEquipos = async (req: Request, res: Response) => {
     try {
+        var query = 'SELECT nombre FROM Equipo';
+        if (req.query.nombre && req.query.anio) {
+          query += ' JOIN Evento_Equipo ON Equipo.nombre = Evento_Equipo.nombre_eq WHERE nombre_ev = "' + req.query.nombre + '" AND anio_ev = ' + req.query.anio + ';';
+        }
         const conn = await connection;
-        const [rows] = await conn.execute('SELECT nombre FROM Equipo');
+        const [rows] = await conn.execute(query);
         
         const countries: string[] = Object.values(rows).map((row: any) => row.nombre); // Corregido: usar row.nombre
 
@@ -177,9 +182,9 @@ export const insertarEventoEquipo = async (req: Request, res: Response) => {
         const conn = await connection;
         const [rows] = await conn.execute('SELECT nombre FROM Carrera');
         
-        const countries: string[] = Object.values(rows).map((row: any) => row.nombre); 
+        const carreras: string[] = Object.values(rows).map((row: any) => row.nombre); 
 
-        res.status(200).send({'carreras': countries});
+        res.status(200).send({'carreras': carreras});
     } catch (error) {
         console.error('Error al seleccionar carreras de la tabla Carrera:', error);
         res.status(500).send('Error al seleccionar carreras de la tabla Carrera');
@@ -208,6 +213,23 @@ export const insertarEventoEquipo = async (req: Request, res: Response) => {
         const estadios: EstadioObject[] = Object.values(rows).map((row: any) => new EstadioObject(row.id, row.nombre)); 
 
         res.status(200).send({'estadios': estadios});
+    } catch (error) {
+        console.error('Error al seleccionar estadios de la tabla Estadios:', error);
+        res.status(500).send('Error al seleccionar estadios de la tabla Estadios');
+    }
+  }
+
+  export const selectRanking = async (req: Request, res: Response) => {
+    try {
+
+        var  query = 'SELECT a.nombre AS nombre, a.apellido AS apellido, COALESCE(pp.puntos_partidos + pcs.puntos_posicion, pp.puntos_partidos, 0) AS puntaje FROM (SELECT ac.CI, SUM(puntaje) AS puntos_partidos FROM Alumno_Carrera ac JOIN Prediccion_Partido pred ON ac.CI = pred.CI JOIN Partido p ON p.nombre_eq1 = pred.nombre_eq1 AND p.nombre_eq2 = pred.nombre_eq2 AND p.fecha_hora = pred.fecha_hora_partido WHERE p.nombre_ev = "' + req.query.nombre + '" AND p.anio_ev = ' + req.query.anio + ' GROUP BY ac.CI) pp JOIN (SELECT ac.CI, SUM(puntaje) AS puntos_posicion FROM Alumno_Carrera ac JOIN Prediccion_Evento_Equipo pred ON ac.CI = pred.CI WHERE pred.nombre_ev = "' + req.query.nombre + '" AND pred.anio_ev = ' + req.query.anio + ' GROUP BY ac.CI) pcs ON pp.CI = pcs.CI JOIN Alumno a ON pp.CI = a.CI;';
+
+        const conn = await connection;
+        const [rows] = await conn.execute(query);
+        
+        const ranking: IRanking[] = Object.values(rows).map((row: any) => new IRanking(row.nombre, row.apellido, row.puntaje)); 
+
+        res.status(200).send({'ranking': ranking});
     } catch (error) {
         console.error('Error al seleccionar estadios de la tabla Estadios:', error);
         res.status(500).send('Error al seleccionar estadios de la tabla Estadios');
