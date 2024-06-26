@@ -39,7 +39,7 @@ const isUserIdTaken = async (ci: number): Promise<boolean> => {
 
       // Insertar tabla carrera_alumno
       await conn.execute('INSERT INTO Alumno_Carrera (id_carrera, CI, fecha_ini, fecha_ult_act) VALUES (?, ?, ?, ?)', [id_carrera, ci, fecha_ini, fecha_ini]);
-  
+      //Aca no le mando una respesta porque se la adjunto luego en register cuando uso este metodo y IsUserIdTaken juntos
       await conn.commit();
     } catch (error) {
       await conn.rollback();
