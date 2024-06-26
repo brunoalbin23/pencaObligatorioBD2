@@ -89,13 +89,15 @@ export const insertarEquipo = async (req: Request, res: Response) => {
 
 
 export const insertarPartido = async (req: Request, res: Response) => {
-    const { nombre_eq1, nombre_eq2, fecha_hora,nombre_ev, anio_ev, estadio, tipo_partido } = req.body;
+  console.log("hola")
+    const { nombre_eq1, nombre_eq2, fecha_hora, nombre_ev, anio_ev, estadio, tipo_partido } = req.body;
   
     // Verificar que todos los campos necesarios estén presentes
     if (!nombre_eq1 || !nombre_eq2 || !fecha_hora || !nombre_ev || !anio_ev || !estadio || !tipo_partido) {
+      console.log(req.body);
       return res.status(400).json({ error: 'Todos los campos son requeridos' });
     }
-  
+    console.log("chau")
     try {
       const conn = await connection;
   

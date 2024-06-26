@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IEstadio } from '../../interfaces/iestadio';
 import { ITipoPartido } from '../../interfaces/itipo-partido';
+import { InfoService } from '../../services/info.service';
 
 @Component({
   selector: 'app-ingresar-partido',
@@ -20,14 +21,10 @@ export class IngresarPartidoComponent {
     this.fetchEquipo();
   }
   
-  constructor(private router: Router) { }
+  constructor(private router: Router, private infoService: InfoService) { }
 
   cancelar() {
     this.router.navigate(['/actualizacion-torneo']);
-  }
-
-  crearTorneo() {
-    this.router.navigate(['/torneo-creado']);
   }
 
   //TIPOS DE PARTIDOOOOOOOOOOOOOOOOOOOS
@@ -150,5 +147,32 @@ export class IngresarPartidoComponent {
       }
       this.closeForm3();
     }
+  }
+
+  //enivar todo
+  async crearTorneo() {
+    await this.fetchIngresarPartido();
+    this.router.navigate(['/torneo-creado']);
+  }
+
+  async fetchIngresarPartido() {
+    var url = "http://localhost:3000/admin/insertGame";
+    const evento = this.infoService.getEvento();
+    if(evento) {
+      url += encodeURI(evento.nombre) + '&anio=' + evento.anio;
+    }
+    const body = {
+      nombre_eq1: (<HTMLInputElement>document.getElementById("equipo1")).value,
+      nombre_eq2: (<HTMLInputElement>document.getElementById("equipo2")).value,
+      fecha_hora: (<HTMLInputElement>document.getElementById("fecha")).value,
+      //nombre_ev: evento?.nombre,
+      //anio_ev: evento?.anio,
+      nombre_ev: ("Copa america brasil"),
+      anio_ev: (2021),
+      estadio: (<HTMLInputElement>document.getElementById("estadio")).value,
+      tipo_partido: (<HTMLInputElement>document.getElementById("tiposPartidos")).value
+    }
+    console.log(body);
+    await fetch(url, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body)}); 
   }
 }
