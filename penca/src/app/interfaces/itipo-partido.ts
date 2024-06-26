@@ -1,4 +1,4 @@
 export interface ITipoPartido {
-    id: string,
+    id: number,
     nombre: string
 }

@@ -6,6 +6,7 @@ import { EventoObject } from '../Interfaces/EventoObject';
 import { EstadioObject } from '../Interfaces/EstadioObject';
 import { TipoPartidoObject } from '../Interfaces/TipoPartidoObject';
 import { IRanking } from '../Interfaces/IRanking';
+import { ICarrera } from '../Interfaces/ICarrera';
 
 const app = express();
 app.use(bodyParser.json());
@@ -180,9 +181,9 @@ export const insertarEventoEquipo = async (req: Request, res: Response) => {
   export const selectCarreras = async (req: Request, res: Response) => {
     try {
         const conn = await connection;
-        const [rows] = await conn.execute('SELECT nombre FROM Carrera');
+        const [rows] = await conn.execute('SELECT id, nombre FROM Carrera');
         
-        const carreras: string[] = Object.values(rows).map((row: any) => row.nombre); 
+        const carreras: ICarrera[] = Object.values(rows).map((row: any) => new ICarrera(row.id, row.nombre)); 
 
         res.status(200).send({'carreras': carreras});
     } catch (error) {
