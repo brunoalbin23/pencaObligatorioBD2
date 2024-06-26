@@ -33,8 +33,34 @@ export class CreacionTorneoComponent {
   eliminarEquipo(equipoId: number) {
     this.equiposs = this.equiposs.filter(equipo => equipo.id !== equipoId);
   }
-  crearTorneo() {
+  async crearTorneo() {
+    await this.fetchCrearTorneo();
+    await this.fetchInsertarEquipos();
     this.router.navigate(['/torneo-creado']);
+  }
+
+
+  async fetchCrearTorneo() {
+    console.log("estesi")
+    const url = "http://localhost:3000/admin/insertEvent";
+    const body = {
+      nombre: (<HTMLInputElement>document.getElementById("nombreTorneo")).value,
+      anio: (<HTMLInputElement>document.getElementById("anoTorneo")).value
+    }
+    await fetch(url, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body)}); 
+  }
+
+  async fetchInsertarEquipos() {
+    console.log("aca?")
+    const url = "http://localhost:3000/admin/insertTeam";
+    const body = {
+      nombre_ev: (<HTMLInputElement>document.getElementById("nombreTorneo")).value,
+      anio_ev: (<HTMLInputElement>document.getElementById("anoTorneo")).value,
+      equiposs: this.equiposs.map(equipo => equipo.nombre)
+    }
+    console
+    await fetch(url, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body)});
+    console.log("aca???") 
   }
 
   agregarEquipo() {

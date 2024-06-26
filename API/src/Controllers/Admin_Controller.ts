@@ -152,6 +152,7 @@ export const insertarEvento = async (req: Request, res: Response) => {
 };
 
 export const insertarEventoEquipo = async (req: Request, res: Response) => {
+  console.log("toy")
   const { nombre_ev, anio_ev, equipos} = req.body;
 
   // Verificar que todos los campos necesarios estén presentes

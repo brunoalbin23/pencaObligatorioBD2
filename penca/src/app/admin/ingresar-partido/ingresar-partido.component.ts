@@ -124,7 +124,12 @@ export class IngresarPartidoComponent {
   }
 
   async fetchEquipo() {
-    const response = await fetch("http://localhost:3000/admin/getEquipos");
+    var url = 'http://localhost:3000/admin/getEquipos?nombre='
+    const evento = this.infoService.getEvento();
+    if(evento) {
+      url += encodeURI(evento.nombre) + '&anio=' + evento.anio;
+    }
+    const response = await fetch(url);
     await response.json().then((res) => {
       if (res.equipos) {
         this.equipos = res.equipos;
@@ -156,6 +161,7 @@ export class IngresarPartidoComponent {
   }
 
   async fetchIngresarPartido() {
+    
     var url = "http://localhost:3000/admin/insertGame";
     const evento = this.infoService.getEvento();
     if(evento) {
@@ -165,10 +171,8 @@ export class IngresarPartidoComponent {
       nombre_eq1: (<HTMLInputElement>document.getElementById("equipo1")).value,
       nombre_eq2: (<HTMLInputElement>document.getElementById("equipo2")).value,
       fecha_hora: (<HTMLInputElement>document.getElementById("fecha")).value,
-      //nombre_ev: evento?.nombre,
-      //anio_ev: evento?.anio,
-      nombre_ev: ("Copa america brasil"),
-      anio_ev: (2021),
+      nombre_ev: evento?.nombre,
+      anio_ev: evento?.anio,
       estadio: (<HTMLInputElement>document.getElementById("estadio")).value,
       tipo_partido: (<HTMLInputElement>document.getElementById("tiposPartidos")).value
     }
