@@ -132,8 +132,12 @@ export const selectEventos = async (req: Request, res: Response) => {
 
 export const selectEquipos = async (req: Request, res: Response) => {
     try {
+        var query = 'SELECT nombre FROM Equipo';
+        if (req.query.nombre && req.query.anio) {
+          query += ' JOIN Evento_Equipo ON Equipo.nombre = Evento_Equipo.nombre_eq WHERE nombre_ev = "' + req.query.nombre + '" AND anio_ev = ' + req.query.anio + ';';
+        }
         const conn = await connection;
-        const [rows] = await conn.execute('SELECT nombre FROM Equipo');
+        const [rows] = await conn.execute(query);
         
         const countries: string[] = Object.values(rows).map((row: any) => row.nombre); // Corregido: usar row.nombre
 
