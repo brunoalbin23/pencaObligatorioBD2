@@ -13,6 +13,20 @@ import { OnInit } from '@angular/core';
   styleUrl: './proximos.component.css'
 })
 export class ProximosComponent implements OnInit {
+  bandera: boolean = false;
+
+  setBanderaLogin() {
+    this.bandera = !this.bandera;
+  }
+
+  closeForm() {
+    this.bandera = !this.bandera;
+  }
+
+  guardar(){
+    this.closeForm()
+  }
+
   partidos: { id: number, equipo1: string, equipo2: string, fecha: Date }[] = [];
 
   constructor(private router: Router) { }
@@ -32,9 +46,9 @@ export class ProximosComponent implements OnInit {
     this.router.navigate(['/sala-general']);
   }
 
-  actualizarPartido(id: number) {
+  //actualizarPartido(id: number) {
     // Lógica para actualizar el partido
     // Aquí puedes redirigir a otro componente para actualizar el partido seleccionado
-    this.router.navigate(['/actualizar-partido', id]);
-  }
+   // this.router.navigate(['/actualizar-partido', id]);
+  //}
 }

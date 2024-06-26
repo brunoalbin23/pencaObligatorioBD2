@@ -143,8 +143,8 @@ export class IngresarPartidoComponent {
   }
 
   saveSelectedEquipo() {
-    if (this.selectedEquipo !== null && this.currentInputId2 !== null) {
-      const inputElement = document.getElementById(this.currentInputId2) as HTMLInputElement;
+    if (this.selectedEquipo !== null && this.currentInputId3 !== null) {
+      const inputElement = document.getElementById(this.currentInputId3) as HTMLInputElement;
       if (inputElement) {
         inputElement.value = this.selectedEquipo.toString();
       }

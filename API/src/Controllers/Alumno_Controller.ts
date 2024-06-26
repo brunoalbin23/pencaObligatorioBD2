@@ -54,7 +54,6 @@ const isUserIdTaken = async (ci: number): Promise<boolean> => {
   // Endpoint para registrar un nuevo usuario y alumno
   export const register =  async (req: Request, res: Response) => {
     const { ci, password, nombre, apellido, fechaNac, id_carrera, fecha_ini } = req.body;
-    console.log("llegaste")
     if (!ci || !password || !nombre || !apellido || !fechaNac || !id_carrera || !fecha_ini) {
       return res.status(400).json({ error: 'Todos los campos son requeridos' });
     }

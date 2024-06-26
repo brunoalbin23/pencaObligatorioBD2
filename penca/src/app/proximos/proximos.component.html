@@ -1,4 +1,4 @@
-<div class="login-contenedor">
+<div class="login-contenedor" [ngClass]="{'blurred-background': bandera}">
     <div class="login-subcontenedor">
       <div class="header">
         <button (click)="navigateToSala()" class="boton-exit inicio-boton registrar">Volver</button>
@@ -10,9 +10,32 @@
             <span class="equipo">{{ partido.equipo1 }} vs {{ partido.equipo2 }}</span>
             <span class="fecha">{{ partido.fecha | date: 'dd/MM/yyyy HH:mm' }}</span>
           </div>
-          <button (click)="actualizarPartido(partido.id)" class="btn-actualizar">Actualizar</button>
+          <button (click)="setBanderaLogin()" class="btn-actualizar">Actualizar</button>
         </div>
       </div>
     </div>
+  </div>
+
+  <div id="id01" class="login-box" [ngClass]="{'show': bandera}">
+    <form>
+      <button class="button-cruz"(click)="closeForm()">
+        <span class="X"></span>
+        <span class="Y"></span>
+      </button>
+      <div class="user-box">
+        <input type="text" name="" required="">
+        <label>Resultado equipo 1</label>
+      </div>
+      <div class="user-box">
+        <input type="text" name="" required="">
+        <label>Resultado equipo 2</label>
+      </div>
+      <div class="zona-boton-send">
+        <button (click)="guardar()" class="inicio-boton">
+          GUARDAR
+        <span></span>
+        </button>
+      </div>
+    </form>
   </div>
   
