@@ -1,4 +1,4 @@
 export interface IEstadio {
-    id: string,
+    id: number,
     nombre: string
 }

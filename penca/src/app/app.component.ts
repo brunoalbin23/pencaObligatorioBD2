@@ -27,11 +27,13 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
+import { CrearEquipoComponent } from './crear-equipo/crear-equipo.component';
+import { EquipoCreadoComponent } from './equipo-creado/equipo-creado.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RankingComponent, FinalizadosComponent, ProximosComponent, ActualizacionTorneoFinalComponent, ElegirTorneoComponent, MatDatepickerModule, MatNativeDateModule, MatInputModule, MatFormFieldModule, AppComponent, RouterOutlet, LoginComponent, PrediccionRegistroComponent, SalaGeneralComponent, OpcionesAdminComponent, ActualizacionTorneoComponent, CreacionTorneoComponent, AgregarEquipoComponent, IngresarPartidoComponent, ActualizarResultadoComponent, TorneoCreadoComponent, CommonModule, PartidoCreadoComponent, ActualizacionResultadoComponent, ActualizacionUnResultadoComponent, ResultadoActualizadoComponent, PrediccionActualizadaComponent, PredecirResultadoComponent, SeleccionarTorneoComponent],
+  imports: [EquipoCreadoComponent, CrearEquipoComponent, RankingComponent, FinalizadosComponent, ProximosComponent, ActualizacionTorneoFinalComponent, ElegirTorneoComponent, MatDatepickerModule, MatNativeDateModule, MatInputModule, MatFormFieldModule, AppComponent, RouterOutlet, LoginComponent, PrediccionRegistroComponent, SalaGeneralComponent, OpcionesAdminComponent, ActualizacionTorneoComponent, CreacionTorneoComponent, AgregarEquipoComponent, IngresarPartidoComponent, ActualizarResultadoComponent, TorneoCreadoComponent, CommonModule, PartidoCreadoComponent, ActualizacionResultadoComponent, ActualizacionUnResultadoComponent, ResultadoActualizadoComponent, PrediccionActualizadaComponent, PredecirResultadoComponent, SeleccionarTorneoComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

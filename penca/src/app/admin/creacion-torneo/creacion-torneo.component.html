@@ -11,15 +11,19 @@
           <input id="anoTorneo" [(ngModel)]="anoTorneo" type="text" class="form-control form-control2">
         </div>
       </div>
+
       <div class="equipo-form-group">
-        <label for="nombreEquipo">Nombre Equipo</label>
-        <input id="nombreEquipo" [(ngModel)]="nombreEquipo" type="text" class="form-control">
+        <label class="nombre-tit" for="subcampeon"><b>Ingrese su subcampeón</b></label>
+        <input id="subcampeon" [(ngModel)]="nombreEquipo" class="inputs" type="text" name="uname" disabled>
         <button (click)="agregarEquipo()" class="btn-agregar inicio-boton">Agregar Equipo</button>
+        
       </div>
+      <button type="button" (click)="openModal('subcampeon')" class="inicio-boton">Seleccionar</button>
+
+
       <div class="lista-equipos">
-        <div class="equipo" *ngFor="let equipo of equipos">
+        <div class="equipo" *ngFor="let equipo of equiposs">
           <span>{{ equipo.nombre }}</span>
-          <button (click)="eliminarEquipo(equipo.id)" class="btn-eliminar inicio-boton">X</button>
         </div>
       </div>
       <div class="botones">
@@ -30,3 +34,17 @@
   </div>
 </div>
 
+<div id="id01" class="login-box" [ngClass]="{'show': bandera}">
+  <form>
+      <div class="user-box">
+        <div class="number-grid">
+          <div class="number-item" *ngFor="let equipo of equipos" [class.selected]="selectedEquipo === equipo" (click)="selectEquipo(equipo)">
+              {{ equipo }}
+          </div>
+      </div>
+      </div>
+      <div class="zona-boton-send">
+        <button class="save-btn" (click)="saveSelectedEquipo()" type="button">Guardar</button>
+      </div>
+  </form>
+</div> 

@@ -1,9 +1,8 @@
 import { Router } from "express";
-//import { inicio, register } from "../Controllers/Alumno_Controller";
+import { register } from "../Controllers/Alumno_Controller";
 
 const router = Router();
 
-//router.post('/register', register);
-//router.post('/inicio', inicio);
+router.post('/register', register);
 
 export default router;

@@ -22,6 +22,8 @@ import { ActualizacionTorneoFinalComponent } from './actualizacion-torneo-final/
 import { RankingComponent } from './ranking/ranking.component';
 import { FinalizadosComponent } from './finalizados/finalizados.component';
 import { ProximosComponent } from './proximos/proximos.component';
+import { CrearEquipoComponent } from './crear-equipo/crear-equipo.component';
+import { EquipoCreadoComponent } from './equipo-creado/equipo-creado.component';
 
 export const appRoutes: Routes = [
   { path: '', component: LoginComponent },
@@ -46,5 +48,7 @@ export const appRoutes: Routes = [
   { path: 'actualizacion-torneo-final', component: ActualizacionTorneoFinalComponent},
   { path: 'ranking', component: RankingComponent},
   { path: 'finalizados', component: FinalizadosComponent},
-  { path: 'proximos', component: ProximosComponent}
+  { path: 'proximos', component: ProximosComponent},
+  { path: 'crear-equipo', component: CrearEquipoComponent},
+  { path: 'equipo-creado', component: EquipoCreadoComponent}
 ];

@@ -15,4 +15,5 @@ router.get('/getTiposPartidos', selectTiposPartidos);
 router.get('/getEstadios', selectEstadios);
 router.get('/getEventos', selectEventos);
 
+
 export default router; // Exportar el router correctamente

@@ -11,31 +11,68 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./creacion-torneo.component.css']
 })
 export class CreacionTorneoComponent {
+
+  bandera: boolean = false;
+  currentInputId: string | null = null;
   nombreTorneo: string = '';
   anoTorneo: string = '';
   nombreEquipo: string = '';
-  equipos: { id: number, nombre: string }[] = []; 
+  equiposs: { id: number, nombre: string }[] = []; 
 
   constructor(private router: Router) { }
+
+  openModal(inputId: string) {
+    this.currentInputId = inputId;
+    this.bandera = true;
+  }
+
+  cancelar(){
+
+  }
+
+  crearTorneo(){
+    
+  }
 
   agregarEquipo() {
     if (this.nombreEquipo) {
       const id = new Date().getTime(); 
-      this.equipos.push({ id, nombre: this.nombreEquipo });
+      this.equiposs.push({ id, nombre: this.nombreEquipo });
       this.nombreEquipo = '';
     }
   }
 
-  eliminarEquipo(equipoId: number) {
-    this.equipos = this.equipos.filter(equipo => equipo.id !== equipoId);
+  closeForm() {
+    this.bandera = false;
   }
 
-  cancelar() {
-    this.router.navigate(['/opciones-admin']);
+  ngOnInit() {
+    this.fetchEquipos();
+  }
+  
+  async fetchEquipos() {
+    const response = await fetch("http://localhost:3000/admin/getEquipos");
+    await response.json().then((res) => {
+      if (res.equipos) {
+        this.equipos = res.equipos;
+      }
+    }); 
+  };
+  
+  selectedEquipo: String | null = null;
+  equipos: String[] = [];
+
+  selectEquipo(equipo: String) {
+    this.selectedEquipo = equipo;
   }
 
-  crearTorneo() {
-    // Lógica para agregar el torneo a la base de datos q ni idea jaksdjkad
-    this.router.navigate(['/torneo-creado']);
+  saveSelectedEquipo() {
+    if (this.selectedEquipo !== null && this.currentInputId !== null) {
+      const inputElement = document.getElementById(this.currentInputId) as HTMLInputElement;
+      if (inputElement) {
+        inputElement.value = this.selectedEquipo.toString();
+      }
+      this.closeForm();
+    }
   }
 }
