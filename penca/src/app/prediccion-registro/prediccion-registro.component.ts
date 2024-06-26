@@ -61,6 +61,7 @@ export class PrediccionRegistroComponent {
       if (inputElement) {
         inputElement.value = this.selectedEquipo.toString();
       }
+      this.selectedEquipo = null;
       this.closeForm();
     }
   }

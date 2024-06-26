@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { InfoService } from '../services/info.service';
 
 @Component({
   selector: 'app-ranking',
@@ -11,32 +12,31 @@ import { Router } from '@angular/router';
   styleUrls: ['./ranking.component.css']
 })
 export class RankingComponent {
-  personas: { id: number, nombre: string, apellido: string, puntaje: number }[] = [];
+  personas: { nombre: string, apellido: string, puntaje: number }[] = [];
 
-  constructor(private router: Router) { 
-    // Datos de ejemplo
-    this.personas = [
-      { id: 1, nombre: 'Juan', apellido: 'Pérez', puntaje: 85 },
-      { id: 2, nombre: 'Ana', apellido: 'García', puntaje: 92 },
-      { id: 3, nombre: 'Carlos', apellido: 'Rodríguez', puntaje: 78 },
-      // Agregar más personas según sea necesario
-    ];
+  constructor(private router: Router, private infoService: InfoService) {}
+
+  ngOnInit() {
+    this.fetchRanking();
+  }
+
+  async fetchRanking() {
+    var url = "http://localhost:3000/admin/getRanking?nombre="
+    const evento = this.infoService.getEvento();
+    if(evento) {
+      url += encodeURI(evento.nombre) + '&anio=' + evento.anio;
+    }
+    const response = await fetch(url);
+    await response.json().then((res) => {
+      if (res.ranking) {
+        this.personas = res.ranking;
+      }
+    });
     this.ordenarPersonas();
   }
 
   navigateToSala() {
     this.router.navigate(['/sala-general']);
-  }
-
-  // Método para agregar una persona al ranking
-  agregarPersona(nombre: string, apellido: string, puntaje: number) {
-    const id = new Date().getTime();
-    this.personas.push({ id, nombre, apellido, puntaje });
-  }
-
-  // Método para eliminar una persona del ranking
-  eliminarPersona(personaId: number) {
-    this.personas = this.personas.filter(persona => persona.id !== personaId);
   }
 
   ordenarPersonas() {

@@ -5,6 +5,5 @@ export class Evento {
     constructor(nombre: string, anio: number) {
       this.nombre = nombre;
       this.año = anio;
-
     }
-  }
+}
