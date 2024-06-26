@@ -164,9 +164,6 @@ export class IngresarPartidoComponent {
     
     var url = "http://localhost:3000/admin/insertGame";
     const evento = this.infoService.getEvento();
-    if(evento) {
-      url += encodeURI(evento.nombre) + '&anio=' + evento.anio;
-    }
     const body = {
       nombre_eq1: (<HTMLInputElement>document.getElementById("equipo1")).value,
       nombre_eq2: (<HTMLInputElement>document.getElementById("equipo2")).value,
