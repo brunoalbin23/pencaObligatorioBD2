@@ -152,7 +152,6 @@ export const insertarEvento = async (req: Request, res: Response) => {
 };
 
 export const insertarEventoEquipo = async (req: Request, res: Response) => {
-  console.log("toy")
   const { nombre_ev, anio_ev, equipos} = req.body;
 
   // Verificar que todos los campos necesarios estén presentes
@@ -164,7 +163,6 @@ export const insertarEventoEquipo = async (req: Request, res: Response) => {
     const conn = await connection;
     await conn.execute('INSERT INTO Evento (nombre, anio) VALUES (?, ?)', [nombre_ev, anio_ev]);
     console.log('Evento insertado con exito');
-    console.log(equipos);
     if(!equipos || equipos.length===0){
       res.status(200).send('Torneo insertado sin equipos adicionales')
     }
@@ -176,6 +174,22 @@ export const insertarEventoEquipo = async (req: Request, res: Response) => {
   } catch (error) {
     console.error('Error al intentar intentar insertar en la tabla Evento_Equipo:', error);
     return res.status(500).json({ error: 'Error al intentar insertar'+ error });
+  }
+};
+
+//INSERTAR VARIOS EQUIPOS
+export const insertarEquipos = async (req: Request, res: Response) => {
+  const { equipos } = req.body;
+  try {
+    const conn = await connection;
+    for(const equipo of equipos){
+      await conn.execute('INSERT INTO Equipo (nombre) VALUE (?)', [equipo]);
+    }
+
+    return res.status(201).json({ message: 'equipo registrado exitosamente' });
+  } catch (error) {
+    console.error('Error al intentar intentar insertar el equipo:', error);
+    return res.status(500).json({ error: 'Error al intentar insertar el equipo' });
   }
 };
 
