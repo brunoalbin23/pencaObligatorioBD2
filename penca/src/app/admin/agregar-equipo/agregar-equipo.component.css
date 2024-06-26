@@ -1,181 +1,557 @@
 .main-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  
-  .crear-torneo-contenedor {
-    background-color: #1e1e1e;
-    border-radius: 10px;
-    padding: 20px;
-    width: 600px;
-  }
-  
-  .crear-torneo-subcontenedor {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .form-group {
-    margin-bottom: 20px;
-  }
-  
-  label {
-    color: white;
-  }
-  
-  input {
-    width: 90%;
-    padding: 10px;
-    margin-top: 5px;
-    margin-bottom: 15px;
-    border-radius: 5px;
-  }
-  
-  .equipo-form-group {
-    background-color: #333;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-  }
-  
-  .btn-agregar {
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-left: 30%;
-  }
-  
-  .lista-equipos {
-    margin-bottom: 20px;
-  }
-  
-  .equipo {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #444;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-  }
-  
-  .bandera {
-    width: 50px;
-    height: auto;
-  }
-  
-  .btn-eliminar {
-    background-color: red;
-    color: white;
-    border: none;
-    padding: 5px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .botones {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.crear-torneo-contenedor {
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  padding: 20px;
+  width: 600px;
+}
+
+.crear-torneo-subcontenedor {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  color: white;
+}
+
+input {
+  width: 90%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+}
+
+.equipo-form-group {
+  background-color: #333;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.btn-agregar {
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 30%;
+}
+
+.lista-equipos {
+  margin-bottom: 20px;
+}
+
+.equipo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #444;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  height: 10px;
+}
+
+.bandera {
+  width: 50px;
+  height: auto;
+}
+
+.btn-eliminar {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 10px;
+  height: 10px;
+  margin: 0px;
+}
+
+.botones {
+  display: flex;
+  justify-content: space-between;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: rgba(0, 0, 0, 0);
+  border-color: white;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-cancelar, .btn-crear {
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-cancelar {
+  color: white;
+}
+
+.btn-crear {
+  color: white;
+}
+
+.inicio-boton {
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  color: #ffffff;
+  font-size: 16px;
+  text-decoration: none;
+  text-transform: uppercase;
+  overflow: hidden;
+  transition: .5s;
+  letter-spacing: 4px
+}
+
+.inicio-boton:hover{
+  background: #3a3ae3;
+  color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 5px #3a3ae3,
+              0 0 25px #3a3ae3,
+              0 0 50px #3a3ae3,
+              0 0 100px #3a3ae3;
+}
+
+.main-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-size: cover;
+}
+
+.crear-torneo-contenedor {
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.form-group, .equipo-form-group, .lista-equipos, .botones {
+  margin-bottom: 20px;
+}
+
+.lista-equipos {
+  max-height: 200px; 
+  overflow-y: auto;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.equipo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.btn-eliminar {
+  background-color: #ff4081;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-eliminar:hover {
+  background-color: #e91e63;
+}
+
+.form-general {
+  display: flex;
+  flex-direction: row;
+}
+
+.login-contenedor {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  position: relative;
+}
+
+.nombre-tit {
+  font-size: 30px;
+  color: white;
+  margin-right: 70px;
+}
+
+.login-subcontenedor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 65%;
+  height: 55%;
+  background-color: black;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 50px;
+}
+
+.containter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-titulo {
+  margin: 50px 0px;
+  color: white;
+  width: 700px;
+  display: grid;
+  place-content: center;
+}
+
+.contenedor-predecir-campeon{
+  margin: 0px 0px 0px 0px;
+}
+
+.contenedor-predecir-subcampeon{
+  margin: 0px 0px;
+}
+
+.contenedor-boton-continuar{
+  display: flex;
+  justify-content: center;
+}
+
+.inputs {
+  padding: 10px;
+  margin: 20px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: rgba(0, 0, 0, 0);
+  border-color: white;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.inicio-boton {
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  color: #ffffff;
+  font-size: 16px;
+  text-decoration: none;
+  text-transform: uppercase;
+  overflow: hidden;
+  letter-spacing: 4px
+}
+
+.inicio-boton:hover{
+  background: #3a3ae3;
+  color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 5px #3a3ae3,
+              0 0 25px #3a3ae3,
+              0 0 50px #3a3ae3,
+              0 0 100px #3a3ae3;
+}
+
+.login-box {
+  display: none;
+  position: absolute;
+  top: 45%;
+  left: 47%;
+  width: auto;
+  padding: 30px;
+  margin: 50px;  
+  transform: translate(-50%, -50%);
+  background: rgba(24, 20, 20, 0.987);
+  box-sizing: border-box;
+  box-shadow: 0 15px 25px rgba(0,0,0,.6);
+  border-radius: 10px;
+}
+
+.login-box.show{
+  display: flex;
+}
+
+.login-box .user-box {
+  position: relative;
+}
+
+.login-box .user-box input {
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 30px;
+  border: none;
+  border-bottom: 1px solid #fff;
+  outline: none;
+  background: transparent;
+}
+
+.login-box .user-box label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #fff;
+  pointer-events: none;
+  transition: .5s;
+}
+
+.login-box .user-box input:focus ~ label,
+.login-box .user-box input:valid ~ label {
+  top: -20px;
+  left: 0;
+  color: #bdb8b8;
+  font-size: 12px;
+}
+
+.inicio-boton {
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  color: #ffffff;
+  font-size: 16px;
+  text-decoration: none;
+  text-transform: uppercase;
+  overflow: hidden;
+  transition: .5s;
+  letter-spacing: 4px
+}
+
+.inicio-boton:hover{
+  background: #3a3ae3;
+  color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 5px #3a3ae3,
+              0 0 25px #3a3ae3,
+              0 0 50px #3a3ae3,
+              0 0 100px #3a3ae3;
+}
+
+.login-box form a {
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  color: #ffffff;
+  font-size: 16px;
+  text-decoration: none;
+  text-transform: uppercase;
+  overflow: hidden;
+  transition: .5s;
+  letter-spacing: 4px
+}
+
+.login-box a:hover {
+  background: #3a3ae3;
+  color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 5px #3a3ae3,
+              0 0 25px #3a3ae3,
+              0 0 50px #3a3ae3,
+              0 0 100px #3a3ae3;
+}
+
+.login-box a span {
+
+  position: absolute;
+  display: block;
+}
+.zona-boton-send {
+  text-align: center; 
+}
+
+@keyframes btn-anim1 {
+  0% {
+    left: -100%;
   }
 
-  button {
-    padding: 10px 20px;
-    background-color: rgba(0, 0, 0, 0);
-    border-color: white;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  50%,100% {
+    left: 100%;
   }
-  
-  .btn-cancelar, .btn-crear {
-    padding: 10px 20px;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .btn-cancelar {
-    color: white;
-  }
-  
-  .btn-crear {
-    color: white;
-  }
+}
 
-  .inicio-boton {
-    position: relative;
-    display: inline-block;
-    padding: 10px 20px;
-    color: #ffffff;
-    font-size: 16px;
-    text-decoration: none;
-    text-transform: uppercase;
-    overflow: hidden;
-    transition: .5s;
-    letter-spacing: 4px
+@keyframes close {
+  100% {
+    opacity: 1;
   }
+}
 
-  .inicio-boton:hover{
-    background: #3a3ae3;
-    color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 0 5px #3a3ae3,
-                0 0 25px #3a3ae3,
-                0 0 50px #3a3ae3,
-                0 0 100px #3a3ae3;
-  }
+.main-content {
+  transition: filter 0.3s ease;
+}
+.main-content.blurred {
+  filter: blur(5px);
+}
+.modal.show {
+  display: block; 
+}
 
-  .main-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-size: cover;
-  }
-  
-  .crear-torneo-contenedor {
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  }
-  
-  .form-group, .equipo-form-group, .lista-equipos, .botones {
-    margin-bottom: 20px;
-  }
+.main-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
 
-  .lista-equipos {
-    max-height: 200px; 
-    overflow-y: auto;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: rgba(255, 255, 255, 0.1);
-  }
-  
-  .equipo {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 10px;
-  }
-  
-  .btn-eliminar {
-    background-color: #ff4081;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .btn-eliminar:hover {
-    background-color: #e91e63;
-  }
-  
+.open-modal-btn {
+  padding: 10px 20px;
+  background-color: #3a3ae3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.open-modal-btn:hover {
+  background-color: #2a2aa3;
+}
+
+.number-selector-modal {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 15px 25px rgba(0,0,0,.6);
+}
+
+.number-selector-modal.show {
+  display: block;
+}
+
+.number-selector-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.number-selector-modal {
+text-align: right;
+}
+
+.number-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.number-item {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+
+.number-item:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.number-item.selected {
+  background: rgba(58, 58, 227, 0.8);
+  color: white;
+}
+
+.save-btn {
+  padding: 10px 20px;
+  background-color: #3a3ae3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.save-btn:hover {
+  background-color: #2a2aa3;
+}
+
+.save-btn:hover {
+background-color: #2a2aa3;
+}
+
+.contenedorr {
+display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cositacosita {
+flex-grow: 1;
+margin-right: 20px;
+width: 200px;
+}
+
+anashei {
+flex-shrink: 0;
+margin: 0px;
+padding: 0px;
+}
+
+.lista-equipos {
+max-height: 200px; 
+overflow-y: auto;
+margin-bottom: 20px;
+border: 1px solid #ccc;
+padding: 10px;
+border-radius: 5px;
+background-color: rgba(255, 255, 255, 0.1);
+}
+
+.equipo {
+display: flex;
+align-items: center;
+justify-content: space-between;
+margin-bottom: 10px;
+}
+
+.btn-eliminar {
+background-color: #ff4081;
+color: white;
+border: none;
+padding: 10px 20px;
+border-radius: 5px;
+cursor: pointer;
+}
+
+.btn-eliminar:hover {
+background-color: #e91e63;
+}
+
+
+.form-general {
+display: flex;
+flex-direction: row;
+}
