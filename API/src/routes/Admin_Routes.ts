@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { insertarEquipo, insertarEvento, selectEquipos, selectCarreras, selectTiposPartidos, selectEstadios, selectEventos} from "../Controllers/Admin_Controller";
+import { insertarEquipo, insertarEvento, selectEquipos, selectCarreras, selectTiposPartidos, selectEstadios, selectEventos, selectRanking} from "../Controllers/Admin_Controller";
 import { insertarPartido } from "../Controllers/German_Controller";
 
 const router = Router();
@@ -14,5 +14,6 @@ router.get('/getCarreras', selectCarreras);
 router.get('/getTiposPartidos', selectTiposPartidos);
 router.get('/getEstadios', selectEstadios);
 router.get('/getEventos', selectEventos);
+router.get('/getRanking', selectRanking)
 
 export default router; // Exportar el router correctamente
