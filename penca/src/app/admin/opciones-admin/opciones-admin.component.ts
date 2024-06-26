@@ -12,6 +12,12 @@ import { FormsModule } from '@angular/forms';
 })
 export class OpcionesAdminComponent {
 
+  bandera: boolean = false;
+  
+  openModal(inputId: string) {
+    this.bandera = true;
+  }
+
   constructor(private router: Router) { }
 
   navigateToCrearTorneo() {
@@ -20,6 +26,10 @@ export class OpcionesAdminComponent {
 
   navigateToSeleccionarTorneo() {
     this.router.navigate(['/seleccionar-torneo']);
+  }
+
+  navigateToCrearEquipo() {
+    this.router.navigate(['/crear-equipo']);
   }
 
   navigateToSalir() {

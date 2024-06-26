@@ -11,30 +11,67 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './agregar-equipo.component.css'
 })
 export class AgregarEquipoComponent {
+
+  bandera: boolean = false;
+  currentInputId: string | null = null;
   nombreTorneo: string = '';
+  anoTorneo: string = '';
   nombreEquipo: string = '';
-  equipos: { id: number, nombre: string }[] = []; 
+  equiposs: { id: number, nombre: string }[] = []; 
 
   constructor(private router: Router) { }
+
+  openModal(inputId: string) {
+    this.currentInputId = inputId;
+    this.bandera = true;
+  }
+
+  cancelar() {
+    this.router.navigate(['/opciones-admin']);
+  }
+
+  eliminarEquipo(equipoId: number) {
+    this.equiposs = this.equiposs.filter(equipo => equipo.id !== equipoId);
+  }
+  actualizarTorneo() {
+    this.router.navigate(['/actualizacion-torneo-final']);
+  }
 
   agregarEquipo() {
     if (this.nombreEquipo) {
       const id = new Date().getTime(); 
-      this.equipos.push({ id, nombre: this.nombreEquipo });
+      this.equiposs.push({ id, nombre: this.nombreEquipo });
       this.nombreEquipo = '';
     }
   }
 
-  eliminarEquipo(equipoId: number) {
-    this.equipos = this.equipos.filter(equipo => equipo.id !== equipoId);
+  closeForm() {
+    this.bandera = false;
   }
 
-  cancelar() {
-    this.router.navigate(['/actualizacion-torneo']);
+  ngOnInit() {
+    this.fetchEquipos();
   }
+  
+  async fetchEquipos() {
+    const response = await fetch("http://localhost:3000/admin/getEquipos");
+    await response.json().then((res) => {
+      if (res.equipos) {
+        this.equipos = res.equipos;
+      }
+    }); 
+  };
+  
+  selectedEquipo: String | null = null;
+  equipos: String[] = [];
 
-  actualizarTorneo() {
-    // Lógica para agregar el torneo a la base de datos q ni idea jaksdjkad
-    this.router.navigate(['/actualizacion-torneo-final']);
+  selectEquipo(equipo: String) {
+    this.selectedEquipo = equipo;
   }
+  saveSelectedEquipo() {
+    if (this.selectedEquipo !== null && this.currentInputId !== null) {
+      this.nombreEquipo = this.selectedEquipo.toString();
+      this.closeForm();
+    }
+  }
 }

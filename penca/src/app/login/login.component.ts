@@ -85,6 +85,8 @@ export class LoginComponent {
     this.bandera4 = !this.bandera4;
   }
 
+  //MOSTRAR CARRERASA
+
   currentInputId: string | null = null;
 
   openModal(inputId: string) {
@@ -105,8 +107,6 @@ export class LoginComponent {
     }); 
   };
 
-
-  //Esto por ahora esta con numeros, la idea es q despues sean nombres de paises o cuadros extraidos de la base de datos del torneo
   selectedCarrera: ICarrera | null = null;
   carreras: ICarrera[] = [];
 

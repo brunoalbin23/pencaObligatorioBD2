@@ -40,5 +40,6 @@ app.use(cors(corsOptions));
 
 app.use('/admin', adminRoutes);
 app.use('/alumno', alumnoRoutes);
+
 app.post('/registrar', register);
 app.post('/login', login);

@@ -17,4 +17,5 @@ router.get('/getEstadios', selectEstadios);
 router.get('/getEventos', selectEventos);
 router.get('/getRanking', selectRanking)
 
+
 export default router; // Exportar el router correctamente
