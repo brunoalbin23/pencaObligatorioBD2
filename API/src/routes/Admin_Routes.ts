@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { insertarEquipo, insertarEvento, selectEquipos, selectCarreras, selectTiposPartidos, selectEstadios, selectEventos, selectRanking} from "../Controllers/Admin_Controller";
+import { insertarEquipo, insertarEvento, selectEquipos, selectCarreras, selectTiposPartidos, selectEstadios, selectEventos, selectRanking, insertarEventoEquipo} from "../Controllers/Admin_Controller";
 import { insertarPartido } from "../Controllers/German_Controller";
 
 const router = Router();
@@ -8,6 +8,7 @@ const router = Router();
 router.post('/insertEvent', insertarEvento);
 router.post('/insertTeam', insertarEquipo);
 router.post('/insertGame', insertarPartido); //Del controlador German
+router.post('/insertarEventoEquipo', insertarEventoEquipo);
 
 router.get('/getEquipos', selectEquipos);
 router.get('/getCarreras', selectCarreras);

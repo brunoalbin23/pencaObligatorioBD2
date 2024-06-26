@@ -46,27 +46,6 @@ export const Adminlogin = async (req: Request, res: Response) => {
 };
 
 
-
-//INSERTAR EVENTO
-export const insertarEvento = async (req: Request, res: Response) => {
-    const { nombre, anio } = req.body;
-  
-    // Verificar que todos los campos necesarios estén presentes
-    if (!nombre || !anio) {
-      return res.status(400).json({ error: 'Todos los campos son requeridos' });
-    }
-  
-    try {
-      const conn = await connection;
-      await conn.execute('INSERT INTO Evento (nombre, anio) VALUES (?, ?)', [nombre, anio]);
-  
-      return res.status(201).json({ message: 'evento registrado exitosamente' });
-    } catch (error) {
-      console.error('Error al intentar intentar insertar el evento:', error);
-      return res.status(500).json({ error: 'Error al intentar insertar el evento' });
-    }
-  };
-
 //INSERTAR EQUIPO
 export const insertarEquipo = async (req: Request, res: Response) => {
   const { nombre} = req.body;
@@ -117,20 +96,6 @@ export const insertarResultadoPartido = async (req: Request, res: Response) => {
   }
 };
 
-export const selectEventos = async (req: Request, res: Response) => {
-  try {
-      const conn = await connection;
-      const [rows] = await conn.execute('SELECT nombre, anio FROM Evento');
-      
-      const eventos: EventoObject[] = Object.values(rows).map((row: any) => new EventoObject(row.nombre, row.anio)); 
-
-      res.status(200).send({'eventos': eventos});
-  } catch (error) {
-      console.error('Error al seleccionar eventos de la tabla Eventos:', error);
-      res.status(500).send('Error al seleccionar eventos de la tabla Eventos');
-  }
-}
-
 export const selectEquipos = async (req: Request, res: Response) => {
     try {
         var query = 'SELECT nombre FROM Equipo';
@@ -148,6 +113,69 @@ export const selectEquipos = async (req: Request, res: Response) => {
         res.status(500).send('Error al seleccionar países de la tabla Equipo');
     }
   }
+
+//SELECCIONAR EVENTO
+export const selectEventos = async (req: Request, res: Response) => {
+  try {
+      const conn = await connection;
+      const [rows] = await conn.execute('SELECT nombre, anio FROM Evento');
+      //EventoObject era porque por pantalla muestro nombre y año
+      const eventos: EventoObject[] = Object.values(rows).map((row: any) => new EventoObject(row.nombre, row.anio));
+
+      res.status(200).send({'eventos': eventos});
+  } catch (error) {
+      console.error('Error al seleccionar eventos de la tabla Eventos:', error);
+      res.status(500).send('Error al seleccionar eventos de la tabla Eventos');
+  }
+}
+
+//INSERTAR EVENTO
+export const insertarEvento = async (req: Request, res: Response) => {
+  const { nombre, anio } = req.body;
+
+  // Verificar que todos los campos necesarios estén presentes
+  if (!nombre || !anio) {
+    return res.status(400).json({ error: 'Todos los campos son requeridos' });
+  }
+
+  try {
+    const conn = await connection;
+    await conn.execute('INSERT INTO Evento (nombre, anio) VALUES (?, ?)', [nombre, anio]);
+
+    return res.status(201).json({ message: 'evento registrado exitosamente' });
+  } catch (error) {
+    console.error('Error al intentar intentar insertar el evento:', error);
+    return res.status(500).json({ error: 'Error al intentar insertar el evento' });
+  }
+};
+
+export const insertarEventoEquipo = async (req: Request, res: Response) => {
+  const { nombre_ev, anio_ev, equipos} = req.body;
+
+  // Verificar que todos los campos necesarios estén presentes
+  if (!nombre_ev || !anio_ev) {
+    return res.status(400).json({ error: 'Ingrese nombre y año del evento' });
+  }
+
+  try {
+    const conn = await connection;
+    await conn.execute('INSERT INTO Evento (nombre, anio) VALUES (?, ?)', [nombre_ev, anio_ev]);
+    console.log('Evento insertado con exito');
+    console.log(equipos);
+    if(!equipos || equipos.length===0){
+      res.status(200).send('Torneo insertado sin equipos adicionales')
+    }
+    for(const equipo of equipos){
+      await conn.execute('INSERT INTO Evento_Equipo (nombre_ev, anio_ev, nombre_eq) VALUE (?, ?, ?)', [nombre_ev, anio_ev, equipo]);
+    }
+    //await conn.execute('INSERT INTO Evento_Equipo (nombre_ev, anio_ev, nombre_eq) VALUE (?, ?, ?, ?)', [nombre_ev, anio_ev, equipos]);
+    return res.status(201).json({ message: 'Evento_equipo registrado exitosamente' });
+  } catch (error) {
+    console.error('Error al intentar intentar insertar en la tabla Evento_Equipo:', error);
+    return res.status(500).json({ error: 'Error al intentar insertar'+ error });
+  }
+};
+
 
   export const selectCarreras = async (req: Request, res: Response) => {
     try {
