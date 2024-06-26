@@ -125,3 +125,4 @@ export const insertarPartido = async (req: Request, res: Response) => {
   //PARA ACTUALIZAR RESULTADO PRIMERO HAY QUE FILTRAR EN UN METODO POR año y evento en la tabla evento (elegidos con el seleccionar)
   //Luego con otro metodo hay que seleccionar dentro de los partidos de ese evento
   //y una vez seleccionado el partido filtrando por su pk (WHERE PK= blablabla) actualizar los goles
+  
