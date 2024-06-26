@@ -1,4 +1,4 @@
-export interface ITipoPartido {
+export interface ICarrera {
     id: number,
     nombre: string
 }

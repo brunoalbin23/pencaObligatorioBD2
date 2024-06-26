@@ -87,7 +87,7 @@ export const insertarEquipo = async (req: Request, res: Response) => {
 
 
 export const insertarPartido = async (req: Request, res: Response) => {
-    const { nombre_eq1, nombre_eq2, fecha_hora, goles_eq1, goles_eq2, nombre_ev, anio_ev, estadio, tipo_partido } = req.body;
+    const { nombre_eq1, nombre_eq2, fecha_hora,nombre_ev, anio_ev, estadio, tipo_partido } = req.body;
   
     // Verificar que todos los campos necesarios estén presentes
     if (!nombre_eq1 || !nombre_eq2 || !fecha_hora || !nombre_ev || !anio_ev || !estadio || !tipo_partido) {
@@ -113,7 +113,7 @@ export const insertarPartido = async (req: Request, res: Response) => {
       const id_tipo = Object.values(tipoPartidoRows)[0].id;
   
       // Insertar el resultado del partido
-      await conn.execute('INSERT INTO Partido (nombre_eq1, nombre_eq2, fecha_hora, goles_eq1, goles_eq2, nombre_ev, anio_ev, id_estadio, id_tipo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', [nombre_eq1, nombre_eq2, fecha_hora, goles_eq1, goles_eq2, nombre_ev, anio_ev, id_estadio, id_tipo]);
+      await conn.execute('INSERT INTO Partido (nombre_eq1, nombre_eq2, fecha_hora, nombre_ev, anio_ev, id_estadio, id_tipo) VALUES (?, ?, ?, ?, ?, ?, ?)', [nombre_eq1, nombre_eq2, fecha_hora, nombre_ev, anio_ev, id_estadio, id_tipo]);
   
       return res.status(201).json({ message: 'Partido insertado exitosamente' });
     } catch (error) {
@@ -125,3 +125,4 @@ export const insertarPartido = async (req: Request, res: Response) => {
   //PARA ACTUALIZAR RESULTADO PRIMERO HAY QUE FILTRAR EN UN METODO POR año y evento en la tabla evento (elegidos con el seleccionar)
   //Luego con otro metodo hay que seleccionar dentro de los partidos de ese evento
   //y una vez seleccionado el partido filtrando por su pk (WHERE PK= blablabla) actualizar los goles
+  

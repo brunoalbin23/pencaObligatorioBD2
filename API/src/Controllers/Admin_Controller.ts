@@ -5,6 +5,8 @@ import { generateAccessToken } from './Seguridad';
 import { EventoObject } from '../Interfaces/EventoObject';
 import { EstadioObject } from '../Interfaces/EstadioObject';
 import { TipoPartidoObject } from '../Interfaces/TipoPartidoObject';
+import { IRanking } from '../Interfaces/IRanking';
+import { ICarrera } from '../Interfaces/ICarrera';
 
 const app = express();
 app.use(bodyParser.json());
@@ -44,27 +46,6 @@ export const Adminlogin = async (req: Request, res: Response) => {
   }
 };
 
-
-
-//INSERTAR EVENTO
-export const insertarEvento = async (req: Request, res: Response) => {
-    const { nombre, anio } = req.body;
-  
-    // Verificar que todos los campos necesarios estén presentes
-    if (!nombre || !anio) {
-      return res.status(400).json({ error: 'Todos los campos son requeridos' });
-    }
-  
-    try {
-      const conn = await connection;
-      await conn.execute('INSERT INTO Evento (nombre, anio) VALUES (?, ?)', [nombre, anio]);
-  
-      return res.status(201).json({ message: 'evento registrado exitosamente' });
-    } catch (error) {
-      console.error('Error al intentar intentar insertar el evento:', error);
-      return res.status(500).json({ error: 'Error al intentar insertar el evento' });
-    }
-  };
 
 //INSERTAR EQUIPO
 export const insertarEquipo = async (req: Request, res: Response) => {
@@ -116,24 +97,14 @@ export const insertarResultadoPartido = async (req: Request, res: Response) => {
   }
 };
 
-export const selectEventos = async (req: Request, res: Response) => {
-  try {
-      const conn = await connection;
-      const [rows] = await conn.execute('SELECT nombre, anio FROM Evento');
-      
-      const eventos: EventoObject[] = Object.values(rows).map((row: any) => new EventoObject(row.nombre, row.anio)); 
-
-      res.status(200).send({'eventos': eventos});
-  } catch (error) {
-      console.error('Error al seleccionar eventos de la tabla Eventos:', error);
-      res.status(500).send('Error al seleccionar eventos de la tabla Eventos');
-  }
-}
-
 export const selectEquipos = async (req: Request, res: Response) => {
     try {
+        var query = 'SELECT nombre FROM Equipo';
+        if (req.query.nombre && req.query.anio) {
+          query += ' JOIN Evento_Equipo ON Equipo.nombre = Evento_Equipo.nombre_eq WHERE nombre_ev = "' + req.query.nombre + '" AND anio_ev = ' + req.query.anio + ';';
+        }
         const conn = await connection;
-        const [rows] = await conn.execute('SELECT nombre FROM Equipo');
+        const [rows] = await conn.execute(query);
         
         const countries: string[] = Object.values(rows).map((row: any) => row.nombre); // Corregido: usar row.nombre
 
@@ -144,14 +115,77 @@ export const selectEquipos = async (req: Request, res: Response) => {
     }
   }
 
+//SELECCIONAR EVENTO
+export const selectEventos = async (req: Request, res: Response) => {
+  try {
+      const conn = await connection;
+      const [rows] = await conn.execute('SELECT nombre, anio FROM Evento');
+      //EventoObject era porque por pantalla muestro nombre y año
+      const eventos: EventoObject[] = Object.values(rows).map((row: any) => new EventoObject(row.nombre, row.anio));
+
+      res.status(200).send({'eventos': eventos});
+  } catch (error) {
+      console.error('Error al seleccionar eventos de la tabla Eventos:', error);
+      res.status(500).send('Error al seleccionar eventos de la tabla Eventos');
+  }
+}
+
+//INSERTAR EVENTO
+export const insertarEvento = async (req: Request, res: Response) => {
+  const { nombre, anio } = req.body;
+
+  // Verificar que todos los campos necesarios estén presentes
+  if (!nombre || !anio) {
+    return res.status(400).json({ error: 'Todos los campos son requeridos' });
+  }
+
+  try {
+    const conn = await connection;
+    await conn.execute('INSERT INTO Evento (nombre, anio) VALUES (?, ?)', [nombre, anio]);
+
+    return res.status(201).json({ message: 'evento registrado exitosamente' });
+  } catch (error) {
+    console.error('Error al intentar intentar insertar el evento:', error);
+    return res.status(500).json({ error: 'Error al intentar insertar el evento' });
+  }
+};
+
+export const insertarEventoEquipo = async (req: Request, res: Response) => {
+  const { nombre_ev, anio_ev, equipos} = req.body;
+
+  // Verificar que todos los campos necesarios estén presentes
+  if (!nombre_ev || !anio_ev) {
+    return res.status(400).json({ error: 'Ingrese nombre y año del evento' });
+  }
+
+  try {
+    const conn = await connection;
+    await conn.execute('INSERT INTO Evento (nombre, anio) VALUES (?, ?)', [nombre_ev, anio_ev]);
+    console.log('Evento insertado con exito');
+    console.log(equipos);
+    if(!equipos || equipos.length===0){
+      res.status(200).send('Torneo insertado sin equipos adicionales')
+    }
+    for(const equipo of equipos){
+      await conn.execute('INSERT INTO Evento_Equipo (nombre_ev, anio_ev, nombre_eq) VALUE (?, ?, ?)', [nombre_ev, anio_ev, equipo]);
+    }
+    //await conn.execute('INSERT INTO Evento_Equipo (nombre_ev, anio_ev, nombre_eq) VALUE (?, ?, ?, ?)', [nombre_ev, anio_ev, equipos]);
+    return res.status(201).json({ message: 'Evento_equipo registrado exitosamente' });
+  } catch (error) {
+    console.error('Error al intentar intentar insertar en la tabla Evento_Equipo:', error);
+    return res.status(500).json({ error: 'Error al intentar insertar'+ error });
+  }
+};
+
+
   export const selectCarreras = async (req: Request, res: Response) => {
     try {
         const conn = await connection;
-        const [rows] = await conn.execute('SELECT nombre FROM Carrera');
+        const [rows] = await conn.execute('SELECT id, nombre FROM Carrera');
         
-        const countries: string[] = Object.values(rows).map((row: any) => row.nombre); 
+        const carreras: ICarrera[] = Object.values(rows).map((row: any) => new ICarrera(row.id, row.nombre)); 
 
-        res.status(200).send({'carreras': countries});
+        res.status(200).send({'carreras': carreras});
     } catch (error) {
         console.error('Error al seleccionar carreras de la tabla Carrera:', error);
         res.status(500).send('Error al seleccionar carreras de la tabla Carrera');
@@ -180,6 +214,23 @@ export const selectEquipos = async (req: Request, res: Response) => {
         const estadios: EstadioObject[] = Object.values(rows).map((row: any) => new EstadioObject(row.id, row.nombre)); 
 
         res.status(200).send({'estadios': estadios});
+    } catch (error) {
+        console.error('Error al seleccionar estadios de la tabla Estadios:', error);
+        res.status(500).send('Error al seleccionar estadios de la tabla Estadios');
+    }
+  }
+
+  export const selectRanking = async (req: Request, res: Response) => {
+    try {
+
+        var  query = 'SELECT a.nombre AS nombre, a.apellido AS apellido, COALESCE(pp.puntos_partidos + pcs.puntos_posicion, pp.puntos_partidos, 0) AS puntaje FROM (SELECT ac.CI, SUM(puntaje) AS puntos_partidos FROM Alumno_Carrera ac JOIN Prediccion_Partido pred ON ac.CI = pred.CI JOIN Partido p ON p.nombre_eq1 = pred.nombre_eq1 AND p.nombre_eq2 = pred.nombre_eq2 AND p.fecha_hora = pred.fecha_hora_partido WHERE p.nombre_ev = "' + req.query.nombre + '" AND p.anio_ev = ' + req.query.anio + ' GROUP BY ac.CI) pp JOIN (SELECT ac.CI, SUM(puntaje) AS puntos_posicion FROM Alumno_Carrera ac JOIN Prediccion_Evento_Equipo pred ON ac.CI = pred.CI WHERE pred.nombre_ev = "' + req.query.nombre + '" AND pred.anio_ev = ' + req.query.anio + ' GROUP BY ac.CI) pcs ON pp.CI = pcs.CI JOIN Alumno a ON pp.CI = a.CI;';
+
+        const conn = await connection;
+        const [rows] = await conn.execute(query);
+        
+        const ranking: IRanking[] = Object.values(rows).map((row: any) => new IRanking(row.nombre, row.apellido, row.puntaje)); 
+
+        res.status(200).send({'ranking': ranking});
     } catch (error) {
         console.error('Error al seleccionar estadios de la tabla Estadios:', error);
         res.status(500).send('Error al seleccionar estadios de la tabla Estadios');

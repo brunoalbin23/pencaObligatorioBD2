@@ -26,7 +26,7 @@ const isUserIdTaken = async (ci: number): Promise<boolean> => {
   };
   
   // Función para registrar un nuevo usuario y alumno
-  const registerUserAndStudent = async (ci: number, password: string, nombre: string, apellido: string, fechaNac: string, id_carrera: number, fecha_ini: String, fecha_ult_act: String ): Promise<void> => {
+  const registerUserAndStudent = async (ci: number, password: string, nombre: string, apellido: string, fechaNac: string, id_carrera: number, fecha_ini: String): Promise<void> => {
     const conn = await connection;
     try {
       await conn.beginTransaction();
@@ -38,7 +38,7 @@ const isUserIdTaken = async (ci: number): Promise<boolean> => {
       await conn.execute('INSERT INTO Alumno (CI, nombre, apellido, fecha_nac) VALUES (?, ?, ?, ?)', [ci, nombre, apellido, fechaNac]);
 
       // Insertar tabla carrera_alumno
-      await conn.execute('INSERT INTO Alumno_Carrera (id_carrera, CI, fecha_ini, fecha_ult_act) VALUES (?, ?, ?, ?)', [id_carrera, ci, fecha_ini, fecha_ult_act]);
+      await conn.execute('INSERT INTO Alumno_Carrera (id_carrera, CI, fecha_ini, fecha_ult_act) VALUES (?, ?, ?, ?)', [id_carrera, ci, fecha_ini, fecha_ini]);
   
       await conn.commit();
     } catch (error) {
@@ -53,9 +53,9 @@ const isUserIdTaken = async (ci: number): Promise<boolean> => {
   
   // Endpoint para registrar un nuevo usuario y alumno
   export const register =  async (req: Request, res: Response) => {
-    const { ci, password, nombre, apellido, fechaNac, id_carrera, fecha_ini, fecha_ult_act } = req.body;
-  
-    if (!ci || !password || !nombre || !apellido || !fechaNac || !id_carrera || !fecha_ini || !fecha_ult_act) {
+    const { ci, password, nombre, apellido, fechaNac, id_carrera, fecha_ini } = req.body;
+    console.log("llegaste")
+    if (!ci || !password || !nombre || !apellido || !fechaNac || !id_carrera || !fecha_ini) {
       return res.status(400).json({ error: 'Todos los campos son requeridos' });
     }
   
@@ -65,7 +65,7 @@ const isUserIdTaken = async (ci: number): Promise<boolean> => {
         return res.status(409).json({ error: 'ID de usuario ya en uso' });
       }
   
-      await registerUserAndStudent(ci, password, nombre, apellido, fechaNac, id_carrera, fecha_ini, fecha_ult_act);
+      await registerUserAndStudent(ci, password, nombre, apellido, fechaNac, id_carrera, fecha_ini);
       return res.status(201).json({ message: 'Usuario y alumno registrados exitosamente' });
     } catch (error) {
       if (error instanceof Error) {

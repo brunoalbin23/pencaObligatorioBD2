@@ -63,19 +63,19 @@
       <span class="Y"></span>
     </button>
     <div class="user-box">
-      <input type="text" name="" required="">
+      <input type="text" id="registro-ci" name="" required="">
       <label>CI</label>
     </div>
     <div class="user-box">
-      <input type="password" name="" required="">
+      <input type="password" id="registro-contraseña" name="" required="">
       <label>Contraseña</label>
     </div>
     <div class="user-box">
-      <input type="text" name="" required="">
+      <input type="text" id="registro-nombre" name="" required="">
       <label>Nombre</label>
     </div>
     <div class="user-box">
-      <input type="text" name="" required="">
+      <input type="text" id="registro-apellido" name="" required="">
       <label>Apellido</label>
     </div>
     <div class="user-box cositas">
@@ -87,7 +87,7 @@
      </div>
    </div>
     <div class="user-box">
-      <input type="date" name="" required="">
+      <input type="date" id="registro-fnac" name="" required="">
       <label>Fecha de Nacimiento</label>
     </div>
     <div class="zona-boton-send">
@@ -106,7 +106,7 @@
         <!--Por ahora esto con numeros, la idea dsp q sean LOS TORNEOS QUE CREE EL ADMIN-->
         <div class="number-grid">
           <div class="number-item" *ngFor="let carrera of carreras" [class.selected]="selectedCarrera === carrera" (click)="selectCarrera(carrera)">
-              {{ carrera }}
+              {{ carrera.nombre }}
           </div>
       </div>
       </div>

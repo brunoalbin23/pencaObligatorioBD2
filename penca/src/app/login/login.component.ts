@@ -6,6 +6,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { ICarrera } from '../interfaces/icarrera';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -24,8 +26,23 @@ export class LoginComponent {
 
   constructor(private router: Router) { }
 
-  navigateToElegirTorneo() {
+  async navigateToElegirTorneo() {
+    await this.fetchRegistro();
     this.router.navigate(['/elegir-torneo']);
+  }
+
+  async fetchRegistro() {
+    const url = "http://localhost:3000/alumno/register";
+    const body = {
+      ci: (<HTMLInputElement>document.getElementById("registro-ci")).value,
+      password: (<HTMLInputElement>document.getElementById("registro-contraseña")).value,
+      nombre: (<HTMLInputElement>document.getElementById("registro-nombre")).value,
+      apellido: (<HTMLInputElement>document.getElementById("registro-apellido")).value,
+      fechaNac: (<HTMLInputElement>document.getElementById("registro-fnac")).value,
+      id_carrera: this.selectedCarrera?.id,
+      fecha_ini: formatDate(new Date(), "yyyy-MM-dd", "en")
+    }
+    await fetch(url, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body)}); 
   }
 
   navigateToOpcionesAdmin() {
@@ -90,10 +107,10 @@ export class LoginComponent {
     }); 
   };
 
-  selectedCarrera: String | null = null;
-  carreras: String[] = [];
+  selectedCarrera: ICarrera | null = null;
+  carreras: ICarrera[] = [];
 
-  selectCarrera(carrera: String) {
+  selectCarrera(carrera: ICarrera) {
     this.selectedCarrera = carrera;
   }
 
@@ -101,7 +118,7 @@ export class LoginComponent {
     if (this.selectedCarrera !== null && this.currentInputId !== null) {
       const inputElement = document.getElementById(this.currentInputId) as HTMLInputElement;
       if (inputElement) {
-        inputElement.value = this.selectedCarrera.toString();
+        inputElement.value = this.selectedCarrera.nombre;
       }
       this.closeForm3();
     }

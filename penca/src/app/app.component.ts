@@ -29,6 +29,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 import { CrearEquipoComponent } from './crear-equipo/crear-equipo.component';
 import { EquipoCreadoComponent } from './equipo-creado/equipo-creado.component';
+import { InfoService } from './services/info.service';
 
 @Component({
   selector: 'app-root',
@@ -38,5 +39,7 @@ import { EquipoCreadoComponent } from './equipo-creado/equipo-creado.component';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+  constructor(private infoService: InfoService) {}
+
   title = 'penca';
 }

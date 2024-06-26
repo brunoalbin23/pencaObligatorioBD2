@@ -83,7 +83,7 @@ nombre_eq VARCHAR(30) NOT NULL,
 prediccion TINYINT NOT NULL,
 puntaje TINYINT,
 PRIMARY KEY (CI, nombre_ev, anio_ev, nombre_eq),
-CONSTRAINT UC1 UNIQUE (nombre_ev, anio_ev, prediccion),
+CONSTRAINT UC1 UNIQUE (CI, nombre_ev, anio_ev, prediccion),
 FOREIGN KEY (fecha_ini_car, CI) REFERENCES Alumno_Carrera(fecha_ini, CI),
 FOREIGN KEY (nombre_ev, anio_ev, nombre_eq) REFERENCES Evento_Equipo(nombre_ev, anio_ev, nombre_eq)
 );
@@ -100,3 +100,4 @@ PRIMARY KEY (CI, nombre_eq1, nombre_eq2, fecha_hora_partido),
 FOREIGN KEY (fecha_ini_car, CI) REFERENCES Alumno_Carrera(fecha_ini, CI),
 FOREIGN KEY (nombre_eq1, nombre_eq2, fecha_hora_partido) REFERENCES Partido(nombre_eq1, nombre_eq2, fecha_hora)
 );
+
