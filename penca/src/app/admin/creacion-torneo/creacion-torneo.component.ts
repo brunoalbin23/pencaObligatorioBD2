@@ -26,12 +26,15 @@ export class CreacionTorneoComponent {
     this.bandera = true;
   }
 
-  cancelar(){
-
+  cancelar() {
+    this.router.navigate(['/opciones-admin']);
   }
 
-  crearTorneo(){
-    
+  eliminarEquipo(equipoId: number) {
+    this.equiposs = this.equiposs.filter(equipo => equipo.id !== equipoId);
+  }
+  crearTorneo() {
+    this.router.navigate(['/torneo-creado']);
   }
 
   agregarEquipo() {
@@ -65,14 +68,10 @@ export class CreacionTorneoComponent {
   selectEquipo(equipo: String) {
     this.selectedEquipo = equipo;
   }
-
   saveSelectedEquipo() {
     if (this.selectedEquipo !== null && this.currentInputId !== null) {
-      const inputElement = document.getElementById(this.currentInputId) as HTMLInputElement;
-      if (inputElement) {
-        inputElement.value = this.selectedEquipo.toString();
-      }
+      this.nombreEquipo = this.selectedEquipo.toString();
       this.closeForm();
-    }
-  }
+    }
+  }
 }

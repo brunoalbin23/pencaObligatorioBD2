@@ -13,17 +13,17 @@
       </div>
 
       <div class="equipo-form-group">
-        <label class="nombre-tit" for="subcampeon"><b>Ingrese su subcampeón</b></label>
-        <input id="subcampeon" [(ngModel)]="nombreEquipo" class="inputs" type="text" name="uname" disabled>
+        <label class="nombre-tit" for="subcampeon"><b>Añadir equipos</b></label>
+        <div class="contenedorr">
+          <input id="subcampeon" [(ngModel)]="nombreEquipo" class="inputs cositacosita" type="text" name="uname" disabled>
+          <button type="button" (click)="openModal('subcampeon')" class="inicio-boton anashei">Selec</button>
+        </div>
         <button (click)="agregarEquipo()" class="btn-agregar inicio-boton">Agregar Equipo</button>
-        
       </div>
-      <button type="button" (click)="openModal('subcampeon')" class="inicio-boton">Seleccionar</button>
-
-
       <div class="lista-equipos">
         <div class="equipo" *ngFor="let equipo of equiposs">
           <span>{{ equipo.nombre }}</span>
+          <button (click)="eliminarEquipo(equipo.id)" class="btn-eliminar inicio-boton"></button>
         </div>
       </div>
       <div class="botones">
@@ -46,5 +46,5 @@
       <div class="zona-boton-send">
         <button class="save-btn" (click)="saveSelectedEquipo()" type="button">Guardar</button>
       </div>
-  </form>
-</div> 
+  </form>
+</div>

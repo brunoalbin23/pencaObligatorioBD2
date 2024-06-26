@@ -61,6 +61,7 @@
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 5px;
+    height: 10px;
   }
   
   .bandera {
@@ -75,6 +76,9 @@
     padding: 5px;
     border-radius: 5px;
     cursor: pointer;
+    width: 10px;
+    height: 10px;
+    margin: 0px;
   }
   
   .botones {
@@ -260,7 +264,6 @@
     text-decoration: none;
     text-transform: uppercase;
     overflow: hidden;
-    margin-top: 40px;
     letter-spacing: 4px
   }
 
@@ -338,7 +341,6 @@
     text-transform: uppercase;
     overflow: hidden;
     transition: .5s;
-    margin-top: 40px;
     letter-spacing: 4px
   }
 
@@ -362,7 +364,6 @@
     text-transform: uppercase;
     overflow: hidden;
     transition: .5s;
-    margin-top: 40px;
     letter-spacing: 4px
   }
   
@@ -393,73 +394,6 @@
     50%,100% {
       left: 100%;
     }
-  }
-
-  .button-cruz {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    width: 3em;
-    height: 3em;
-    margin-left: 150px;
-    border: none;
-    background: rgb(211, 21, 21);
-    border-radius: 5px;
-    transition: background 0.5s;
-  }
-  
-  .X {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 2em;
-    height: 1.5px;
-    background-color: rgb(255, 255, 255);
-    transform: translateX(-50%) rotate(45deg);
-  }
-  
-  .Y {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 2em;
-    height: 1.5px;
-    background-color: #fff;
-    transform: translateX(-50%) rotate(-45deg);
-  }
-  
-  .close {
-    position: absolute;
-    display: flex;
-    padding: 0.8rem 1.5rem;
-    align-items: center;
-    justify-content: center;
-    transform: translateX(-50%);
-    top: -70%;
-    left: 50%;
-    width: 3em;
-    height: 1.7em;
-    font-size: 12px;
-    background-color: rgb(19, 22, 24);
-    color: rgb(187, 229, 236);
-    border: none;
-    border-radius: 3px;
-    pointer-events: none;
-    opacity: 0;
-  }
-  
-  .button-cruz:hover {
-    background-color: rgb(244, 117, 117);
-  }
-  
-  .button-cruz:active {
-    background-color: rgb(130, 0, 0);
-  }
-  
-  .button-cruz:hover > .close {
-    animation: close 0.2s forwards 0.25s;
   }
   
   @keyframes close {
@@ -566,4 +500,58 @@
 
 .save-btn:hover {
   background-color: #2a2aa3;
+}
+
+.contenedorr {
+  display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cositacosita {
+  flex-grow: 1;
+  margin-right: 20px;
+  width: 200px;
+}
+
+anashei {
+  flex-shrink: 0;
+  margin: 0px;
+  padding: 0px;
+}
+
+.lista-equipos {
+  max-height: 200px; 
+  overflow-y: auto;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.equipo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.btn-eliminar {
+  background-color: #ff4081;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-eliminar:hover {
+  background-color: #e91e63;
+}
+
+
+.form-general {
+  display: flex;
+  flex-direction: row;
 }
