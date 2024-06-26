@@ -49,7 +49,8 @@ export const Adminlogin = async (req: Request, res: Response) => {
 
 //INSERTAR EQUIPO
 export const insertarEquipo = async (req: Request, res: Response) => {
-  const { nombre} = req.body;
+  const { nombre } = req.body;
+  console.log("lleuge")
 
   // Verificar que todos los campos necesarios estén presentes
   if (!nombre) {

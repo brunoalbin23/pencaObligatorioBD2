@@ -21,7 +21,16 @@ export class CrearEquipoComponent {
     this.router.navigate(['/opciones-admin']);
   }
 
-  actualizarTorneo() {
+  async actualizarTorneo() {
+    await this.fetchCrearEquipo();
     this.router.navigate(['/equipo-creado']);
+  }
+
+  async fetchCrearEquipo() {
+    const url = "http://localhost:3000/admin/insertTeam";
+    const body = {
+      nombre: (<HTMLInputElement>document.getElementById("nombre-equipo")).value
+    }
+    await fetch(url, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body)}); 
   }
 }
