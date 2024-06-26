@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IEvento } from '../../interfaces/ievento';
+import { InfoService } from '../../services/info.service';
 
 @Component({
   selector: 'app-elegir-torneo',
@@ -15,7 +16,7 @@ export class ElegirTorneoComponent implements OnInit {
   bandera: boolean = false;
   currentInputId: string | null = null;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private infoService: InfoService) { }
 
   ngOnInit() {
     this.fetchEventos();
@@ -55,6 +56,7 @@ export class ElegirTorneoComponent implements OnInit {
       const inputElement = document.getElementById(this.currentInputId) as HTMLInputElement;
       if (inputElement) {
         inputElement.value = this.selectedEvento.nombre;
+        this.infoService.setEvento(this.selectedEvento);
       }
       this.closeForm();
     }
