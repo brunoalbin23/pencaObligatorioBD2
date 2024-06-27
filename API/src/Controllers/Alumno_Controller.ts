@@ -4,6 +4,7 @@ import express, { Request, Response } from 'express';
 import bodyParser from "body-parser";
 import connection from "../db";
 import { generateAccessToken } from './Seguridad';
+import { IPartido } from '../Interfaces/IPartido';
 
 const app = express();
 app.use(bodyParser.json());
@@ -103,3 +104,49 @@ export const login = async (req: Request, res: Response) => {
       return res.status(500).json({ error: 'Error al intentar iniciar sesión' });
     }
   };
+
+  export const insertarPrediccionPartido = async (req: Request, res: Response) => {
+    const { ci, nombre_eq1, nombre_eq2, prediccion_eq1, prediccion_eq2, fecha_hora } = req.body;
+    // Verificar que todos los campos necesarios estén presentes
+    if (!ci || !nombre_eq1 || !nombre_eq2 || !prediccion_eq1 || !prediccion_eq2 || !fecha_hora) {
+      return res.status(400).json({ error: 'Todos los campos son requeridos' });
+    }
+  
+    try {
+      const conn = await connection;
+
+      var [rows] = await conn.execute('SELECT 1 as existe FROM Prediccion_Partido WHERE CI = ? AND nombre_eq1 = ? AND nombre_eq2 = ? AND fecha_hora_partido = ?', [ci, nombre_eq1, nombre_eq2, fecha_hora]);
+      const check = Object.values(rows).map((row: any) => row.existe);
+      if (check[0] != 1) {
+        [rows] = await conn.execute('SELECT fecha_ini FROM Alumno_Carrera WHERE CI = ? ORDER BY fecha_ini DESC LIMIT 1;', [ci])
+
+        const result: String[] = Object.values(rows).map((row: any) => row.fecha_ini)
+        await conn.execute('INSERT INTO Prediccion_Partido (CI, fecha_ini_car, nombre_eq1, nombre_eq2, fecha_hora_partido, prediccion_eq1, prediccion_eq2) VALUE (?, ?, ?, ?, ?, ?, ?);', [ci, result[0], nombre_eq1, nombre_eq2, fecha_hora, prediccion_eq1, prediccion_eq2]);
+      } else {
+        await conn.execute('UPDATE Prediccion_Partido SET prediccion_eq1 = ?, prediccion_eq2 = ? WHERE nombre_eq1 = ? AND nombre_eq2 = ? AND CI = ? AND fecha_hora_partido = ?;', [prediccion_eq1, prediccion_eq2, nombre_eq1, nombre_eq2, ci, fecha_hora])
+      }
+  
+      return res.status(201).json({ message: 'prediccion de partido registrada exitosamente' });
+    } catch (error) {
+      console.error('Error al intentar insertar predicción de partido:', error);
+      return res.status(500).json({ error: 'Error al intentar insertar la predicción de partido' });
+    }
+  };
+
+  export const selectPartidos = async (req: Request, res: Response) => {
+    try {
+        var query = 'SELECT nombre_eq1, nombre_eq2, fecha_hora, id_tipo, id_estadio FROM Partido';
+        if (req.query.nombre && req.query.anio) {
+          query += ' WHERE nombre_ev = "' + req.query.nombre + '" AND anio_ev = ' + req.query.anio + ' AND DATE_SUB(fecha_hora, INTERVAL 1 HOUR) > NOW();';
+        }
+        const conn = await connection;
+        const [rows] = await conn.execute(query);
+        
+        const partidos: IPartido[] = Object.values(rows).map((row: any) => new IPartido(row.nombre_eq1, row.nombre_eq2, row.fecha_hora, row.id_tipo, row.id_estadio)); // Corregido: usar row.nombre
+
+        res.status(200).send({'partidos': partidos});
+    } catch (error) {
+        console.error('Error al seleccionar países de la tabla Equipo:', error);
+        res.status(500).send('Error al seleccionar países de la tabla Equipo');
+    }
+  }

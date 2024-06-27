@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ICarrera } from '../interfaces/icarrera';
 import { formatDate } from '@angular/common';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -24,17 +25,17 @@ export class LoginComponent {
   bandera4: boolean = false;
   
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private userService: UserService) { }
 
-  async navigateToElegirTorneo() {
-    await this.fetchRegistro();
+  navigateToElegirTorneo() {
     this.router.navigate(['/elegir-torneo']);
   }
 
   async fetchRegistro() {
     const url = "http://localhost:3000/alumno/register";
+    const ci = + (<HTMLInputElement>document.getElementById("registro-ci")).value;
     const body = {
-      ci: (<HTMLInputElement>document.getElementById("registro-ci")).value,
+      ci: ci,
       password: (<HTMLInputElement>document.getElementById("registro-contraseña")).value,
       nombre: (<HTMLInputElement>document.getElementById("registro-nombre")).value,
       apellido: (<HTMLInputElement>document.getElementById("registro-apellido")).value,
@@ -42,7 +43,14 @@ export class LoginComponent {
       id_carrera: this.selectedCarrera?.id,
       fecha_ini: formatDate(new Date(), "yyyy-MM-dd", "en")
     }
-    await fetch(url, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body)}); 
+    await fetch(url, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body)});
+    this.userService.setCI(ci);
+    this.navigateToElegirTorneo(); 
+  }
+
+  fetchLogin() {
+    this.userService.setCI(92856362);
+    this.navigateToElegirTorneo();
   }
 
   navigateToOpcionesAdmin() {

@@ -20,7 +20,7 @@
         <div class="user-box">
           <div class="number-grid">
             <div class="number-item" *ngFor="let evento of eventos" [class.selected]="selectedEvento === evento" (click)="selectEvento(evento)">
-                {{ evento.nombre }}
+                {{ evento.nombre + ' ' + evento.anio }}
             </div>
         </div>
         </div>

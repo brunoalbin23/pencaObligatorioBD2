@@ -55,7 +55,7 @@ export class ElegirTorneoComponent implements OnInit {
     if (this.selectedEvento !== null && this.currentInputId !== null) {
       const inputElement = document.getElementById(this.currentInputId) as HTMLInputElement;
       if (inputElement) {
-        inputElement.value = this.selectedEvento.nombre;
+        inputElement.value = this.selectedEvento.nombre + ' ' + this.selectedEvento.anio;
         this.infoService.setEvento(this.selectedEvento);
       }
       this.closeForm();
