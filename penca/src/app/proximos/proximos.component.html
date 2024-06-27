@@ -7,10 +7,10 @@
       <div class="lista-partidos">
         <div class="partido" *ngFor="let partido of partidos">
           <div class="equipo-nombres">
-            <span class="equipo">{{ partido.equipo1 }} vs {{ partido.equipo2 }}</span>
-            <span class="fecha">{{ partido.fecha | date: 'dd/MM/yyyy HH:mm' }}</span>
+            <span class="equipo">{{ partido.nombre_eq1 }} vs {{ partido.nombre_eq2 }}</span>
+            <span class="fecha"> {{ partido.fecha_hora | date: 'dd/MM/yyyy HH:mm' }}</span>
           </div>
-          <button (click)="setBanderaLogin()" class="btn-actualizar">Actualizar</button>
+          <button (click)="setBanderaPredecir(partido)" class="btn-actualizar">Actualizar</button>
         </div>
       </div>
     </div>
@@ -23,12 +23,12 @@
         <span class="Y"></span>
       </button>
       <div class="user-box">
-        <input type="text" name="" required="">
-        <label>Resultado equipo 1</label>
+        <input type="text" id="prediccion-eq1" name="" required="">
+        <label>Resultado {{ selectedPartido?.nombre_eq1 }}</label>
       </div>
       <div class="user-box">
-        <input type="text" name="" required="">
-        <label>Resultado equipo 2</label>
+        <input type="text" id="prediccion-eq2" name="" required="">
+        <label>Resultado {{ selectedPartido?.nombre_eq2 }}</label>
       </div>
       <div class="zona-boton-send">
         <button (click)="guardar()" class="inicio-boton">

@@ -30,6 +30,8 @@ import { CommonModule } from '@angular/common';
 import { CrearEquipoComponent } from './crear-equipo/crear-equipo.component';
 import { EquipoCreadoComponent } from './equipo-creado/equipo-creado.component';
 import { InfoService } from './services/info.service';
+import { PartidoService } from './services/partido.service';
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -39,7 +41,7 @@ import { InfoService } from './services/info.service';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  constructor(private infoService: InfoService) {}
+  constructor(private infoService: InfoService, private partidoService: PartidoService, private userService: UserService) {}
 
   title = 'penca';
 }

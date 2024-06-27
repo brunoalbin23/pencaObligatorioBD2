@@ -1,11 +1,11 @@
-import { carrera } from "./ICarrera"
+import { ICarrera } from "./ICarrera"
 
 interface IAlumno {
   nombre: string
   apellido: string
   fecha_nac: Date
   ci: string
-  carrera: carrera
+  carrera: ICarrera
   password: string
 }
 export default IAlumno

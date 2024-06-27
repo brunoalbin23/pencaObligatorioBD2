@@ -4,6 +4,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { OnInit } from '@angular/core';
+import { InfoService } from '../services/info.service';
+import { IPartido } from '../interfaces/ipartido';
+import { UserService } from '../services/user.service';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-proximos',
@@ -15,7 +19,8 @@ import { OnInit } from '@angular/core';
 export class ProximosComponent implements OnInit {
   bandera: boolean = false;
 
-  setBanderaLogin() {
+  setBanderaPredecir(partido: IPartido) {
+    this.selectedPartido = partido;
     this.bandera = !this.bandera;
   }
 
@@ -23,23 +28,52 @@ export class ProximosComponent implements OnInit {
     this.bandera = !this.bandera;
   }
 
-  guardar(){
-    this.closeForm()
+  async guardar(){
+    this.fetchPredecirPartido();
+    this.closeForm();
   }
 
-  partidos: { id: number, equipo1: string, equipo2: string, fecha: Date }[] = [];
+  async fetchPredecirPartido() {
+    const url = "http://localhost:3000/alumno/ingresarPrediccionPartido";
+    const ci = this.userService.getCI();
+    const body = {
+      ci: ci,
+      nombre_eq1: this.selectedPartido?.nombre_eq1,
+      nombre_eq2: this.selectedPartido?.nombre_eq2,
+      prediccion_eq1: (<HTMLInputElement>document.getElementById("prediccion-eq1")).value,
+      prediccion_eq2: (<HTMLInputElement>document.getElementById("prediccion-eq2")).value,
+      fecha_hora: formatDate(<Date>this.selectedPartido?.fecha_hora, "yyyy-MM-dd hh-mm-ss", "en")
+    }
+    console.log(body);
+    await fetch(url, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body)}); 
+  }
 
-  constructor(private router: Router) { }
+  partidos: IPartido[] = [];
+  selectedPartido: IPartido | null = null;
+
+  constructor(private router: Router, private infoService: InfoService, private userService: UserService) { }
 
   ngOnInit() {
-    // Aquí iría la lógica para cargar los partidos desde la base de datos
-    this.partidos = [
-      { id: 1, equipo1: 'Equipo A', equipo2: 'Equipo B', fecha: new Date('2024-07-01T14:00:00') },
-      { id: 2, equipo1: 'Equipo C', equipo2: 'Equipo D', fecha: new Date('2024-06-30T16:00:00') },
-      // Agregar más partidos según sea necesario
-    ];
+    this.fetchPartidos();
+  }
 
-    this.partidos.sort((a, b) => b.fecha.getTime() - a.fecha.getTime());
+  async fetchPartidos() {
+    var url = "http://localhost:3000/alumno/getPartidos?nombre=";
+    const evento = this.infoService.getEvento();
+    if(evento) {
+      url += encodeURI(evento.nombre) + '&anio=' + evento.anio;
+    }
+    const response = await fetch(url);
+    await response.json().then((res) => {
+      if (res.partidos) {
+        this.partidos = res.partidos;
+      }
+    });
+    this.ordenarPartidos();
+  }
+
+  ordenarPartidos() {
+    this.partidos.sort((a, b) => Date.parse(b.fecha_hora.toString()) - Date.parse(a.fecha_hora.toString()));
   }
 
   navigateToSala() {
