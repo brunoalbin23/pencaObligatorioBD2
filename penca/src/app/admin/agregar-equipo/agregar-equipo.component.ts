@@ -35,6 +35,11 @@ export class AgregarEquipoComponent {
     this.equiposs = this.equiposs.filter(equipo => equipo.id !== equipoId);
   }
 
+
+
+
+
+
   async actualizarTorneo() {
     await this.fetchInsertarEquipos();
     this.router.navigate(['/actualizacion-torneo-final']);
@@ -48,8 +53,13 @@ export class AgregarEquipoComponent {
       anio_ev: evento?.anio,
       equipos: this.equiposs.map(equipo => equipo.nombre) 
     }
+    console.log(body);
     await fetch(url, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body)});
   }
+
+
+
+
 
 
   agregarEquipo() {

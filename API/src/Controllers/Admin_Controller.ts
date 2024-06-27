@@ -180,6 +180,9 @@ export const insertarEventoEquipo = async (req: Request, res: Response) => {
 //INSERTAR VARIOS EQUIPOS
 export const insertarEquipos = async (req: Request, res: Response) => {
   const { nombre_ev, anio_ev, equipos} = req.body;
+  if (!nombre_ev || !anio_ev) {
+    return res.status(400).json({ error: 'Ingrese nombre y año del evento' });
+  }
   try {
     const conn = await connection;
     for(const equipo of equipos){
