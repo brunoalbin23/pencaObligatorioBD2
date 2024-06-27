@@ -157,7 +157,7 @@ export const insertarPartido = async (req: Request, res: Response) => {
         //EventoObject era porque por pantalla muestro nombre y año
         const eventos: EventoObject[] = Object.values(rows).map((row: any) => new EventoObject(row.nombre, row.anio));
   
-        res.status(200).send({'eventos termiandos': eventos});
+        res.status(200).send({'eventos': eventos});
     } catch (error) {
         console.error('Error al seleccionar eventos (termiandos) de la tabla Eventos:', error);
         res.status(500).send('Error al seleccionar eventos de la tabla Eventos');
