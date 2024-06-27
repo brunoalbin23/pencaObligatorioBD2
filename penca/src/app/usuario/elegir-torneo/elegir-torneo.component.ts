@@ -36,7 +36,7 @@ export class ElegirTorneoComponent implements OnInit {
   }
 
   async fetchEventos() {
-    const response = await fetch("http://localhost:3000/admin/getEventos");
+    const response = await fetch("http://localhost:3000/admin/eventosTerminados");
     await response.json().then((res) => {
       if (res.eventos) {
         this.eventos = res.eventos;
