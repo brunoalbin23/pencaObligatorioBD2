@@ -22,19 +22,10 @@ export const Adminlogin = async (req: Request, res: Response) => {
     const conn = await connection;
 
     // Verificar en la tabla Usuario
-    const [rowsUsuario] = await conn.execute('SELECT * FROM Usuario WHERE id = ? AND contrasenia = ?', [id, password]);
-    
-    // Verificar la cantidad de filas devueltas por la consulta SELECT
-    if ((rowsUsuario as any).rowCount === 0) {
+    const [rows] = await conn.execute('SELECT 1 AS existe FROM Usuario u JOIN Admin a ON u.id = a.id WHERE u.id = ? AND u.contrasenia = ?', [id, password]);
+    const check = Object.values(rows).map((row: any) => row.existe);
+    if (check[0] != 1) {
       return res.status(401).json({ error: 'Credenciales incorrectas' });
-    }
-    
-    // Verificar en la tabla Admin que este registrado previamente (las cuentas admin se hardcodean)
-    const [rowsAdmin] = await conn.execute('SELECT * FROM Admin WHERE id = ?', [id]);
-    
-    // Verificar la cantidad de filas devueltas por la consulta SELECT
-    if ((rowsAdmin as any).rowCount === 0) {
-      return res.status(401).json({ error: 'No tienes permisos de administrador' });
     }
 
     // Si las credenciales son correctas y es administrador, generar token de acceso qu esperemos que funcione

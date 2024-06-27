@@ -70,6 +70,21 @@ export class LoginComponent {
     }
   }
 
+  async fetchAdmin() {
+    const url = "http://localhost:3000/admin/login";
+    const body = {
+      id: (<HTMLInputElement>document.getElementById("admin-id")).value,
+      password: (<HTMLInputElement>document.getElementById("admin-contraseña")).value
+    }
+    const response = await fetch(url, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body)});
+    if (response.status != 200) {
+      console.log('Datos incorrectos');
+      this.setBanderaLogin2();
+    } else {
+      this.navigateToOpcionesAdmin();
+    } 
+  }
+
   navigateToOpcionesAdmin() {
     this.router.navigate(['/opciones-admin']);
   }

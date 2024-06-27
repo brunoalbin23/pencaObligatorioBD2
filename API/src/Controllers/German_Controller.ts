@@ -1,51 +1,12 @@
 import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import connection from '../db';
-import { generateAccessToken } from './Seguridad';
 import { EventoObject } from '../Interfaces/EventoObject';
 
 
 
 const app = express();
 app.use(bodyParser.json());
-
-export const Adminlogin = async (req: Request, res: Response) => {
-  const { id, password } = req.body;
-
-  if (!id || !password) {
-    return res.status(400).json({ error: 'ID de usuario y contraseña son requeridos' });
-  }
-
-
-  try {
-    const conn = await connection;
-
-    // Verificar en la tabla Usuario
-    const [rowsUsuario] = await conn.execute('SELECT * FROM Usuario WHERE id = ? AND contrasenia = ?', [id, password]);
-    
-    // Verificar la cantidad de filas devueltas por la consulta SELECT
-    if ((rowsUsuario as any).rowCount === 0) {
-      return res.status(401).json({ error: 'Credenciales incorrectas' });
-    }
-    
-    // Verificar en la tabla Admin que este registrado previamente (las cuentas admin se hardcodean)
-    const [rowsAdmin] = await conn.execute('SELECT * FROM Admin WHERE id = ?', [id]);
-    
-    // Verificar la cantidad de filas devueltas por la consulta SELECT
-    if ((rowsAdmin as any).rowCount === 0) {
-      return res.status(401).json({ error: 'No tienes permisos de administrador' });
-    }
-
-    // Si las credenciales son correctas y es administrador, generar token de acceso qu esperemos que funcione
-    const accessToken = generateAccessToken(id); // Suponiendo que el 'id' (en este caso es la cedula) es único, se utiliza como usuario en el token
-    return res.status(200).json({ accessToken: accessToken });
-  } catch (error) {
-    console.error('Error al intentar iniciar sesión:', error);
-    return res.status(500).json({ error: 'Error al intentar iniciar sesión' });
-  }
-};
-
-
 
 //INSERTAR EVENTO
 export const insertarEvento = async (req: Request, res: Response) => {
@@ -123,23 +84,19 @@ export const insertarPartido = async (req: Request, res: Response) => {
       return res.status(500).json({ error: 'Error al intentar insertar partido' });
     }
   };
-  //AL FIN SALIOOOO LPM!!!!!
-  //PARA ACTUALIZAR RESULTADO PRIMERO HAY QUE FILTRAR EN UN METODO POR año y evento en la tabla evento (elegidos con el seleccionar)
-  //Luego con otro metodo hay que seleccionar dentro de los partidos de ese evento
-  //y una vez seleccionado el partido filtrando por su pk (WHERE PK= blablabla) actualizar los goles
   
   export const  actualizarPartido = async (req: Request, res: Response) => {
     try {
       const {nombre_eq1, nombre_eq2, fecha_hora, g1, g2} = req.body;
       if(!nombre_eq1 || !nombre_eq2 || !fecha_hora || !g1 || !g2){
-         res.status(400).json({error: 'Falta ingrersar datos'}); //luego le pongo return
+         res.status(400).json({error: 'Falta ingrersar datos'});
       }
         const conn = await connection;
         const query = `
           UPDATE Partido
           SET goles_eq1 = ?, goles_eq2= ?
           WHERE nombre_eq1 = ? AND nombre_eq2 = ? AND fecha_hora = ?;
-          `//QUE COMILLAS DE  MIERDAAA
+          `
         
         await conn.execute(query, [g1, g2, nombre_eq1, nombre_eq2, fecha_hora]);
         res.status(200).json({message:'Partido actualizado con exito'});
