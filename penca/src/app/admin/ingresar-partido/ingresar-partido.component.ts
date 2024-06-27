@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IEstadio } from '../../interfaces/iestadio';
 import { ITipoPartido } from '../../interfaces/itipo-partido';

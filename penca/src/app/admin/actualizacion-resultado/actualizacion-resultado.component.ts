@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { InfoService } from '../../services/info.service';
+import { IPartido } from '../../interfaces/ipartido';
+
 
 @Component({
   selector: 'app-actualizacion-resultado',
@@ -10,47 +13,25 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './actualizacion-resultado.component.html',
   styleUrls: ['./actualizacion-resultado.component.css']
 })
-export class ActualizacionResultadoComponent {
-  nombreEquipo1: string = '';
-  nombreEquipo2: string = '';
-  resultado1: string = '';
-  resultado2: string = '';
-  partidos: { id: number, nombreEquipo1: string, nombreEquipo2: string, resultado1?: string, resultado2?: string }[] = [
-    { id: 1, nombreEquipo1: 'Equipo A', nombreEquipo2: 'Equipo B' },
-    { id: 2, nombreEquipo1: 'Equipo C', nombreEquipo2: 'Equipo D' }
-  ];
+export class ActualizacionResultadoComponent implements OnInit {
 
-  selectedPartido: any = null;
   bandera: boolean = false;
   currentInputId: string | null = null;
+  selectedPartido: IPartido | null = null;
+  partidos: IPartido[] = [];
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private infoService: InfoService) { }
 
-  agregarPartido() {
-    if (this.selectedPartido && this.resultado1 && this.resultado2) {
-      this.partidos = this.partidos.map(partido => {
-        if (partido.id === this.selectedPartido.id) {
-          return { ...partido, resultado1: this.resultado1, resultado2: this.resultado2 };
-        }
-        return partido;
-      });
-      this.selectedPartido = null;
-      this.resultado1 = '';
-      this.resultado2 = '';
-    }
-  }
-
-  eliminarPartido(partidoId: number) {
-    this.partidos = this.partidos.filter(partido => partido.id !== partidoId);
+  ngOnInit() {
+    this.fetchPartidos();
   }
 
   cancelar() {
     this.router.navigate(['/actualizacion-torneo']);
   }
 
-  crearTorneo() {
-    // Lógica para agregar el torneo a la base de datos
-    this.router.navigate(['/resultado-actualizado']);
+  closeForm() {
+    this.bandera = false;
   }
 
   openModal(inputId: string) {
@@ -58,37 +39,63 @@ export class ActualizacionResultadoComponent {
     this.bandera = true;
   }
 
-  closeForm() {
-    this.bandera = false;
+  async fetchPartidos() {
+    var url = "http://localhost:3000/alumno/getPartidos?nombre=";
+    const evento = this.infoService.getEvento();
+    if(evento) {
+      url += encodeURI(evento.nombre) + '&anio=' + evento.anio;
+    }
+    const response = await fetch(url);
+    await response.json().then((res) => {
+      if (res.partidos) {
+        this.partidos = res.partidos;
+      }
+    });
+    this.ordenarPartidos();
   }
 
-  selectPartido(partido: any) {
+  ordenarPartidos() {
+    this.partidos.sort((a, b) => Date.parse(b.fecha_hora.toString()) - Date.parse(a.fecha_hora.toString()));
+  }
+
+  selectPartido(partido: IPartido) {
     this.selectedPartido = partido;
-    this.nombreEquipo1 = partido.nombreEquipo1;
-    this.nombreEquipo2 = partido.nombreEquipo2;
-    this.closeForm();
   }
 
-  // Esto por ahora esta con numeros, la idea es que despues sean nombres de partidos extraidos de la base de datos del torneo
-  selectedNumber: number | null = null;
-  numbers: number[] = Array.from({ length: 20 }, (_, i) => i + 1);
-
-  selectNumber(num: number) {
-    this.selectedNumber = num;
-  }
-
-  saveSelectedNumber() {
-    if (this.selectedNumber !== null && this.currentInputId !== null) {
+  saveSelectedPartido() {
+    if (this.selectedPartido !== null && this.currentInputId !== null) {
       const inputElement = document.getElementById(this.currentInputId) as HTMLInputElement;
       if (inputElement) {
-        inputElement.value = this.selectedNumber.toString();
-        if (this.currentInputId === 'equipo1') {
-          this.nombreEquipo1 = inputElement.value;
-        } else if (this.currentInputId === 'equipo2') {
-          this.nombreEquipo2 = inputElement.value;
-        }
+        inputElement.value = this.selectedPartido.nombre_eq1 + " vs " + this.selectedPartido.nombre_eq2; 
       }
       this.closeForm();
     }
   }
+
+  formatFecha(date: Date): string {
+    return formatDate(date, 'yyyy-MM-dd HH:mm:ss', 'en');
+  }
+
+  async crearTorneo() {
+    await this.fetchIngresarResultado();
+    this.router.navigate(['/resultado-actualizado']);
+  }
+
+  async fetchIngresarResultado() {
+    
+    var url = "http://localhost:3000/admin/actualizarPartido";
+    const evento = this.infoService.getEvento();
+    const body = {
+      nombre_eq1: this.selectedPartido?.nombre_eq1,
+      nombre_eq2: this.selectedPartido?.nombre_eq2,
+      fecha_hora: this.formatFecha(<Date>this.selectedPartido?.fecha_hora),
+      g1: (<HTMLInputElement>document.getElementById("resultado1")).value,
+      g2: (<HTMLInputElement>document.getElementById("resultado2")).value,
+      nombre_ev:evento?.nombre,
+      anio_ev:evento?.anio
+    }
+    console.log(body);
+    await fetch(url, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body)}); 
+  }
+
 }

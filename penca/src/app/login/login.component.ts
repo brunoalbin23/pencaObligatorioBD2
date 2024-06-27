@@ -33,7 +33,7 @@ export class LoginComponent {
 
   async fetchRegistro() {
     const url = "http://localhost:3000/alumno/register";
-    const ci = + (<HTMLInputElement>document.getElementById("registro-ci")).value;
+    const ci = +(<HTMLInputElement>document.getElementById("registro-ci")).value;
     const body = {
       ci: ci,
       password: (<HTMLInputElement>document.getElementById("registro-contraseña")).value,
@@ -43,14 +43,46 @@ export class LoginComponent {
       id_carrera: this.selectedCarrera?.id,
       fecha_ini: formatDate(new Date(), "yyyy-MM-dd", "en")
     }
-    await fetch(url, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body)});
-    this.userService.setCI(ci);
-    this.navigateToElegirTorneo(); 
+    const response = await fetch(url, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body)});
+    if (response.status != 201) {
+      console.log('Datos incorrectos');
+      this.setBanderaRegistro();
+    } else {
+      this.userService.setCI(ci);
+      this.navigateToElegirTorneo(); 
+    }
   }
 
-  fetchLogin() {
-    this.userService.setCI(92856362);
-    this.navigateToElegirTorneo();
+  async fetchLogin() {
+    const url = "http://localhost:3000/alumno/inicio";
+    const ci = +(<HTMLInputElement>document.getElementById("login-ci")).value;
+    const body = {
+      id: ci,
+      password: (<HTMLInputElement>document.getElementById("login-contraseña")).value
+    }
+    const response = await fetch(url, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body)});
+    if (response.status != 200) {
+      console.log('Datos incorrectos');
+      this.setBanderaLogin();
+    } else {
+      this.userService.setCI(ci);
+      this.navigateToElegirTorneo();
+    }
+  }
+
+  async fetchAdmin() {
+    const url = "http://localhost:3000/admin/login";
+    const body = {
+      id: (<HTMLInputElement>document.getElementById("admin-id")).value,
+      password: (<HTMLInputElement>document.getElementById("admin-contraseña")).value
+    }
+    const response = await fetch(url, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body)});
+    if (response.status != 200) {
+      console.log('Datos incorrectos');
+      this.setBanderaLogin2();
+    } else {
+      this.navigateToOpcionesAdmin();
+    } 
   }
 
   navigateToOpcionesAdmin() {

@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 import connection from "../db";
 import { generateAccessToken } from './Seguridad';
 import { IPartido } from '../Interfaces/IPartido';
+import { IPartidoPasado } from '../Interfaces/IPartidoPasado';
 
 const app = express();
 app.use(bodyParser.json());
@@ -82,16 +83,16 @@ const isUserIdTaken = async (ci: number): Promise<boolean> => {
   // Función para iniciar sesión
 export const login = async (req: Request, res: Response) => {
     const { id, password } = req.body; //seria cedula pero lo dejo con id porque es representativo de usuario
-  
+
     if (!id || !password) {
       return res.status(400).json({ error: 'Cédula de usuario y contraseña son requeridos' });
     }
   
     try {
       const conn = await connection;
-      const [rows] = await conn.execute('SELECT * FROM Usuario WHERE id = ? AND contrasenia = ?', [id, password]);
+      const [rows] = await conn.execute('SELECT id FROM Usuario WHERE id = ? AND contrasenia = ?', [id, password]);
       const count = (rows as any)[0].count;
-        
+
       if (count===0) {
         return res.status(401).json({ error: 'Credenciales incorrectas' });
       }
@@ -151,16 +152,28 @@ export const login = async (req: Request, res: Response) => {
     }
   }
 
+<<<<<<< HEAD
   export const selectPartidosAdmin = async (req: Request, res: Response) => {
     try {
         var query = 'SELECT nombre_eq1, nombre_eq2, fecha_hora, id_tipo, id_estadio FROM Partido';
         if (req.query.nombre && req.query.anio) {
           query += ' WHERE nombre_ev = "' + req.query.nombre + '" AND anio_ev = ' + req.query.anio +';';
+=======
+  export const selectPartidosPasados = async (req: Request, res: Response) => {
+    try {
+        var query = 'SELECT pp.nombre_eq1, pp.nombre_eq2, p.fecha_hora, pp.puntaje FROM Prediccion_Partido';
+        if (req.query.nombre && req.query.anio && req.query.ci) {
+          query += ' pp JOIN Partido p ON pp.nombre_eq1 = p.nombre_eq1 AND pp.nombre_eq2 = p.nombre_eq2 AND pp.fecha_hora_partido = p.fecha_hora WHERE puntaje IS NOT NULL AND CI = ' + req.query.ci + ' AND nombre_ev = "' + req.query.nombre + '" AND anio_ev = ' + req.query.anio + ';';
+>>>>>>> cc70b77a094e1cf752f7e76e82ed32f1bfb5c8ae
         }
         const conn = await connection;
         const [rows] = await conn.execute(query);
         
+<<<<<<< HEAD
         const partidos: IPartido[] = Object.values(rows).map((row: any) => new IPartido(row.nombre_eq1, row.nombre_eq2, row.fecha_hora, row.id_tipo, row.id_estadio)); // Corregido: usar row.nombre
+=======
+        const partidos: IPartidoPasado [] = Object.values(rows).map((row: any) => new IPartidoPasado(row.nombre_eq1, row.nombre_eq2, row.fecha_hora, row.puntaje)); // Corregido: usar row.nombre
+>>>>>>> cc70b77a094e1cf752f7e76e82ed32f1bfb5c8ae
 
         res.status(200).send({'partidos': partidos});
     } catch (error) {
