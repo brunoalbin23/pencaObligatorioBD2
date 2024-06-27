@@ -45,7 +45,6 @@ export class IngresarPartidoComponent {
       const response = await fetch("http://localhost:3000/admin/getTiposPartidos");
       await response.json().then((res) => {
         if (res.tiposPartidos) {
-          console.log(res.tiposPartidos)
           this.tiposPartidos = res.tiposPartidos;
       }
     }); 
@@ -157,7 +156,7 @@ export class IngresarPartidoComponent {
   //enivar todo
   async crearTorneo() {
     await this.fetchIngresarPartido();
-    this.router.navigate(['/torneo-creado']);
+    this.router.navigate(['/partido-creado']);
   }
 
   async fetchIngresarPartido() {

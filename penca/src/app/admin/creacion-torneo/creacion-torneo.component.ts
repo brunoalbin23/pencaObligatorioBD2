@@ -33,6 +33,11 @@ export class CreacionTorneoComponent {
   eliminarEquipo(equipoId: number) {
     this.equiposs = this.equiposs.filter(equipo => equipo.id !== equipoId);
   }
+
+
+
+
+
   async crearTorneo() {
     await this.fetchInsertarEquipos();
     this.router.navigate(['/torneo-creado']);
@@ -49,6 +54,10 @@ export class CreacionTorneoComponent {
     await fetch(url, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body)});
   }
 
+
+
+
+  
   agregarEquipo() {
     if (this.nombreEquipo) {
       const id = new Date().getTime(); 
