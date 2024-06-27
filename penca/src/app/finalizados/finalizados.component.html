@@ -7,8 +7,9 @@
       <div class="lista-partidos">
         <div class="partido" *ngFor="let partido of partidos">
           <div class="equipo-nombres">
-            <span class="equipo">{{ partido.equipo1 }} vs {{ partido.equipo2 }}</span>
-            <span class="fecha">{{ partido.fecha | date: 'dd/MM/yyyy HH:mm' }}</span>
+            <span class="equipo">{{ partido.nombre_eq1 }} vs {{ partido.nombre_eq2 }}</span><br>
+            <span class="equipo">Puntaje: {{partido.puntaje}}</span><br>
+            <span class="fecha">{{ partido.fecha_hora | date: 'dd/MM/yyyy' }}</span>
           </div>
         </div>
       </div>

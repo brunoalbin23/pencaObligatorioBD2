@@ -4,6 +4,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { OnInit } from '@angular/core';
+import { InfoService } from '../services/info.service';
+import { UserService } from '../services/user.service';
+import { IPartido } from '../interfaces/ipartido';
+import { IPartidoPasado } from '../interfaces/ipartidopasado';
 
 @Component({
   selector: 'app-finalizados',
@@ -13,28 +17,36 @@ import { OnInit } from '@angular/core';
   styleUrl: './finalizados.component.css'
 })
 export class FinalizadosComponent implements OnInit {
-  partidos: { id: number, equipo1: string, equipo2: string, fecha: Date }[] = [];
+  partidos: IPartidoPasado[] = [];
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private infoService: InfoService, private userService: UserService) { }
 
   ngOnInit() {
-    // Aquí iría la lógica para cargar los partidos desde la base de datos
-    this.partidos = [
-      { id: 1, equipo1: 'Equipo A', equipo2: 'Equipo B', fecha: new Date('2024-07-01T14:00:00') },
-      { id: 2, equipo1: 'Equipo C', equipo2: 'Equipo D', fecha: new Date('2024-06-30T16:00:00') },
-      // Agregar más partidos según sea necesario
-    ];
-
-    this.partidos.sort((a, b) => b.fecha.getTime() - a.fecha.getTime());
+    this.fetchPartidosFinalizados();
   }
 
+  async fetchPartidosFinalizados() {
+    var url = "http://localhost:3000/alumno/getPartidosPasados?nombre="
+    const evento = this.infoService.getEvento();
+    const ci = this.userService.getCI();
+    if(evento && ci) {
+      url += encodeURI(evento.nombre) + '&anio=' + evento.anio + '&ci=' + ci;
+    }
+    const response = await fetch(url);
+    await response.json().then((res) => {
+      if (res.partidos) {
+        this.partidos = res.partidos;
+      }
+    });
+    this.ordenarPartidos();
+  }
+
+  ordenarPartidos() {
+    this.partidos.sort((a, b) => Date.parse(b.fecha_hora.toString()) - Date.parse(a.fecha_hora.toString()));
+  }
   navigateToSala() {
     this.router.navigate(['/sala-general']);
   }
 
-  actualizarPartido(id: number) {
-    // Lógica para actualizar el partido
-    // Aquí puedes redirigir a otro componente para actualizar el partido seleccionado
-    this.router.navigate(['/actualizar-partido', id]);
-  }
+
 }
