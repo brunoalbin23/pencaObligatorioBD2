@@ -37,7 +37,7 @@ export class PrediccionRegistroComponent {
   async fetchEquipos() {
     var url = 'http://localhost:3000/admin/getEquipos?nombre='
     const evento = this.infoService.getEvento();
-    if(evento) {
+    if(evento) { 
       url += encodeURI(evento.nombre) + '&anio=' + evento.anio;
     }
     const response = await fetch(url);
