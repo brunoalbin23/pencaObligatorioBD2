@@ -82,16 +82,16 @@ const isUserIdTaken = async (ci: number): Promise<boolean> => {
   // Función para iniciar sesión
 export const login = async (req: Request, res: Response) => {
     const { id, password } = req.body; //seria cedula pero lo dejo con id porque es representativo de usuario
-  
+
     if (!id || !password) {
       return res.status(400).json({ error: 'Cédula de usuario y contraseña son requeridos' });
     }
   
     try {
       const conn = await connection;
-      const [rows] = await conn.execute('SELECT * FROM Usuario WHERE id = ? AND contrasenia = ?', [id, password]);
+      const [rows] = await conn.execute('SELECT id FROM Usuario WHERE id = ? AND contrasenia = ?', [id, password]);
       const count = (rows as any)[0].count;
-        
+
       if (count===0) {
         return res.status(401).json({ error: 'Credenciales incorrectas' });
       }
