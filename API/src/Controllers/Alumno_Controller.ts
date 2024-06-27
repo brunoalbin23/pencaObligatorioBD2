@@ -150,3 +150,21 @@ export const login = async (req: Request, res: Response) => {
         res.status(500).send('Error al seleccionar países de la tabla Equipo');
     }
   }
+
+  export const selectPartidosAdmin = async (req: Request, res: Response) => {
+    try {
+        var query = 'SELECT nombre_eq1, nombre_eq2, fecha_hora, id_tipo, id_estadio FROM Partido';
+        if (req.query.nombre && req.query.anio) {
+          query += ' WHERE nombre_ev = "' + req.query.nombre + '" AND anio_ev = ' + req.query.anio +';';
+        }
+        const conn = await connection;
+        const [rows] = await conn.execute(query);
+        
+        const partidos: IPartido[] = Object.values(rows).map((row: any) => new IPartido(row.nombre_eq1, row.nombre_eq2, row.fecha_hora, row.id_tipo, row.id_estadio)); // Corregido: usar row.nombre
+
+        res.status(200).send({'partidos': partidos});
+    } catch (error) {
+        console.error('Error al seleccionar países de la tabla Equipo:', error);
+        res.status(500).send('Error al seleccionar países de la tabla Equipo');
+    }
+  }

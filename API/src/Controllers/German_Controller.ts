@@ -129,20 +129,23 @@ export const insertarPartido = async (req: Request, res: Response) => {
   
   export const  actualizarPartido = async (req: Request, res: Response) => {
     try {
-      const {nombre_eq1, nombre_eq2, fecha_hora, g1, g2} = req.body;
+      const {nombre_eq1, nombre_eq2, fecha_hora, g1, g2, nombre_ev, anio_ev} = req.body;
+      console.log(req.body);
       if(!nombre_eq1 || !nombre_eq2 || !fecha_hora || !g1 || !g2){
          res.status(400).json({error: 'Falta ingrersar datos'}); //luego le pongo return
       }
         const conn = await connection;
-        const query = `
-          UPDATE Partido
-          SET goles_eq1 = ?, goles_eq2= ?
-          WHERE nombre_eq1 = ? AND nombre_eq2 = ? AND fecha_hora = ?;
-          `//QUE COMILLAS DE  MIERDAAA
-        
+        const query = 'UPDATE Partido SET goles_eq1 = ?, goles_eq2= ? WHERE nombre_eq1 = ? AND nombre_eq2 = ? AND fecha_hora = ?;'
+             
         await conn.execute(query, [g1, g2, nombre_eq1, nombre_eq2, fecha_hora]);
+
+        await conn.execute('UPDATE Prediccion_Partido opp JOIN Partido p ON opp.nombre_eq1 = p.nombre_eq1 AND opp.nombre_eq2 = p.nombre_eq2 AND opp.fecha_hora_partido = p.fecha_hora SET opp.Puntaje = 4 WHERE p.nombre_ev = ? AND p.anio_ev = ? AND opp.prediccion_eq1 = p.goles_eq1 AND opp.prediccion_eq2 = p.goles_eq2;',[nombre_ev, anio_ev]);
+        await conn.execute('UPDATE Prediccion_Partido opp JOIN Partido p ON opp.nombre_eq1 = p.nombre_eq1 AND opp.nombre_eq2 = p.nombre_eq2 AND opp.fecha_hora_partido = p.fecha_hora SET opp.Puntaje = 2 WHERE p.goles_eq1 IS NOT NULL AND p.nombre_ev = ? AND p.anio_ev = ? AND (((opp.prediccion_eq1 > opp.prediccion_eq2 AND p.goles_eq1 > p.goles_eq2) OR (opp.prediccion_eq1 = opp.prediccion_eq2 AND p.goles_eq1 = p.goles_eq2) OR (opp.prediccion_eq1 < opp.prediccion_eq2 AND p.goles_eq1 < p.goles_eq2) ) AND (opp.prediccion_eq1 <> p.goles_eq1 OR opp.prediccion_eq2 <> p.goles_eq2));',[nombre_ev, anio_ev]);
+        await conn.execute('UPDATE Prediccion_Partido opp JOIN Partido p ON opp.nombre_eq1 = p.nombre_eq1 AND opp.nombre_eq2 = p.nombre_eq2 AND opp.fecha_hora_partido = p.fecha_hora SET opp.Puntaje = 0 WHERE p.goles_eq1 IS NOT NULL AND p.nombre_ev = ? AND p.anio_ev = ? AND ((opp.prediccion_eq1 > opp.prediccion_eq2 AND p.goles_eq1 < p.goles_eq2) OR (opp.prediccion_eq1 < opp.prediccion_eq2 AND p.goles_eq1 > p.goles_eq2) OR (opp.prediccion_eq1 = opp.prediccion_eq2 AND p.goles_eq1 <> p.goles_eq2) OR (opp.prediccion_eq1 <> opp.prediccion_eq2 AND p.goles_eq1 = p.goles_eq2));',[nombre_ev, anio_ev]);
+        await conn.execute('UPDATE Prediccion_Evento_Equipo ope JOIN Evento_Equipo ev_eq ON ope.nombre_ev = ev_eq.nombre_ev AND ope.anio_ev = ev_eq.anio_ev AND ope.nombre_eq = ev_eq.nombre_eq SET puntaje = 10 WHERE ev_eq.nombre_ev = ? AND ev_eq.anio_ev = ?  AND ope.prediccion = 1 AND ope.prediccion = ev_eq.posicion;',[nombre_ev, anio_ev]);
+        await conn.execute('UPDATE Prediccion_Evento_Equipo ope JOIN Evento_Equipo ev_eq ON ope.nombre_ev = ev_eq.nombre_ev AND ope.anio_ev = ev_eq.anio_ev AND ope.nombre_eq = ev_eq.nombre_eq SET puntaje = 5 WHERE ev_eq.nombre_ev = ? AND ev_eq.anio_ev = ?  AND ope.prediccion = 2 AND ope.prediccion = ev_eq.posicion;',[nombre_ev, anio_ev]);
         res.status(200).json({message:'Partido actualizado con exito'});
-       
+
     } catch (error) {
         console.error('Error al seleccionar carreras de la tabla Carrera:', error);
         res.status(500).send('Error al seleccionar carreras de la tabla Carrera');
