@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import connection from '../db';
 import { generateAccessToken } from './Seguridad';
+import { EventoObject } from '../Interfaces/EventoObject';
 
 
 
@@ -148,3 +149,18 @@ export const insertarPartido = async (req: Request, res: Response) => {
         res.status(500).send('Error al seleccionar carreras de la tabla Carrera');
     }
   }
+
+  export const selectEventoTerminados = async (req: Request, res: Response) => {
+    try {
+        const conn = await connection;
+        const [rows] = await conn.execute('SELECT nombre, anio FROM Evento WHERE (nombre, anio) NOT IN (SELECT ev_eq.nombre, ev_eq.anio FROM Evento ev_eq JOIN Partido p ON ev_eq.nombre = p.nombre_ev AND ev_eq.anio = p.anio_ev AND id_tipo = 1 AND p.goles_eq1 IS NOT NULL);');
+        //EventoObject era porque por pantalla muestro nombre y año
+        const eventos: EventoObject[] = Object.values(rows).map((row: any) => new EventoObject(row.nombre, row.anio));
+  
+        res.status(200).send({'eventos termiandos': eventos});
+    } catch (error) {
+        console.error('Error al seleccionar eventos (termiandos) de la tabla Eventos:', error);
+        res.status(500).send('Error al seleccionar eventos de la tabla Eventos');
+    }
+  }
+  
