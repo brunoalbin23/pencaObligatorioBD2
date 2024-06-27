@@ -179,11 +179,11 @@ export const insertarEventoEquipo = async (req: Request, res: Response) => {
 
 //INSERTAR VARIOS EQUIPOS
 export const insertarEquipos = async (req: Request, res: Response) => {
-  const { equipos } = req.body;
+  const { nombre_ev, anio_ev, equipos} = req.body;
   try {
     const conn = await connection;
     for(const equipo of equipos){
-      await conn.execute('INSERT INTO Equipo (nombre) VALUE (?)', [equipo]);
+      await conn.execute('INSERT INTO Evento_Equipo (nombre_ev, anio_ev, nombre_eq) VALUE (?, ?, ?)', [nombre_ev, anio_ev, equipo]);
     }
 
     return res.status(201).json({ message: 'equipo registrado exitosamente' });

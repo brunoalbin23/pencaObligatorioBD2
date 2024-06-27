@@ -43,7 +43,7 @@ export class CreacionTorneoComponent {
     const body = {
       nombre_ev: (<HTMLInputElement>document.getElementById("nombreTorneo")).value,
       anio_ev: (<HTMLInputElement>document.getElementById("anoTorneo")).value,
-      equipos: this.equiposs.map(equipo => equipo.nombre)
+      equipos: this.equiposs.map(equipo => equipo.nombre) 
     }
     console.log(body.equipos);
     await fetch(url, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body)});
@@ -53,7 +53,7 @@ export class CreacionTorneoComponent {
     if (this.nombreEquipo) {
       const id = new Date().getTime(); 
       this.equiposs.push({ id, nombre: this.nombreEquipo });
-      this.nombreEquipo = '';
+      this.nombreEquipo = ''; 
     }
   }
 

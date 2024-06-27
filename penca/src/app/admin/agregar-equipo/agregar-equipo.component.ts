@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { InfoService } from '../../services/info.service';
 
 @Component({
   selector: 'app-agregar-equipo',
@@ -19,7 +20,7 @@ export class AgregarEquipoComponent {
   nombreEquipo: string = '';
   equiposs: { id: number, nombre: string }[] = []; 
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private infoService: InfoService) { }
 
   openModal(inputId: string) {
     this.currentInputId = inputId;
@@ -33,9 +34,23 @@ export class AgregarEquipoComponent {
   eliminarEquipo(equipoId: number) {
     this.equiposs = this.equiposs.filter(equipo => equipo.id !== equipoId);
   }
-  actualizarTorneo() {
+
+  async actualizarTorneo() {
+    await this.fetchInsertarEquipos();
     this.router.navigate(['/actualizacion-torneo-final']);
   }
+
+  async fetchInsertarEquipos() {
+    var url = "http://localhost:3000/admin/insertTeams";
+    const evento = this.infoService.getEvento();
+    const body = {
+      nombre_ev: evento?.nombre, 
+      anio_ev: evento?.anio,
+      equipos: this.equiposs.map(equipo => equipo.nombre) 
+    }
+    await fetch(url, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body)});
+  }
+
 
   agregarEquipo() {
     if (this.nombreEquipo) {
